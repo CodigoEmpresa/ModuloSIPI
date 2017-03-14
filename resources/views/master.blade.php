@@ -48,7 +48,9 @@
 				</div>
 				<div class="navbar-collapse collapse" id="navbar-main">
 					<ul class="nav navbar-nav">
-					
+						@if ($_SESSION['Usuario']['Permisos']['administrar_usuarios'])
+							<li><a href="{{ url('/personas') }}">Administración</a></li>
+						@endif
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="http://www.idrd.gov.co/sitio/idrd/" target="_blank">I.D.R.D</a></li>
