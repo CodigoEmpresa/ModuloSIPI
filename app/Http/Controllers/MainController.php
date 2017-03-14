@@ -38,7 +38,7 @@ class MainController extends Controller {
 			$permissions_array = $user_array;
 
 			$permisos = [
-				'permiso1' => array_key_exists(1, $permissions_array) ? intval($permissions_array[1]) : 0
+				'administrar_usuarios' => array_key_exists(1, $permissions_array) ? intval($permissions_array[1]) : 0
 			];
 
 			$_SESSION['Usuario'] = $user_array;
