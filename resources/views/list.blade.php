@@ -1,5 +1,1 @@
-@extends('master')                              
-
-@section('content') 
-	{!! $lista !!}
-@stop
+@extends('master')

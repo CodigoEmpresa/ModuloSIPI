@@ -52,6 +52,15 @@
 							<li><a href="{{ url('/personas') }}">Administración</a></li>
 						@endif
 					</ul>
+					<ul class="nav navbar-nav">
+						<li>
+		                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Ficha Técnica <span class="caret"></span></a>
+		                <ul class="dropdown-menu" aria-labelledby="themes">		                  
+		                      <li><a href="{{ URL::to( 'registroFT') }}">Registro Ficha Técnica</a></li>		                  
+		                      <li><a href="{{ URL::to( 'ediciónFT') }}">Edición Ficha Técnica</a></li>		                  
+		                </ul>
+		              </li>
+		              </ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="http://www.idrd.gov.co/sitio/idrd/" target="_blank">I.D.R.D</a></li>
 						<li class="dropdown">
