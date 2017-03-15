@@ -21,9 +21,20 @@ class FichaTecnicaController extends Controller
 
 		$this->repositorio_personas = $repositorio_personas;
 	}
-    public function indexRegistro(){
-		return view('FichaTecnica/registro')
-				;
 
+
+    public function indexRegistro(){
+		$datos = [
+			'seccion' => 'Registro'
+		];
+		return view('FichaTecnica/registro', $datos);
     }
+
+    public function indexEdicion(){
+		$datos = [
+			'seccion' => 'Edicion'
+		];
+		return view('FichaTecnica/edicion', $datos);
+    }
+    
 }

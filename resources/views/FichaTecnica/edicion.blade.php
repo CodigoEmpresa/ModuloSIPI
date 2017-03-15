@@ -3,7 +3,7 @@
 @section('content') 
 	
 <!-- ------------------------------------------------------------------------------------ -->
-<center><h3>REGISTRO FICHA TÉCNICA</h3></center>
+<center><h3>EDICIÓN FICHA TÉCNICA</h3></center>
 <input type="hidden" name="_token" value="{{csrf_token()}}" id="token"/>
 <div id="main_persona" class="row" data-url="{{ url(config('usuarios.prefijo_ruta')) }}">  
     <div class="content">
