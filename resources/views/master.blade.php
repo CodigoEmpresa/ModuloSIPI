@@ -31,6 +31,16 @@
 				<script src="{{ asset('public/components/highcharts/js/highcharts.js') }}"></script>
 				<script src="{{ asset('public/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 				<script src="{{ asset('public/Js/main.js') }}"></script>
+
+				<meta name="csrf-token" content="{{ csrf_token() }}" />
+
+		          <script type="text/javascript">
+		              $.ajaxSetup({
+		                  headers: {
+		                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		                  }
+		              });
+		          </script>
 		@show
 		<title>SIPI</title>
 	</head>
@@ -57,10 +67,7 @@
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Ficha Técnica <span class="caret"></span></a>
 						<ul class="dropdown-menu" aria-labelledby="themes">		
 							<li class="{{ $seccion && $seccion == 'Registro' ? 'active' : '' }}">                  
-		                    	<a href="{{ URL::to( 'registroFT') }}">Registro Ficha Técnica</a>
-		                    </li>
-		                    <li class="{{ $seccion && $seccion == 'Edicion' ? 'active' : '' }}">                  
-		                    	<a href="{{ URL::to( 'edicionFT') }}">Edición Ficha Técnica</a>
+		                    	<a href="{{ URL::to( 'registroFT') }}">Gestor Ficha Técnica</a>
 		                    </li>
 		                </ul>
 						</li>						

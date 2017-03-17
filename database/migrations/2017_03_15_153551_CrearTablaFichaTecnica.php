@@ -17,12 +17,15 @@ class CrearTablaFichaTecnica extends Migration
             $table->increments('Id');
             $table->integer('Subdireccion_Id')->unsigned();
             $table->integer('Persona_Id');
-            $table->date('Anio');
+            $table->string('Anio');
             $table->integer('Codigo_Proceso');
             $table->string('Objeto', 1500);
             $table->string('Presupuesto_Estimado');
             $table->date('Fecha_Entrega_Estimada');
             $table->string('Observacion', 1500);
+            $table->date('Alcance1')->nullable();
+            $table->date('Alcance2')->nullable();
+            $table->date('Alcance3')->nullable();
             $table->timestamps();
 
             $table->foreign('Subdireccion_Id')->references('Id')->on('subdireccion');
