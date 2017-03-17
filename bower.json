@@ -1,5 +1,5 @@
 {
-  "name": "ModuloRecreovia",
+  "name": "modulorecreovia",
   "description": "",
   "main": "",
   "license": "MIT",
@@ -23,6 +23,8 @@
     "loaders.css": "^0.1.2",
     "highcharts": "^5.0.6",
     "datatables.net-responsive": "^2.1.1",
-    "datatables.net-responsive-dt": "^2.1.1"
+    "datatables.net-responsive-dt": "^2.1.1",
+    "bootstrap-datepicker": "^1.6.4",
+    "datatables.net": "^2.1.1"
   }
 }

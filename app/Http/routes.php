@@ -32,7 +32,13 @@ Route::any('/logout', 'MainController@logout');
 
 //rutas con filtro de autenticación
 Route::group(['middleware' => ['web']], function () {
+
 	Route::get('/welcome', 'MainController@welcome');
 	Route::get('registroFT', 'FichaTecnicaController@indexRegistro');
-	Route::get('edicionFT', 'FichaTecnicaController@indexEdicion');
+	Route::post('addFichaTecnica', 'FichaTecnicaController@registroFichaTecnica');	
+	Route::post('editFichaTecnica', 'FichaTecnicaController@modificarFichaTecnica');	
+
+	Route::get('getFichaTecnicaDatos','FichaTecnicaController@GetFichaTecnicaDatos');
+	Route::get('getFichaTecnicaDatosOne/{id}','FichaTecnicaController@GetFichaTecnicaDatosOne');
+	
 });
