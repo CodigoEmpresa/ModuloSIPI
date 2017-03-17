@@ -47,6 +47,9 @@ $(function(){
       $("#Presupuesto").removeAttr("readonly", "readonly");
       $("#FechaEntrega").removeAttr("readonly", "readonly");
       $("#Observaciones").removeAttr("readonly", "readonly");
+      $("#Alcance1").removeAttr("readonly", "readonly");
+      $("#Alcance2").removeAttr("readonly", "readonly");
+      $("#Alcance3").removeAttr("readonly", "readonly");
       $("#RegistrarFT").show('slow');    
       $("#ModificarFT").hide('slow');
       $("#A1").hide('slow');
@@ -148,6 +151,9 @@ $(function(){
       $("#Presupuesto").attr("readonly", "readonly");
       $("#FechaEntrega").attr("readonly", "readonly");
       $("#Observaciones").attr("readonly", "readonly");
+      $("#Alcance1").attr("readonly", "readonly");
+      $("#Alcance2").attr("readonly", "readonly");
+      $("#Alcance3").attr("readonly", "readonly");
       $("#RegistrarFT").hide('slow');
       $("#ModificarFT").hide('slow');
     });    
@@ -178,6 +184,9 @@ $(function(){
       $("#Presupuesto").removeAttr("readonly", "readonly");
       $("#FechaEntrega").removeAttr("readonly", "readonly");
       $("#Observaciones").removeAttr("readonly", "readonly");
+      $("#Alcance1").removeAttr("readonly", "readonly");
+      $("#Alcance2").removeAttr("readonly", "readonly");
+      $("#Alcance3").removeAttr("readonly", "readonly");
     });    
   });
 
