@@ -2,10 +2,10 @@ $(function(){
   $.datepicker.setDefaults($.datepicker.regional["es"]);
 
   $('#AnioDate').datetimepicker({
-    format: 'YYYY', 
-    viewMode: "years", 
+    format: 'YYYY',
+    viewMode: "years",
   });
-  
+
   $('#FechaEntrega').datetimepicker({
     format: 'YYYY-MM-DD',
   });
@@ -22,7 +22,7 @@ $(function(){
     format: 'YYYY-MM-DD',
   });
 
-   $.get("ModuloSIPI/getFichaTecnicaDatos/"+$(this).val(), function (FichaTecnicadatos) {
+   $.get("getFichaTecnicaDatos", function (FichaTecnicadatos) {
       $('#TablaDatos').html(FichaTecnicadatos);
       $('#datosTabla').DataTable({
         retrieve: true,
@@ -40,7 +40,7 @@ $(function(){
 
    $("#Agregar_Ficha").on('click', function(){
       document.getElementById("registroFichaTecnicaF").reset();
-      $("#AgregarFichaD").modal('show');    
+      $("#AgregarFichaD").modal('show');
       $("#Anio").removeAttr("readonly", "readonly");
       $("#Subdireccion").removeAttr("readonly", "readonly");
       $("#Objeto").removeAttr("readonly", "readonly");
@@ -50,7 +50,7 @@ $(function(){
       $("#Alcance1").removeAttr("readonly", "readonly");
       $("#Alcance2").removeAttr("readonly", "readonly");
       $("#Alcance3").removeAttr("readonly", "readonly");
-      $("#RegistrarFT").show('slow');    
+      $("#RegistrarFT").show('slow');
       $("#ModificarFT").hide('slow');
       $("#A1").hide('slow');
       $("#A2").hide('slow');
@@ -60,7 +60,7 @@ $(function(){
   $("#RegistrarFT").on('click', function(){
 
     var formData = new FormData($("#registroFichaTecnicaF")[0]);
-    var token = $("#token").val();    
+    var token = $("#token").val();
 
     $.ajax({
       type: 'POST',
@@ -71,14 +71,14 @@ $(function(){
       processData: false,
       dataType: "json",
       data: formData,
-        beforeSend: function(){          
+        beforeSend: function(){
         },
         success: function (xhr) {
           $('#registroFichaTecnicaF .form-group').removeClass('has-error');
           document.getElementById("registroFichaTecnicaF").reset();
           $('#mensaje').html('<div class="alert alert-dismissible alert-success" ><strong>Exito!</strong>'+xhr.Mensaje+'</div>');
           $('#mensaje').show(60);
-          $('#mensaje').delay(1500).hide(600); 
+          $('#mensaje').delay(1500).hide(600);
 
           $.get("getFichaTecnicaDatosOne/"+xhr.Id, function (FichaOne) {
             var t = $('#datosTabla').DataTable();
@@ -87,7 +87,7 @@ $(function(){
                   FichaOne.Anio,
                   FichaOne.subdireccion.Nombre_Subdireccion,
                   FichaOne.persona.Primer_Nombre+' '+FichaOne.persona.Segundo_Nombre+' '+FichaOne.persona.Primer_Apellido+' '+FichaOne.persona.Segundo_Apellido,
-                  
+
                   '<button type="button" class="btn-sm btn-info" data-funcion="verFicha" value="'+xhr.Id+'" ><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></button><button type="button" class="btn-sm btn-primary" data-funcion="modificarFicha" value="'+xhr.Id+'" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>',
               ] ).draw( false );
           });
@@ -108,36 +108,36 @@ $(function(){
     });
   }
 
-  $('body').delegate('button[data-funcion="verFicha"]','click',function (e) {  
+  $('body').delegate('button[data-funcion="verFicha"]','click',function (e) {
     $.get("getFichaTecnicaDatosOne/"+$(this).val(), function (FichaOne) {
       $("#Anio").val(FichaOne.Anio);
       $("#Subdireccion").val(FichaOne.Subdireccion_Id);
       $("#Objeto").val(FichaOne.Objeto);
       $("#Presupuesto").val(FichaOne.Presupuesto_Estimado);
       $("#FechaEntrega").val(FichaOne.Fecha_Entrega_Estimada);
-      $("#Observaciones").val(FichaOne.Observacion);      
+      $("#Observaciones").val(FichaOne.Observacion);
 
       if(FichaOne.Alcance1 != '0000-00-00' || FichaOne.Alcance2 != '0000-00-00' || FichaOne.Alcance3 != '0000-00-00'){
         if(FichaOne.Alcance1 == '0000-00-00' || FichaOne.Alcance1 == null){
-          $("#A1").hide('slow');          
+          $("#A1").hide('slow');
         }else{
           $("#A1").show('slow');
           $("#Alcance1").val(FichaOne.Alcance1);
-          
+
         }
-        
+
         if(FichaOne.Alcance2 == '0000-00-00' || FichaOne.Alcance2 == null){
           $("#A2").hide('slow');
         }else{
           $("#A2").show('slow');
-          $("#Alcance2").val(FichaOne.Alcance2);          
+          $("#Alcance2").val(FichaOne.Alcance2);
         }
 
         if(FichaOne.Alcance3 == '0000-00-00' || FichaOne.Alcance3 == null){
           $("#A3").hide('slow');
         }else{
           $("#A3").show('slow');
-          $("#Alcance3").val(FichaOne.Alcance3);          
+          $("#Alcance3").val(FichaOne.Alcance3);
         }
 
       }else{
@@ -156,10 +156,10 @@ $(function(){
       $("#Alcance3").attr("readonly", "readonly");
       $("#RegistrarFT").hide('slow');
       $("#ModificarFT").hide('slow');
-    });    
+    });
   });
 
-  $('body').delegate('button[data-funcion="modificarFicha"]','click',function (e) {      
+  $('body').delegate('button[data-funcion="modificarFicha"]','click',function (e) {
     $.get("getFichaTecnicaDatosOne/"+$(this).val(), function (FichaOne) {
       $("#Anio").val(FichaOne.Anio);
       $("#Subdireccion").val(FichaOne.Subdireccion_Id);
@@ -187,13 +187,13 @@ $(function(){
       $("#Alcance1").removeAttr("readonly", "readonly");
       $("#Alcance2").removeAttr("readonly", "readonly");
       $("#Alcance3").removeAttr("readonly", "readonly");
-    });    
+    });
   });
 
   $("#ModificarFT").on('click', function(){
 
     var formData = new FormData($("#registroFichaTecnicaF")[0]);
-    var token = $("#token").val();    
+    var token = $("#token").val();
 
     $.ajax({
       type: 'POST',
@@ -204,14 +204,14 @@ $(function(){
       processData: false,
       dataType: "json",
       data: formData,
-        beforeSend: function(){          
+        beforeSend: function(){
         },
         success: function (xhr) {
           $('#registroFichaTecnicaF .form-group').removeClass('has-error');
           document.getElementById("registroFichaTecnicaF").reset();
           $('#mensaje').html('<div class="alert alert-dismissible alert-success" ><strong>Exito!</strong>'+xhr.Mensaje+'</div>');
           $('#mensaje').show(60);
-          $('#mensaje').delay(1500).hide(600); 
+          $('#mensaje').delay(1500).hide(600);
           setTimeout(function(){
               $("#AgregarFichaD").modal('hide');
             }, 2000);
@@ -221,5 +221,5 @@ $(function(){
         }
       });
   });
-  
+
 });

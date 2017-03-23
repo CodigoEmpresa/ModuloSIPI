@@ -1,13 +1,13 @@
-@extends('master')     
+@extends('master')
 @section('script')
     @parent
     <script src="{{ asset('public/Js/FichaTecnica/registroFT.js') }}"></script>
     <script src="{{ asset('public/components/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
-@stop                        
-@section('content') 	
+@stop
+@section('content')
 	<center><h3>GESTOR FICHA TÉCNICA - ACEE</h3></center>
 	<input type="hidden" name="_token" value="{{csrf_token()}}" id="token"/>
-	<div id="main_persona" class="row" data-url="{{ url(config('usuarios.prefijo_ruta')) }}">  
+	<div id="main" class="row" data-url="{{ url('/') }}">  
 	<br>
     <div class="content">
     	<div align="right">
@@ -25,7 +25,7 @@
 	                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	                    <h3 class="modal-title" id="myModalLabel">FICHA TÉCNICA - ACEE</h3>
 	                 </div>
-			    	<form id="registroFichaTecnicaF" name="registroFichaTecnicaF">  
+			    	<form id="registroFichaTecnicaF" name="registroFichaTecnicaF">
 				    	<div class="content">
 	                        <div class="panel">
 	                        	<ul class="list-group" id="seccion_uno" name="seccion_uno">
@@ -40,7 +40,7 @@
 								                <div class="input-group date form-control" id="AnioDate" style="border: none;">
 								                    <input id="Anio" class="form-control " type="text" value="" name="Anio" default="" data-date="" data-behavior="Anio">
 								                <span class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i> </span>
-								                </div>  
+								                </div>
 								            </div>
 
 								            <div class="form-group col-md-2">
@@ -49,7 +49,7 @@
 
 											<div class="form-group col-md-4">
 								                <select name="Subdireccion" id="Subdireccion" class="form-control">
-							                        <option value="">Seleccionar</option>                   
+							                        <option value="">Seleccionar</option>
 							                        @foreach($Subdireccion as $Subdirecciones)
 						                                <option value="{{ $Subdirecciones['Id'] }}">{{ $Subdirecciones['Nombre_Subdireccion'] }}</option>
 						                            @endforeach
@@ -63,7 +63,7 @@
 											</div>
 
 											<div class="form-group col-md-12">
-								                <textarea class="form-control"  placeholder="Objeto" id="Objeto" name="Objeto"></textarea> 
+								                <textarea class="form-control"  placeholder="Objeto" id="Objeto" name="Objeto"></textarea>
 								            </div>
 							            </div>
 
@@ -85,25 +85,25 @@
 								                <div class="input-group date form-control" id="FechaEntregaDate" style="border: none;">
 								                    <input id="FechaEntrega" class="form-control " type="text" value="" name="FechaEntrega" default="" data-date="" data-behavior="FechaEntrega">
 								                <span class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i> </span>
-								                </div> 
+								                </div>
 								            </div>
 
 									    </div>
 
-									    <div class="row">									
+									    <div class="row">
 
 								            <div class="form-group col-md-12">
 												<label for="inputEmail" class="control-label">Observaciones:</label>
 											</div>
 
 											<div class="form-group col-md-12">
-								                <textarea class="form-control"  placeholder="Observaciones" id="Observaciones" name="Observaciones"></textarea> 
+								                <textarea class="form-control"  placeholder="Observaciones" id="Observaciones" name="Observaciones"></textarea>
 								            </div>
 									    </div>
 
-									    <div class="row">		
+									    <div class="row">
 
-									    	<div id="A1">							
+									    	<div id="A1">
 									            <div class="form-group col-md-1">
 													<label for="inputEmail" class="control-label">Alcance N° 1:</label>
 												</div>
@@ -163,5 +163,5 @@
 			    </div>
 		    </div>
 	    </div>
-	</div>        
+	</div>
 @stop
