@@ -25,13 +25,12 @@ $(function(){
    $.get("getFichaTecnicaDatos", function (FichaTecnicadatos) {
       $('#TablaDatos').html(FichaTecnicadatos);
       $('#datosTabla').DataTable({
-        retrieve: true,
-        dom: 'Bfrtip',
-        select: true,
-        "responsive": true,
-        "info": true,
-        "pageLength": 10,
-        "language": {
+        responsive: true,
+		columnDefs: [{
+            targets: 'no-sort',
+            orderable: false
+        }],
+        language: {
             url: 'public/DataTables/Spanish.json',
             searchPlaceholder: "Buscar"
         }
@@ -88,7 +87,7 @@ $(function(){
                   FichaOne.subdireccion.Nombre_Subdireccion,
                   FichaOne.persona.Primer_Nombre+' '+FichaOne.persona.Segundo_Nombre+' '+FichaOne.persona.Primer_Apellido+' '+FichaOne.persona.Segundo_Apellido,
 
-                  '<button type="button" class="btn-sm btn-info" data-funcion="verFicha" value="'+xhr.Id+'" ><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></button><button type="button" class="btn-sm btn-primary" data-funcion="modificarFicha" value="'+xhr.Id+'" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>',
+                  '<button type="button" class="btn btn-xs btn-default" data-funcion="verFicha" value="'+xhr.Id+'" ><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></button><button type="button" class="btn btn-xs btn-primary" data-funcion="modificarFicha" value="'+xhr.Id+'" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>',
               ] ).draw( false );
           });
           setTimeout(function(){

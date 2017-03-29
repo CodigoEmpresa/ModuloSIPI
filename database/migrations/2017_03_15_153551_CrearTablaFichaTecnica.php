@@ -41,8 +41,8 @@ class CrearTablaFichaTecnica extends Migration
     public function down()
     {
         Schema::table('ficha_tecnica', function(Blueprint $table){
-            $table->dropForeign('Contrato_Id');
-        });    
+            $table->dropForeign(['Subdireccion_Id']);
+        });
         Schema::drop('ficha_tecnica');
     }
 }
