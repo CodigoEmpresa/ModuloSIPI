@@ -61,8 +61,8 @@ return [
 
         'db_principal' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST2'),
-            'port' => env('DB_PORT2'),
+            'host' => env('DB_HOST'),
+            'port' => env('DB_PORT'),
             'database' => env('DB_PRINCIPAL'),
             'username' => env('DB_PRINCIPAL_USERNAME'),
             'password' => env('DB_PRINCIPAL_PASSWORD'),
