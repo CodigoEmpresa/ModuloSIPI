@@ -1,5 +1,9 @@
 <?php
 session_start();
+session_set_cookie_params(5000000000, "/");
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -41,4 +45,5 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('getFichaTecnicaDatos/','FichaTecnicaController@GetFichaTecnicaDatos');
 	Route::get('getFichaTecnicaDatosOne/{id}','FichaTecnicaController@GetFichaTecnicaDatosOne');
 
+	Route::get('fichaTecnica/{id}/detalles', 'FichaTecnicaController@detalles');
 });

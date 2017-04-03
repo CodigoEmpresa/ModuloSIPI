@@ -17,11 +17,11 @@
                 <br>
             </div>
             <div class="col-md-12" id="TablaDatos">
-                
+
             </div>
         </div>
-        <div class="modal fade bs-example-modal-lg" id="AgregarFichaD" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-            <div class="modal-dialog modal-lg">
+        <div class="modal fade" id="AgregarFichaD" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -110,11 +110,9 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <div class="form-group">
-                                <button type="button" class="btn btn-primary" name="RegistrarFT" id="RegistrarFT">Registrar Ficha Técnica</button>
-                                <button type="button" class="btn btn-primary" name="ModificarFT" id="ModificarFT">Modificar Ficha Técnica</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            </div>
+                            <button type="button" class="btn btn-primary" name="RegistrarFT" id="RegistrarFT">Registrar Ficha Técnica</button>
+                            <button type="button" class="btn btn-primary" name="ModificarFT" id="ModificarFT">Modificar Ficha Técnica</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                         </div>
                     </form>
                 </div>

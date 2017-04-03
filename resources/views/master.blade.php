@@ -13,6 +13,7 @@
 			<link rel="stylesheet" href="{{ asset('public/components/jquery-ui/themes/base/jquery-ui.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/Css/bootstrap.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}" media="screen">
+			<link rel="stylesheet" href="{{ asset('public/components/selectize/dist/css/selectize.bootstrap3.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/datatables.net-bs/css/dataTables.bootstrap.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/highcharts/css/highcharts.css') }}" media="screen">
@@ -23,6 +24,7 @@
 			<script src="{{ asset('public/components/jquery/jquery.js') }}"></script>
 			<script src="{{ asset('public/components/jquery-ui/jquery-ui.js') }}"></script>
 			<script src="{{ asset('public/components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+			<script src="{{ asset('public/components/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
 			<script src="{{ asset('public/components/moment/moment.js') }}"></script>
 			<script src="{{ asset('public/components/datatables.net/js/jquery.dataTables.js') }}"></script>
 			<script src="{{ asset('public/components/datatables.net-bs/js/dataTables.bootstrap.js') }}"></script>
@@ -52,7 +54,7 @@
 						@endif
 					</ul>
 					<ul class="nav navbar-nav">
-						<li class="{{ $seccion && in_array($seccion, ['Registro', 'Edicion']) ? 'active' : '' }}">
+						<li class="{{ $seccion && in_array($seccion, ['Gestor de fichas técnicas']) ? 'active' : '' }}">
 		                    <a href="{{ URL::to( 'registroFT') }}">Fichas técnicas</a>
 						</li>
 		            </ul>

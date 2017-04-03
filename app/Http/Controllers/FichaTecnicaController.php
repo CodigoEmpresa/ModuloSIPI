@@ -20,27 +20,30 @@ use App\Modelos\Persona;
 class FichaTecnicaController extends Controller
 {
 
-	public function __construct(PersonaInterface $repositorio_personas){
+	public function __construct(PersonaInterface $repositorio_personas)
+	{
 		if (isset($_SESSION['Usuario']))
 			$this->Usuario = $_SESSION['Usuario'];
 
 		$this->repositorio_personas = $repositorio_personas;
 	}
 
-    public function indexRegistro(){
+    public function indexRegistro()
+	{
     	$Subdireccion = Subdireccion::all();
+
 		$datos = [
 			'seccion' => 'Gestor de fichas técnicas'
 		];
+
 		return view('FichaTecnica/registro', $datos)
-			   ->with(compact('Subdireccion'))
-		;
+			   ->with(compact('Subdireccion'));
     }
 
-    public function registroFichaTecnica(RegistroFT $request){
-
-    	if ($request->ajax()) {
-
+    public function registroFichaTecnica(RegistroFT $request)
+	{
+    	if ($request->ajax())
+		{
     		$a = FichaTecnica::all()->last();
 
     		if($a == null)
@@ -67,7 +70,20 @@ class FichaTecnicaController extends Controller
     	}
     }
 
-    public function GetFichaTecnicaDatos(Request $request){
+	public function detalles(Request $request, $id)
+	{
+		$ficha_tecnica = FichaTecnica::with('items', 'items.insumos', 'items.cotizaciones', 'items.cotizaciones.proveedor')->find($id);
+
+		$datos = [
+			'seccion' => 'Gestor de fichas técnicas',
+			'ficha_tecnica' => $ficha_tecnica
+		];
+
+		return view('FichaTecnica/items', $datos);
+	}
+
+    public function GetFichaTecnicaDatos(Request $request)
+	{
     	$FichaTecnica = FichaTecnica::with('subdireccion', 'persona')->where('Persona_Id', $this->Usuario[0])->get();
 		$html ="";
 		foreach ($FichaTecnica as $key) {
@@ -77,12 +93,16 @@ class FichaTecnicaController extends Controller
 			$Subdireccion = "<td>".$key->subdireccion['Nombre_Subdireccion']."</td>";
 			$Persona = "<td>".$key->persona['Primer_Nombre']." ".$key->persona['Segundo_Nombre']." ".$key->persona['Primer_Apellido']." ".$key->persona['Segundo_Apellido']." "."</td>";
 
-			$Botones = '<td><button type="button" class="btn btn-xs btn-default" data-funcion="verFicha" value="'.$key->Id.'" >
-                                  <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
-                              </button>
-                              <button type="button" class="btn btn-xs btn-primary" data-funcion="modificarFicha" value="'.$key->Id.'" >
-                                  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                              </button></td>';
+			$Botones = '<td>
+							<a href="'.url('fichaTecnica/'.$key->Id.'/detalles').'" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="bottom" title="Detalles">
+								<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+							</a>
+						</td>
+						<td>
+                          	<button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Editar" data-funcion="modificarFicha" value="'.$key->Id.'" >
+                              	<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                          	</button>
+						</td>';
 
 
 			$h = '<tr>'.$CodigoProceso.$Anio.$Subdireccion.$Persona.$Botones.'</tr>';
@@ -95,20 +115,22 @@ class FichaTecnicaController extends Controller
 			            	<th width='30px'>Año</th>
 							<th width='60px'>Subdirección</th>
 	                        <th>Persona encargada</th>
-	                        <th width='60px' data-priority='2' class='no-sort'></th>
+	                        <th width='30px' data-priority='2' class='no-sort'></th>
+	                        <th width='30px' data-priority='2' class='no-sort'></th>
 						</tr>
 					</thead>
 						<tbody>".$html."</tbody></table>";
 		return ($Resultado);
 	}
 
-	public function GetFichaTecnicaDatosOne(Request $request, $id){
+	public function GetFichaTecnicaDatosOne(Request $request, $id)
+	{
     	$FichaTecnica = FichaTecnica::with('subdireccion', 'persona')->find($id);
 		return $FichaTecnica;
 	}
 
-	public function modificarFichaTecnica(RegistroFT $request){
-
+	public function modificarFichaTecnica(RegistroFT $request)
+	{
     	if ($request->ajax()) {
     		$FichaTecnica = FichaTecnica::find($request->Id_FT);
     		$FichaTecnica->Subdireccion_Id = $request->Subdireccion;

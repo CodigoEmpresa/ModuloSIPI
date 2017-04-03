@@ -218,6 +218,10 @@ $(function()
 
 	$('table.default').DataTable({
 		responsive: true,
+		language: {
+            url: 'http://idrd.gov.co/SIM/json/Spanish.json',
+            searchPlaceholder: "Buscar"
+        },
 		columnDefs: [
 			{
 				targets: 'no-sort',

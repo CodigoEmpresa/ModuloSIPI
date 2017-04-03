@@ -1,6 +1,8 @@
 $(function(){
   $.datepicker.setDefaults($.datepicker.regional["es"]);
 
+  var URL = $('#main').data('url');
+
   $('#AnioDate').datetimepicker({
     format: 'YYYY',
     viewMode: "years",
@@ -49,8 +51,8 @@ $(function(){
       $("#Alcance1").removeAttr("readonly", "readonly");
       $("#Alcance2").removeAttr("readonly", "readonly");
       $("#Alcance3").removeAttr("readonly", "readonly");
-      $("#RegistrarFT").show('slow');
-      $("#ModificarFT").hide('slow');
+      $("#RegistrarFT").show();
+      $("#ModificarFT").hide();
       $("#A1").hide('slow');
       $("#A2").hide('slow');
       $("#A3").hide('slow');
@@ -86,8 +88,8 @@ $(function(){
                   FichaOne.Anio,
                   FichaOne.subdireccion.Nombre_Subdireccion,
                   FichaOne.persona.Primer_Nombre+' '+FichaOne.persona.Segundo_Nombre+' '+FichaOne.persona.Primer_Apellido+' '+FichaOne.persona.Segundo_Apellido,
-
-                  '<button type="button" class="btn btn-xs btn-default" data-funcion="verFicha" value="'+xhr.Id+'" ><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></button><button type="button" class="btn btn-xs btn-primary" data-funcion="modificarFicha" value="'+xhr.Id+'" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>',
+                  '<a href="'+URL+'/fichaTecnica/'+xhr.Id+'/detalles" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="bottom" title="Detalles"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>',
+                  '<button type="button" class="btn btn-xs btn-primary" data-funcion="modificarFicha" value="'+xhr.Id+'" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>'
               ] ).draw( false );
           });
           setTimeout(function(){
@@ -153,8 +155,8 @@ $(function(){
       $("#Alcance1").attr("readonly", "readonly");
       $("#Alcance2").attr("readonly", "readonly");
       $("#Alcance3").attr("readonly", "readonly");
-      $("#RegistrarFT").hide('slow');
-      $("#ModificarFT").hide('slow');
+      $("#RegistrarFT").hide();
+      $("#ModificarFT").hide();
     });
   });
 

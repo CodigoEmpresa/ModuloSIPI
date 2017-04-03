@@ -17,4 +17,9 @@ class FichaTecnica extends Model
     public function subdireccion(){
         return $this->belongsTo('App\Modelos\Subdireccion', 'Subdireccion_Id');
     }
+
+    public function items()
+    {
+        return $this->belongsToMany('App\Modelos\Item', 'Fichas_Tecnicas_Items', 'Id_Ficha', 'Id_Item');
+    }
 }
