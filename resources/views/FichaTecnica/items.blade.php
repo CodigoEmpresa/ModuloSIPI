@@ -88,10 +88,24 @@
                 </div>
                 <form id="agregar-item-form">
                     <div class="modal-body">
-                        Codigo
-                        Nombre
-                        Descripcion
-                        Unidad_De_Medida
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="">Código</label>
+                                <input type="text" name="Codigo" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="">Unidad de medida</label>
+                                <input type="text" name="Unidad_De_Medida" class="form-control">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="">Nombre</label>
+                                <input type="text" name="Nombre" class="form-control">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="">Discripción</label>
+                                <textarea name="Descripcion" class="form-control"></textarea>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <input type="hidden" name="Id_Item" value="0">
