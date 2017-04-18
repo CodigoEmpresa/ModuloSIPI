@@ -14,6 +14,7 @@
 			<link rel="stylesheet" href="{{ asset('public/Css/bootstrap.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/selectize/dist/css/selectize.bootstrap3.css') }}" media="screen">
+			<link rel="stylesheet" href="{{ asset('public/components/font-awesome/css/font-awesome.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/datatables.net-bs/css/dataTables.bootstrap.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/highcharts/css/highcharts.css') }}" media="screen">
@@ -25,6 +26,7 @@
 			<script src="{{ asset('public/components/jquery-ui/jquery-ui.js') }}"></script>
 			<script src="{{ asset('public/components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 			<script src="{{ asset('public/components/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
+			<script src="{{ asset('public/components/bootbox.js/bootbox.js') }}"></script>
 			<script src="{{ asset('public/components/moment/moment.js') }}"></script>
 			<script src="{{ asset('public/components/datatables.net/js/jquery.dataTables.js') }}"></script>
 			<script src="{{ asset('public/components/datatables.net-bs/js/dataTables.bootstrap.js') }}"></script>
@@ -52,12 +54,13 @@
 						@if ($_SESSION['Usuario']['Permisos']['administrar_usuarios'])
 							<li><a href="{{ url('/personas') }}">Administración</a></li>
 						@endif
-					</ul>
-					<ul class="nav navbar-nav">
 						<li class="{{ $seccion && in_array($seccion, ['Gestor de fichas técnicas']) ? 'active' : '' }}">
-		                    <a href="{{ URL::to( 'registroFT') }}">Fichas técnicas</a>
+		                    <a href="{{ URL::to('registroFT') }}">Fichas técnicas</a>
 						</li>
-		            </ul>
+						<li class="{{ $seccion && in_array($seccion, ['Gestor de items']) ? 'active' : '' }}">
+		                    <a href="{{ URL::to('item') }}">Items</a>
+						</li>
+					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="http://www.idrd.gov.co/sitio/idrd/" target="_blank">I.D.R.D</a></li>
 						<li class="dropdown">
@@ -76,6 +79,7 @@
 
 		<!-- Contenedor información módulo -->
 		</br></br>
+		@if (!isset($no_header))
 		<div class="container">
 			<div class="page-header" id="banner">
 				<div class="row">
@@ -96,10 +100,11 @@
 				</div>
 			</div>
 		</div>
+		@endif
 		<!-- FIN Contenedor información módulo -->
 
 		<!-- Contenedor panel principal -->
-		<div class="container">
+		<div class="{{ isset($full_width) ? 'container-fluid' : 'container' }}">
 			@yield('content')
 		</div>
 		<div class="container">

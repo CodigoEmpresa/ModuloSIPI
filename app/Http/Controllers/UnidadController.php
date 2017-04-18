@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CrearItemInsumoRequest;
+use App\Http\Requests\CrearItemRequest;
 use App\Modelos\Item;
 use App\Modelos\Insumo;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Illuminate\Http\Request;
 
-class ItemController extends Controller {
+class UnidadController extends Controller {
 
 	protected $Usuario;
 	protected $repositorio_personas;
@@ -20,15 +20,6 @@ class ItemController extends Controller {
 			$this->Usuario = $_SESSION['Usuario'];
 
 		$this->repositorio_personas = $repositorio_personas;
-	}
-
-	public function inicio()
-	{
-		$datos = [
-			'seccion' => 'Gestor de items'
-		];
-
-		return view('Items.formulario', $datos);
 	}
 
 	public function buscarUnidadesDeMedida(Request $request, $unidad = '')
@@ -45,39 +36,5 @@ class ItemController extends Controller {
 		$unidades->sort();
 
 		return response()->json($unidades->toArray());
-	}
-
-	public function buscarItem(Request $request, $item = '')
-	{
-		$items = Item::where('Nombre', 'LIKE', '%'.$item.'%')
-						->orWhere('Descripcion', 'LIKE', '%'.$item.'%')
-						->orWhere('Codigo', 'LIKE', '%'.$item.'%')
-						->get();
-
-		return response()->json($items);
-	}
-
-	public function obtenerItem(Request $request, $item = 0)
-	{
-		$item = Item::with('insumos', 'cotizaciones')->find($item);
-
-		return response()->json($item);
-	}
-
-	public function crear(CrearItemInsumoRequest $request)
-	{
-		$id = $request->input('Id');
-		if (!$id)
-			$item = new Item;
-		else
-			$item = Item::find($id);
-
-		$item->Codigo = $request->input('Codigo');
-		$item->Nombre = $request->input('Nombre');
-		$item->Descripcion = $request->input('Descripcion');
-		$item->Unidad_De_Medida = $request->input('Unidad_De_Medida');
-		$item->save();
-
-		return response()->json($item);
 	}
 }

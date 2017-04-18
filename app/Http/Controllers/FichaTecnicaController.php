@@ -4,17 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-
 use App\Http\Controllers\Controller;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Validator;
 use Exception;
-
 use App\Http\Requests\RegistroFT;
-
 use App\Modelos\Subdireccion;
 use App\Modelos\FichaTecnica;
-
 use App\Modelos\Persona;
 
 class FichaTecnicaController extends Controller
@@ -79,7 +75,7 @@ class FichaTecnicaController extends Controller
 			'ficha_tecnica' => $ficha_tecnica
 		];
 
-		return view('FichaTecnica/items', $datos);
+		return view('FichaTecnica/formulario-items', $datos);
 	}
 
     public function GetFichaTecnicaDatos(Request $request)

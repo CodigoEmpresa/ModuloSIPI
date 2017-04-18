@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -32,13 +32,15 @@ class MainController extends Controller {
 		//$fake_permissions = null;
 
 		if ($request->has('vector_modulo') || $fake_permissions)
-		{	
+		{
 			$vector = $request->has('vector_modulo') ? urldecode($request->input('vector_modulo')) : $fake_permissions;
 			$user_array = is_array($vector) ? $vector : unserialize($vector);
 			$permissions_array = $user_array;
 
 			$permisos = [
-				'administrar_usuarios' => array_key_exists(1, $permissions_array) ? intval($permissions_array[1]) : 0
+				'administrar_usuarios' => array_key_exists(1, $permissions_array) ? intval($permissions_array[1]) : 0,
+				'gestor_de_fichas_tecnicas' => array_key_exists(1, $permissions_array) ? intval($permissions_array[1]) : 0,
+				'gestor_de_items' => array_key_exists(1, $permissions_array) ? intval($permissions_array[1]) : 0
 			];
 
 			$_SESSION['Usuario'] = $user_array;
@@ -63,7 +65,7 @@ class MainController extends Controller {
 	public function logout()
 	{
 		$_SESSION['Usuario'] = '';
-		Session::set('Usuario', ''); 
+		Session::set('Usuario', '');
 
 		return redirect()->to('/');
 	}

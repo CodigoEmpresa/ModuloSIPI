@@ -180,6 +180,22 @@ div.oculto {
 	color: #fff !important;
 }
 
+.panel.seleccionado .label-primary:nth-child(1)
+{
+    background-color: #fff;
+    color: #333;
+}
+
+.panel.lock .panel-body
+{
+    background-color: #eee;
+}
+
+.panel.unlock .panel-body
+{
+    background-color: #fff;
+}
+
 .selectize-control.multi .selectize-input.has-items
 {
 	padding: 7px 12px 4px;
@@ -196,6 +212,12 @@ div.oculto {
 
 .pointer:hover {
     color: #54b4eb;
+}
+
+.ui-autocomplete { z-index:2147483647; }
+
+div.panel-body h4 {
+    margin-top: 0px;
 }
 
 @media (min-width: 1200px) {
