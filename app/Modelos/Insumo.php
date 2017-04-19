@@ -12,6 +12,7 @@ class Insumo extends Model
 
     public function items()
     {
-        return $this->belongsToMany('App\Modelos\Item', 'Items_Insumos', 'Id_Insumo', 'Id_Item');
+        return $this->belongsToMany('App\Modelos\Item', 'Items_Insumos', 'Id_Insumo', 'Id_Item')
+                        ->withPivot('Cantidad');
     }
 }

@@ -52,7 +52,10 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('item/crear', 'ItemController@crear');
 	Route::get('item/obtener/{item?}', 'ItemController@obtenerItem');
 	Route::get('item/buscar/{item?}', 'ItemController@buscarItem');
+	Route::post('item/agregar_insumo', 'ItemController@agregarInsumo');
+	Route::post('item/remover_insumo', 'ItemController@removerInsumo');
 
 	Route::post('insumo/crear', 'InsumoController@crear');
+	Route::get('insumo/obtener/{insumo?}', 'InsumoController@obtenerInsumo');
 	Route::get('insumo/buscar/{insumo?}', 'InsumoController@buscarInsumo');
 });

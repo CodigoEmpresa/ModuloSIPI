@@ -186,6 +186,10 @@ div.oculto {
     color: #333;
 }
 
+.panel.seleccionado .panel-footer {
+    background-color: #333;
+}
+
 .panel.lock .panel-body
 {
     background-color: #eee;

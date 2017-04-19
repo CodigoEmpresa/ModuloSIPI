@@ -80,4 +80,22 @@ class ItemController extends Controller {
 
 		return response()->json($item);
 	}
+
+	public function agregarInsumo(Request $request)
+	{
+		$item = Item::find($request->input('item'));
+		$item->insumos()->attach($request->input('insumo'), ['Cantidad' => $request->input('cantidad')]);
+
+		return $this->obtenerItem($request, $request->input('item'));
+	}
+
+	public function removerInsumo(Request $request)
+	{
+		$item = Item::find($request->input('item'));
+		$item->insumos()->detach($request->input('insumo'));
+
+		$insumo = Insumo::find($request->input('insumo'));
+
+		return response()->json($insumo);
+	}
 }

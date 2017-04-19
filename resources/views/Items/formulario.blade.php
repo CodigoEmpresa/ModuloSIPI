@@ -9,9 +9,9 @@
         <div class="col-xs-12">
             <br><br>
         </div>
-        <div class="col-md-11 col-md-offset-1">
+        <div class="col-md-12">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12 form-group">
                             <label for="">Items <a href="#" id="agregar-item" class="btn-sm btn-link">Agregar</a></label>
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-md-offset-1">
+                <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12 form-group">
                             <label for="">Insumos <a href="#" id="agregar-insumo" class="btn-sm btn-link">Agregar</a></label>
@@ -44,21 +44,18 @@
                         <div class="col-md-12" id="mantener-insumo">
 
                         </div>
-                        <div class="col-md-12" id="lista-insumo">
+                        <div class="col-md-12" id="lista-insumo" data-url="{{ url('/insumo') }}">
 
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-md-offset-1">
+                <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12 form-group">
                             <label for="">Cotizaciones <a href="" class="btn-sm btn-link">Agregar</a></label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" aria-label="..." placeholder="Buscar">
-                                <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default" name="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                                </div>
-                            </div>
+                            <table class="table table-default">
+
+                            </table>
                         </div>
                     </div>
                 </div>

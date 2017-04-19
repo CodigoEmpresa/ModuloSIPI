@@ -40,6 +40,13 @@ class InsumoController extends Controller {
 		return response()->json($insumos);
 	}
 
+	public function obtenerInsumo(Request $request, $insumo = '')
+	{
+		$insumo = Insumo::find($insumo);
+
+		return response()->json($insumo);
+	}
+
 	public function crear(CrearItemInsumoRequest $request)
 	{
 		$id = $request->input('Id');

@@ -1,12 +1,11 @@
 $(function()
 {
     var item_seleccionado = 0;
+    var insumo_seleccionado = 0;
     var url_item = $('#lista-item').data('url');
-    var no_se_encontraron_resultados = '<div class="panel panel-default">'+
-                                            '<div class="panel-body">'+
-                                                '<small>No se encontraron resultados</small>'+
-                                            '</div>'+
-                                        '</div>';
+    var url_insumo = $('#lista-insumo').data('url');
+    var no_se_encontraron_resultados = '';
+    var no_se_encontraron_insumos = '';
 
     function itemHtml(item, islock)
     {
@@ -27,16 +26,16 @@ $(function()
 
     function insumoHtml(insumo, enitem)
     {
-        return '<div data-id="'+insumo.Id+'" class="insumo panel panel-default">'+
+        return '<div data-id="'+insumo.Id+'" class="insumo panel panel-default '+(enitem ? 'seleccionado' : '')+'">'+
                     '<div class="panel-body">'+
-                        '<h4>'+insumo.Nombre+'</h4>'+
+                        '<h4>'+insumo.Nombre+(enitem ? ' ('+insumo.pivot.Cantidad+')' : '')+'</h4>'+
                         '<small>'+insumo.Codigo+
                             '<br>'+insumo.Unidad_De_Medida+' - '+insumo.Descripcion+
-                            (enitem ? '<br>Cantidad: '+insumo.pivot.Cantidad : '')+
                         '</small>'+
                     '</div>'+
                     '<div class="panel-footer">'+
-                        (enitem ? '<a data-role="remover" class="label label-danger">Remover</a> ' : '<a data-role="agregar" class="label label-primary">Agregar</a> ')+
+                        (enitem ? '<a data-role="remover" class="label label-primary">Remover</a>' : '<a data-role="agregar" class="label label-primary">Agregar</a> ')+
+                        (enitem ? '' : '<a data-role="editar" class="label label-primary">Editar</a> ')+
                     '</div>'+
                 '</div>';
     }
@@ -57,6 +56,16 @@ $(function()
     function obtenerItemSeleccionado()
     {
         return item_seleccionado;
+    }
+
+    function establecerInsumoSeleccionado(id)
+    {
+        insumo_seleccionado = id;
+    }
+
+    function obtenerInsumoSeleccionado()
+    {
+        return insumo_seleccionado;
     }
 
     function populateErrors(modal, errors)
@@ -118,7 +127,7 @@ $(function()
             $('#lista-item').html(html);
         }).fail(function(xhr, status, error)
         {
-            html += no_se_encontraron_resultados;
+            var html = no_se_encontraron_resultados;
 
             $('#lista-item').html(html);
         });
@@ -164,7 +173,7 @@ $(function()
             {
                 var panel = $('#lista-item').find('.panel[data-id="'+data.Id+'"]');
                 panel.find('h4').html(data.Nombre);
-                panel.find('small').html(data.Codigo+'<br>'+data.Descripcion);
+                panel.find('small').html(item.Codigo+'<br>'+item.Unidad_De_Medida+' - '+item.Descripcion);
             } else {
                 var panel = itemHtml(data);
                 $('#lista-item').append(panel);
@@ -241,20 +250,20 @@ $(function()
                                 html_insumos += insumoHtml(insumo, true);
                             });
                         } else {
-                            html_insumos = no_se_encontraron_resultados;
+                            html_insumos = no_se_encontraron_insumos;
                         }
 
-                        $('#lista-insumo').html(html_insumos);
+                        $('#mantener-insumo').html(html_insumos);
                     }
                 }
             }).fail(function(xhr, status, error)
             {
-                var html_insumos = no_se_encontraron_resultados;
+                var html_insumos = no_se_encontraron_insumos;
 
-                $('#lista-insumo').html(html_insumos);
+                $('#mantener-insumo').html(html_insumos);
             });
         } else {
-            $('#lista-insumo').html('');
+            $('#mantener-insumo').html('');
         }
 
         e.preventDefault();
@@ -279,7 +288,6 @@ $(function()
     });
 
     // buscador-insumos
-
     $('#buscar-insumo').on('click', function(e)
     {
         var matcher = $('input[name="buscador-insumos"]').val();
@@ -296,7 +304,8 @@ $(function()
             {
                 $.each(data, function(i, e)
                 {
-                    html += insumoHtml(e, false);
+                    if (!$('#mantener-insumo .insumo[data-id="'+e.Id+'"]').length && !$('.insumo.seleccionado[data-id="'+e.Id+'"]').length)
+                        html += insumoHtml(e, false);
                 });
             } else {
                 html += no_se_encontraron_resultados;
@@ -305,7 +314,7 @@ $(function()
             $('#lista-insumo').html(html);
         }).fail(function(xhr, status, error)
         {
-            html += no_se_encontraron_resultados;
+            var html = no_se_encontraron_resultados;
 
             $('#lista-insumo').html(html);
         });
@@ -338,8 +347,24 @@ $(function()
             var $div_errors = $('#modal-agregar-insumos').find('.errores');
             $div_errors.hide();
 
-            var panel = insumoHtml(data, false);
-            $('#lista-insumo').append(panel);
+            var en_lista = false;
+            $('#lista-insumo .panel').each(function(i, e)
+            {
+                if ($(e).data('id') == data.Id)
+                {
+                    en_lista = true;
+                }
+            });
+
+            if (en_lista)
+            {
+                var panel = $('#lista-insumo').find('.panel[data-id="'+data.Id+'"]');
+                panel.find('h4').html(data.Nombre);
+                panel.find('small').html(data.Codigo+'<br>'+data.Unidad_De_Medida+' - '+data.Descripcion);
+            } else {
+                var panel = insumoHtml(data, false);
+                $('#lista-insumo').append(panel);
+            }
 
             $('#modal-agregar-insumo').modal('hide');
         })
@@ -356,5 +381,125 @@ $(function()
         });
 
         e.preventDefault();
+    });
+
+    // lista-insumos
+    $('#lista-insumo').delegate('a[data-role="editar"]', 'click', function(e)
+    {
+        var id = $(this).closest('.panel').data('id');
+
+        $.get(
+            url_insumo+'/obtener/'+id,
+            {},
+            'json'
+        ).done(function(data)
+        {
+            if (data)
+            {
+                populateModal('#modal-agregar-insumo', data);
+            }
+        }).fail(function(xhr, status, error)
+        {
+            alert(status);
+        });
+
+        e.preventDefault();
+    });
+
+    $('#lista-insumo').delegate('a[data-role="agregar"]', 'click', function(e)
+    {
+        var id = $(this).closest('.panel').data('id');
+        establecerInsumoSeleccionado(id);
+
+        if(obtenerItemSeleccionado() == 0)
+        {
+            bootbox.alert({
+                title: 'Error',
+                message: 'Debe seleccionar un item para agregar el insumo',
+                buttons: {
+                    ok: {
+                        label: 'Volver',
+                        className: 'btn-default'
+                    }
+                }
+            });
+        } else {
+            bootbox.prompt({
+                title: 'Cantidad',
+                inputType: 'number',
+                buttons: {
+                    cancel: {
+                        label: 'Volver',
+                        className: 'btn-default'
+                    },
+                    confirm: {
+                        label: 'Agregar',
+                        className: 'btn-primary'
+                    }
+                },
+                callback: function(result)
+                {
+                    if(isNaN(+result))
+                        result = 0;
+
+                    $.post(
+                        url_item+'/agregar_insumo',
+                        {
+                            item: obtenerItemSeleccionado(),
+                            insumo: obtenerInsumoSeleccionado(),
+                            cantidad: result
+                        },
+                        'json'
+                    ).done(function(data)
+                    {
+                        if (data)
+                        {
+                            var html_insumos = '';
+                            if (data)
+                            {
+                                // popular lista de insumos
+                                if (data.insumos.length)
+                                {
+                                    $.each(data.insumos, function(i, insumo)
+                                    {
+                                        html_insumos += insumoHtml(insumo, true);
+                                    });
+
+                                    $('#lista-insumo .panel[data-id="'+obtenerInsumoSeleccionado()+'"]').remove();
+                                    establecerInsumoSeleccionado(0);
+                                }
+
+                                $('#mantener-insumo').html(html_insumos);
+                            }
+                        }
+                    }).fail(function(xhr, status, error)
+                    {
+                        alert(error);
+                    });
+                }
+            });
+        }
+    });
+
+    $('#lista-insumo, #mantener-insumo').delegate('a[data-role="remover"]', 'click', function(e)
+    {
+        var id = $(this).closest('.panel').data('id');
+
+        $.post(
+            url_item+'/remover_insumo',
+            {
+                item: obtenerItemSeleccionado(),
+                insumo: id
+            },
+            'json'
+        ).done(function(data)
+        {
+            $('#mantener-insumo .insumo[data-id="'+id+'"]').remove();
+            var panel = insumoHtml(data, false);
+            $('#lista-insumo').append(panel);
+        }).fail(function(xhr, status, error)
+        {
+            alert(error);
+        });
     });
 });

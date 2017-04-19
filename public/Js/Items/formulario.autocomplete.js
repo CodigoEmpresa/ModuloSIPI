@@ -9,7 +9,6 @@ $(function()
                 {},
                 'json'
             ).done(function(data){
-                console.log(data);
                 response($.map(data, function(k, v){
                     return {
                         label: v,

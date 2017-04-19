@@ -17,7 +17,8 @@ class Item extends Model
 
     public function insumos()
     {
-        return $this->belongsToMany('App\Modelos\Insumo', 'Items_Insumos', 'Id_Item', 'Id_Insumo');
+        return $this->belongsToMany('App\Modelos\Insumo', 'Items_Insumos', 'Id_Item', 'Id_Insumo')
+                        ->withPivot('Cantidad');
     }
 
     public function cotizaciones()
