@@ -215,6 +215,8 @@ $(function()
 	  	$(this).trigger('change');
 	});
 
+	$('select:not([multiple],[data-ignore-selectpicker])').selectpicker();
+
 	$('table.default').DataTable({
 		responsive: true,
 		language: {

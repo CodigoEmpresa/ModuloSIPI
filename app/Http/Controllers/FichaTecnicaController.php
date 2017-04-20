@@ -7,7 +7,6 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Validator;
-use Exception;
 use App\Http\Requests\RegistroFT;
 use App\Modelos\Subdireccion;
 use App\Modelos\FichaTecnica;

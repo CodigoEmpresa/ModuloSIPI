@@ -13,11 +13,11 @@ $(function()
                         '<div class="panel-body">'+
                             '<h4 data-islock="'+(islock ? 'lock' : 'unlock')+'" class="pointer"> <i class="fa '+(islock ? 'fa-lock' : 'fa-unlock-alt')+'"></i> '+item.Nombre+'</h4>'+
                             '<small>'+item.Codigo+
-                                '<br>'+item.Unidad_De_Medida+' - '+item.Descripcion+
+                                '<br>'+item.Unidad_De_Medida+' - <span title="'+item.Descripcion+'">'+item.Descripcion.substring(0, 120)+'</span>'+
                             '</small>'+
                         '</div>'+
                         '<div class="panel-footer">'+
-                            '<a data-role="seleccionar" class="label label-primary">Seleccionar</a> '+
+                            '<a data-role="seleccionar" class="label label-primary">Consultar</a> '+
                             '<a data-role="editar" class="label label-primary">Editar</a> '+
                         '</div>'+
                     '</div>'+
@@ -30,7 +30,7 @@ $(function()
                     '<div class="panel-body">'+
                         '<h4>'+insumo.Nombre+(enitem ? ' ('+insumo.pivot.Cantidad+')' : '')+'</h4>'+
                         '<small>'+insumo.Codigo+
-                            '<br>'+insumo.Unidad_De_Medida+' - '+insumo.Descripcion+
+                            '<br>'+insumo.Unidad_De_Medida+' - <span title="'+insumo.Descripcion+'">'+insumo.Descripcion.substring(0, 120)+'</span>'+
                         '</small>'+
                     '</div>'+
                     '<div class="panel-footer">'+
@@ -42,11 +42,11 @@ $(function()
 
     function establecerItemSeleccionado(id)
     {
-        $('#lista-item .panel, #mantener-item .panel').removeClass('seleccionado').find('a[data-role="seleccionar"]').text('Seleccionar');
+        $('#lista-item .panel, #mantener-item .panel').removeClass('seleccionado').find('a[data-role="seleccionar"]').text('Consultar');
         if(id !== 0)
         {
             $('#lista-item .panel[data-id="'+id+'"], #mantener-item .panel[data-id="'+id+'"]').addClass('seleccionado');
-            $('#lista-item .panel[data-id="'+id+'"], #mantener-item .panel[data-id="'+id+'"]').find('a[data-role="seleccionar"]').text('Deseleccionar');
+            $('#lista-item .panel[data-id="'+id+'"], #mantener-item .panel[data-id="'+id+'"]').find('a[data-role="seleccionar"]').text('Cancelar');
         }
 
         item_seleccionado = id;
@@ -248,6 +248,7 @@ $(function()
                             $.each(data.insumos, function(i, insumo)
                             {
                                 html_insumos += insumoHtml(insumo, true);
+                                $('#lista-insumo .insumo[data-id="'+insumo.Id+'"]').remove();
                             });
                         } else {
                             html_insumos = no_se_encontraron_insumos;
@@ -501,5 +502,36 @@ $(function()
         {
             alert(error);
         });
+    });
+
+    // modal-cotizacion
+    $('#agregar-cotizacion').on('click', function(e)
+    {
+        var item = {
+            Id: 0,
+            Id_Proveedor: '',
+            Precio: '',
+            Precio_Oficial: '',
+            Precio_Calculo: '',
+            Fecha_Actualizacion: ''
+        }
+
+        populateModal('#modal-agregar-cotizacion', item);
+        e.preventDefault();
+    });
+
+    $('#agregar-proveedor').on('click', function(e)
+    {
+        $('#nuevo-proveedor').show();
+    });
+
+    $('#guardar-proveedor').on('click', function(e)
+    {
+
+    });
+
+    $('#cancelar-proveedor').on('click', function(e)
+    {
+        $('#nuevo-proveedor').hide();
     });
 });

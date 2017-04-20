@@ -31,7 +31,7 @@ class CrearTablaCotizacion extends Migration
             $table->integer('Id_Proveedor')->unsigned();
             $table->boolean('Precio_Oficial')->default(0);
             $table->integer('Precio')->unsigned();
-            $table->integer('Precio_Calculo')->unsigned();
+            $table->string('Precio_Calculo')->nullable();
             $table->date('Fecha_Actualizacion');
             $table->timestamps();
 
