@@ -58,4 +58,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('insumo/crear', 'InsumoController@crear');
 	Route::get('insumo/obtener/{insumo?}', 'InsumoController@obtenerInsumo');
 	Route::get('insumo/buscar/{insumo?}', 'InsumoController@buscarInsumo');
+
+	Route::post('proveedor/crear', 'ProveedorController@crear');
+	Route::post('cotizacion/crear', 'CotizacionController@crear');
+	Route::get('cotizacion/obtener/{cotizacion?}', 'CotizacionController@obtener');
 });

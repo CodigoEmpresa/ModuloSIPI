@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CrearItemInsumoRequest;
 use App\Modelos\Item;
 use App\Modelos\Insumo;
+use App\Modelos\Proveedor;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,8 @@ class ItemController extends Controller {
 	public function inicio()
 	{
 		$datos = [
-			'seccion' => 'Gestor de items'
+			'seccion' => 'Gestor de items',
+			'proveedores' => Proveedor::all()
 		];
 
 		return view('Items.formulario', $datos);
@@ -59,7 +61,7 @@ class ItemController extends Controller {
 
 	public function obtenerItem(Request $request, $item = 0)
 	{
-		$item = Item::with('insumos', 'cotizaciones')->find($item);
+		$item = Item::with('insumos', 'cotizaciones', 'cotizaciones.proveedor')->find($item);
 
 		return response()->json($item);
 	}

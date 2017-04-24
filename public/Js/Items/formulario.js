@@ -4,8 +4,10 @@ $(function()
     var insumo_seleccionado = 0;
     var url_item = $('#lista-item').data('url');
     var url_insumo = $('#lista-insumo').data('url');
+    var utl_cotizaciones = $('#lista-cotizaciones').data('url');
     var no_se_encontraron_resultados = '';
     var no_se_encontraron_insumos = '';
+    var no_se_encontraron_cotizaciones = '';
 
     function itemHtml(item, islock)
     {
@@ -17,7 +19,7 @@ $(function()
                             '</small>'+
                         '</div>'+
                         '<div class="panel-footer">'+
-                            '<a data-role="seleccionar" class="label label-primary">Consultar</a> '+
+                            '<a data-role="seleccionar" class="label label-primary">Seleccionar</a> '+
                             '<a data-role="editar" class="label label-primary">Editar</a> '+
                         '</div>'+
                     '</div>'+
@@ -40,9 +42,24 @@ $(function()
                 '</div>';
     }
 
+    function cotizacionHtml(cotizacion)
+    {
+        return '<div data-id="'+cotizacion.Id+'" class="cotizacion '+(cotizacion.Precio_Oficial ? 'oficial' : '')+' seleccionado panel panel-default">'+
+                    '<div class="panel-body">'+
+                        '<h4>'+(cotizacion.Precio_Oficial ? '<i class="fa fa-star" aria-hidden="true"></i> ' : '')+cotizacion.proveedor.Nombre+'</h4>'+
+                        '<small>Fecha actualizacion: '+cotizacion.Fecha_Actualizacion+
+                            '<br>Precio: $'+cotizacion.Precio+
+                        '</small>'+
+                    '</div>'+
+                    '<div class="panel-footer">'+
+                        '<a data-role="editar" class="label label-primary">Editar</a>'+
+                    '</div>'+
+                '</div>';
+    }
+
     function establecerItemSeleccionado(id)
     {
-        $('#lista-item .panel, #mantener-item .panel').removeClass('seleccionado').find('a[data-role="seleccionar"]').text('Consultar');
+        $('#lista-item .panel, #mantener-item .panel').removeClass('seleccionado').find('a[data-role="seleccionar"]').text('Seleccionar');
         if(id !== 0)
         {
             $('#lista-item .panel[data-id="'+id+'"], #mantener-item .panel[data-id="'+id+'"]').addClass('seleccionado');
@@ -70,14 +87,15 @@ $(function()
 
     function populateErrors(modal, errors)
     {
-        var $div_errors = $(modal).find('.errores');
-        $(modal+' .form-group').removeClass('has-error');
+        var $div_errors = $(modal);
+        var $form = $div_errors.closest('form');
+        $form.find('.form-group').removeClass('has-error');
         $div_errors.find('ul').html('');
 
         $.each(errors, function(k, v)
         {
             $div_errors.find('ul').append('<li>'+v+'</li>');
-            $(modal+' *[name="'+k+'"]').closest('.form-group').addClass('has-error');
+            $form.find(' *[name="'+k+'"]').closest('.form-group').addClass('has-error');
         });
 
         $div_errors.show();
@@ -87,7 +105,13 @@ $(function()
     {
         $.each(item, function(key, value)
         {
-            $(modal+' *[name="'+key+'"]').val(value);
+            if($(modal+' *[name="'+key+'"]').is(':radio'))
+                $(modal+' *[name="'+key+'"][value="'+value+'"]').trigger('click');
+            else if($(modal+' *[name="'+key+'"]').is('select'))
+                $(modal+' *[name="'+key+'"]').selectpicker('val', value);
+            else
+                $(modal+' *[name="'+key+'"]').val(value);
+
         });
 
         $(modal).modal('show');
@@ -187,7 +211,7 @@ $(function()
             {
                 var errores = xhr.responseJSON;
 
-                populateErrors('#modal-agregar-item', errores);
+                populateErrors('#modal-agregar-item .errores', errores);
             } else {
                 alert(error);
             }
@@ -240,6 +264,7 @@ $(function()
                 if (data)
                 {
                     var html_insumos = '';
+                    var html_cotizaciones = '';
                     if (data)
                     {
                         // popular lista de insumos
@@ -254,7 +279,18 @@ $(function()
                             html_insumos = no_se_encontraron_insumos;
                         }
 
+                        if (data.cotizaciones.length)
+                        {
+                            $.each(data.cotizaciones, function(i, cotizacion)
+                            {
+                                html_cotizaciones += cotizacionHtml(cotizacion);
+                            });
+                        } else {
+                            html_cotizaciones = no_se_encontraron_cotizaciones;
+                        }
+
                         $('#mantener-insumo').html(html_insumos);
+                        $('#lista-cotizaciones').html(html_cotizaciones);
                     }
                 }
             }).fail(function(xhr, status, error)
@@ -375,7 +411,7 @@ $(function()
             {
                 var errores = xhr.responseJSON;
 
-                populateErrors('#modal-agregar-insumo', errores);
+                populateErrors('#modal-agregar-insumo .errores', errores);
             } else {
                 alert(error);
             }
@@ -440,43 +476,45 @@ $(function()
                 },
                 callback: function(result)
                 {
-                    if(isNaN(+result))
-                        result = 0;
-
-                    $.post(
-                        url_item+'/agregar_insumo',
-                        {
-                            item: obtenerItemSeleccionado(),
-                            insumo: obtenerInsumoSeleccionado(),
-                            cantidad: result
-                        },
-                        'json'
-                    ).done(function(data)
+                    if(result != null)
                     {
-                        if (data)
+                        if(isNaN(+result))
+                            result = 0;
+                        $.post(
+                            url_item+'/agregar_insumo',
+                            {
+                                item: obtenerItemSeleccionado(),
+                                insumo: obtenerInsumoSeleccionado(),
+                                cantidad: result
+                            },
+                            'json'
+                        ).done(function(data)
                         {
-                            var html_insumos = '';
                             if (data)
                             {
-                                // popular lista de insumos
-                                if (data.insumos.length)
+                                var html_insumos = '';
+                                if (data)
                                 {
-                                    $.each(data.insumos, function(i, insumo)
+                                    // popular lista de insumos
+                                    if (data.insumos.length)
                                     {
-                                        html_insumos += insumoHtml(insumo, true);
-                                    });
+                                        $.each(data.insumos, function(i, insumo)
+                                        {
+                                            html_insumos += insumoHtml(insumo, true);
+                                        });
 
-                                    $('#lista-insumo .panel[data-id="'+obtenerInsumoSeleccionado()+'"]').remove();
-                                    establecerInsumoSeleccionado(0);
+                                        $('#lista-insumo .panel[data-id="'+obtenerInsumoSeleccionado()+'"]').remove();
+                                        establecerInsumoSeleccionado(0);
+                                    }
+
+                                    $('#mantener-insumo').html(html_insumos);
                                 }
-
-                                $('#mantener-insumo').html(html_insumos);
                             }
-                        }
-                    }).fail(function(xhr, status, error)
-                    {
-                        alert(error);
-                    });
+                        }).fail(function(xhr, status, error)
+                        {
+                            alert(error);
+                        });
+                    }
                 }
             });
         }
@@ -509,29 +547,143 @@ $(function()
     {
         var item = {
             Id: 0,
+            Id_Item: obtenerItemSeleccionado(),
             Id_Proveedor: '',
             Precio: '',
-            Precio_Oficial: '',
+            Precio_Oficial: '0',
             Precio_Calculo: '',
             Fecha_Actualizacion: ''
         }
 
-        populateModal('#modal-agregar-cotizacion', item);
+        if(obtenerItemSeleccionado() == 0)
+        {
+            bootbox.alert({
+                title: 'Error',
+                message: 'Debe seleccionar un item para agregar una cotización',
+                buttons: {
+                    ok: {
+                        label: 'Volver',
+                        className: 'btn-default'
+                    }
+                }
+            });
+        } else {
+            populateModal('#modal-agregar-cotizacion', item);
+        }
+
         e.preventDefault();
     });
 
     $('#agregar-proveedor').on('click', function(e)
     {
-        $('#nuevo-proveedor').show();
-    });
-
-    $('#guardar-proveedor').on('click', function(e)
-    {
-
+        $('#agregar-proveedor-form').show();
     });
 
     $('#cancelar-proveedor').on('click', function(e)
     {
-        $('#nuevo-proveedor').hide();
+        $('#agregar-proveedor-form').hide();
+    });
+
+    $('#agregar-proveedor-form').on('submit', function(e)
+    {
+        $.post(
+            $(this).prop('action'),
+            $(this).serialize(),
+            'json'
+        ).done(function(proveedor)
+        {
+            if(proveedor)
+            {
+                $('#agregar-proveedor-form').find('input').val('');
+                $('select[name="Id_Proveedor"]').append('<option value="'+proveedor.Id+'">'+proveedor.Nombre+'</option>');
+                $('select[name="Id_Proveedor"]').selectpicker('refresh');
+                $('#agregar-proveedor-form').hide();
+            }
+        }).fail(function(xhr, status, error)
+        {
+            if(xhr.status == 422)
+            {
+                var errores = xhr.responseJSON;
+
+                populateErrors('#agregar-proveedor-form .errores', errores);
+            } else {
+                alert(error);
+            }
+        });
+
+        e.preventDefault();
+    });
+
+    $('#agregar-cotizacion-form').on('submit', function(e)
+    {
+        $.post(
+            $(this).prop('action'),
+            $(this).serialize(),
+            'json'
+        ).done(function(cotizacion)
+        {
+            if (cotizacion)
+            {
+                var $div_errors = $('#modal-agregar-cotizacion').find('.errores');
+                $div_errors.hide();
+
+                var en_lista = false;
+                $('#lista-cotizaciones .panel').each(function(i, e)
+                {
+                    if ($(e).data('id') == cotizacion.Id)
+                    {
+                        en_lista = true;
+                    }
+                });
+
+                $('#lista-cotizaciones .panel.oficial[data-id="'+cotizacion.Id+'"] h4 i').remove();
+
+                if (en_lista)
+                {
+                    var panel = $('#lista-cotizaciones').find('.panel[data-id="'+cotizacion.Id+'"]');
+                    panel.find('h4').html((cotizacion.Precio_Oficial ? '<i class="fa fa-star" aria-hidden="true"></i>' : '')+' '+cotizacion.proveedor.Nombre);
+                    panel.find('small').html(cotizacion.Fecha+'<br>'+cotizacion.Precio);
+                } else {
+                    var panel = cotizacionHtml(cotizacion);
+                    $('#lista-cotizaciones').append(panel);
+                }
+
+                $('#modal-agregar-cotizacion').modal('hide');
+            }
+        }).fail(function(xhr, status, error)
+        {
+            if(xhr.status == 422)
+            {
+                var errores = xhr.responseJSON;
+
+                populateErrors('#agregar-cotizacion-form .errores', errores);
+            } else {
+                alert(error);
+            }
+        });
+
+        e.preventDefault();
+    });
+
+    $('#lista-cotizaciones').delegate('a[data-role="editar"]', 'click', function(e)
+    {
+        var id = $(this).closest('.panel').data('id');
+
+        $.get(
+            utl_cotizaciones+'/obtener/'+id,
+            {},
+            'json'
+        ).done(function(data)
+        {
+            if (data)
+            {
+                populateModal('#modal-agregar-cotizacion', data);
+            }
+        }).fail(function(xhr, status, error)
+        {
+            alert(status);
+        });
+
+        e.preventDefault();
     });
 });

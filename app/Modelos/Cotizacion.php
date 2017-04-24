@@ -8,7 +8,7 @@ class Cotizacion extends Model
 {
     protected $table = 'Cotizaciones';
     protected $primaryKey = 'Id';
-    protected $fillable = ['Id_Item', 'Id_Proveedor', 'Precio_Oficial' ,'Precio', 'Precio_Calculo', 'Fecha_Actualizacion'];
+    protected $fillable = ['Id_Item', 'Id_Proveedor', 'Precio_Oficial' ,'Precio', 'Precio_Calculo', 'Fecha_Actualizacion', 'Observaciones'];
 
     public function items()
     {
