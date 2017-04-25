@@ -14,7 +14,7 @@
                 <div class="col-md-3">
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <label for="">Items <a href="#" id="agregar-item" class="btn-sm btn-link">Agregar</a></label>
+                            <label for="">APU <a href="#" id="agregar-item" class="btn-sm btn-link">Agregar</a></label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="buscador-items" aria-label="..." placeholder="Buscar">
                                 <div class="input-group-btn">
@@ -22,11 +22,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12" id="mantener-item">
-
+                        <div class="col-md-12">
+                            <ul class="list-group" id="mantener-item"></ul>
                         </div>
-                        <div class="col-md-12" id="lista-item" data-url="{{ url('/item') }}">
-
+                        <div class="col-md-12">
+                            <ul class="list-group" id="lista-item" data-url="{{ url('/item') }}"></ul>
                         </div>
                     </div>
                 </div>
@@ -41,11 +41,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12" id="mantener-insumo">
-
+                        <div class="col-md-12">
+                            <ul class="list-group" id="mantener-insumo"></ul>
                         </div>
-                        <div class="col-md-12" id="lista-insumo" data-url="{{ url('/insumo') }}">
-
+                        <div class="col-md-12">
+                            <ul class="list-group" id="lista-insumo" data-url="{{ url('/insumo') }}"></ul>
                         </div>
                     </div>
                 </div>
@@ -55,8 +55,8 @@
                             <label for="">Cotizaciones <a href="#" id="agregar-cotizacion" class="btn-sm btn-link">Agregar</a></label>
                             <p class="form-control-static">Lista de cotizaciones</p>
                         </div>
-                        <div class="col-md-12" id="lista-cotizaciones" data-url="{{ url('/cotizacion') }}">
-
+                        <div class="col-md-12">
+                            <ul class="list-group" id="lista-cotizaciones" data-url="{{ url('/cotizacion') }}"></ul>
                         </div>
                     </div>
                 </div>
@@ -102,8 +102,8 @@
                     <div class="modal-footer">
                         <input type="hidden" name="Id" value="0">
                         <input type="hidden" name="_method" value="POST">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -148,8 +148,8 @@
                     <div class="modal-footer">
                         <input type="hidden" name="Id" value="0">
                         <input type="hidden" name="_method" value="POST">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -206,8 +206,8 @@
                                             <input type="text" name="Email" class="form-control">
                                         </div>
                                         <div class="col-md-12">
-                                            <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
                                             <button type="button" class="btn btn-danger btn-sm" id="cancelar-proveedor">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
                                         </div>
                                         <div class="col-md-12">
                                             <br>
@@ -275,8 +275,8 @@
                         <input type="hidden" name="Id" value="0">
                         <input type="hidden" name="Id_Item" value="0">
                         <input type="hidden" name="_method" value="POST">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>

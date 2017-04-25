@@ -11,59 +11,47 @@ $(function()
 
     function itemHtml(item, islock)
     {
-        return '<div data-id="'+item.Id+'" class="item panel panel-default '+(islock ? 'lock' : 'unlock')+'">'+
-                        '<div class="panel-body">'+
-                            '<h4 data-islock="'+(islock ? 'lock' : 'unlock')+'" class="pointer"> <i class="fa '+(islock ? 'fa-lock' : 'fa-unlock-alt')+'"></i> '+item.Nombre+'</h4>'+
-                            '<small>'+item.Codigo+
-                                '<br>'+item.Unidad_De_Medida+' - <span title="'+item.Descripcion+'">'+item.Descripcion.substring(0, 120)+'</span>'+
-                            '</small>'+
-                        '</div>'+
-                        '<div class="panel-footer">'+
-                            '<a data-role="seleccionar" class="label label-primary">Seleccionar</a> '+
-                            '<a data-role="editar" class="label label-primary">Editar</a> '+
-                        '</div>'+
-                    '</div>'+
-                '</div>';
+        return '<li data-id="'+item.Id+'" class="item list-group-item '+(islock ? 'lock' : 'unlock')+'">'+
+                    '<h5 data-islock="'+(islock ? 'lock' : 'unlock')+'" class="pointer"><i class="fa '+(islock ? 'fa-lock' : 'fa-unlock-alt')+'"></i> <span>'+item.Nombre+' ('+item.Codigo+')</span></h5>'+
+                    '<small>'+
+                        '<strong>Unidad:</strong> '+item.Unidad_De_Medida+
+                    '</small><br>'+
+                    '<a data-role="seleccionar" class="label label-primary">Seleccionar</a> '+
+                    '<a data-role="editar" class="label label-default">Editar</a> '+
+                '</li>';
     }
 
     function insumoHtml(insumo, enitem)
     {
-        return '<div data-id="'+insumo.Id+'" class="insumo panel panel-default '+(enitem ? 'seleccionado' : '')+'">'+
-                    '<div class="panel-body">'+
-                        '<h4>'+insumo.Nombre+(enitem ? ' ('+insumo.pivot.Cantidad+')' : '')+'</h4>'+
-                        '<small>'+insumo.Codigo+
-                            '<br>'+insumo.Unidad_De_Medida+' - <span title="'+insumo.Descripcion+'">'+insumo.Descripcion.substring(0, 120)+'</span>'+
-                        '</small>'+
-                    '</div>'+
-                    '<div class="panel-footer">'+
-                        (enitem ? '<a data-role="remover" class="label label-primary">Remover</a>' : '<a data-role="agregar" class="label label-primary">Agregar</a> ')+
-                        (enitem ? '' : '<a data-role="editar" class="label label-primary">Editar</a> ')+
-                    '</div>'+
-                '</div>';
+        return '<li data-id="'+insumo.Id+'" class="insumo list-group-item '+(enitem ? 'seleccionado' : '')+'">'+
+                    '<h5>'+insumo.Nombre+' ('+insumo.Codigo+')</h5>'+
+                    '<small>'+
+                        (enitem ? '<strong>Cantidad:</strong> '+insumo.pivot.Cantidad+' - ' : '')+
+                        '<strong>Unidad:</strong> '+insumo.Unidad_De_Medida+
+                    '</small><br>'+
+                    (enitem ? '<a data-role="remover" class="label label-primary">Remover</a>' : '<a data-role="agregar" class="label label-primary">Agregar</a> ')+
+                    (enitem ? '' : '<a data-role="editar" class="label label-primary">Editar</a> ')+
+                '</li>';
     }
 
     function cotizacionHtml(cotizacion)
     {
-        return '<div data-id="'+cotizacion.Id+'" class="cotizacion '+(cotizacion.Precio_Oficial ? 'oficial' : '')+' seleccionado panel panel-default">'+
-                    '<div class="panel-body">'+
-                        '<h4>'+(cotizacion.Precio_Oficial ? '<i class="fa fa-star" aria-hidden="true"></i> ' : '')+cotizacion.proveedor.Nombre+'</h4>'+
-                        '<small>Fecha actualizacion: '+cotizacion.Fecha_Actualizacion+
-                            '<br>Precio: $'+cotizacion.Precio+
-                        '</small>'+
-                    '</div>'+
-                    '<div class="panel-footer">'+
-                        '<a data-role="editar" class="label label-primary">Editar</a>'+
-                    '</div>'+
-                '</div>';
+        return '<li data-id="'+cotizacion.Id+'" class="cotizacion list-group-item '+(cotizacion.Precio_Oficial ? 'oficial' : '')+' seleccionado">'+
+                    '<h5>'+(cotizacion.Precio_Oficial ? '<i class="fa fa-star" aria-hidden="true"></i> ' : '')+cotizacion.proveedor.Nombre+'</h5>'+
+                    '<small>'+
+                        '<strong>Fecha actualizacion:</strong> '+cotizacion.Fecha_Actualizacion+' - <strong>Precio:</strong> $'+cotizacion.Precio+
+                    '</small><br>'+
+                    '<a data-role="editar" class="label label-primary">Editar</a>'+
+                '</li>';
     }
 
     function establecerItemSeleccionado(id)
     {
-        $('#lista-item .panel, #mantener-item .panel').removeClass('seleccionado').find('a[data-role="seleccionar"]').text('Seleccionar');
+        $('#lista-item .item, #mantener-item .item').removeClass('seleccionado').find('a[data-role="seleccionar"]').text('Seleccionar');
         if(id !== 0)
         {
-            $('#lista-item .panel[data-id="'+id+'"], #mantener-item .panel[data-id="'+id+'"]').addClass('seleccionado');
-            $('#lista-item .panel[data-id="'+id+'"], #mantener-item .panel[data-id="'+id+'"]').find('a[data-role="seleccionar"]').text('Cancelar');
+            $('#lista-item .item[data-id="'+id+'"], #mantener-item .item[data-id="'+id+'"]').addClass('seleccionado');
+            $('#lista-item .item[data-id="'+id+'"], #mantener-item .item[data-id="'+id+'"]').find('a[data-role="seleccionar"]').text('Cancelar');
         }
 
         item_seleccionado = id;
@@ -179,15 +167,15 @@ $(function()
             $(this).serialize(),
             'json'
         )
-        .done(function(data)
+        .done(function(item)
         {
             var $div_errors = $('#modal-agregar-item').find('.errores');
             $div_errors.hide();
 
             var en_lista = false;
-            $('#lista-item .panel').each(function(i, e)
+            $('#lista-item .item').each(function(i, e)
             {
-                if ($(e).data('id') == data.Id)
+                if ($(e).data('id') == item.Id)
                 {
                     en_lista = true;
                 }
@@ -195,9 +183,9 @@ $(function()
 
             if (en_lista)
             {
-                var panel = $('#lista-item').find('.panel[data-id="'+data.Id+'"]');
-                panel.find('h4').html(data.Nombre);
-                panel.find('small').html(item.Codigo+'<br>'+item.Unidad_De_Medida+' - '+item.Descripcion);
+                var panel = $('#lista-item').find('.item[data-id="'+item.Id+'"]');
+                panel.find('h5 span').html(item.Nombre+' ('+item.Codigo+')');
+                panel.find('small').html('<strong>Unidad:</strong> '+item.Unidad_De_Medida);
             } else {
                 var panel = itemHtml(data);
                 $('#lista-item').append(panel);
@@ -223,7 +211,7 @@ $(function()
     // lista-items
     $('#lista-item, #mantener-item').delegate('a[data-role="editar"]', 'click', function(e)
     {
-        var id = $(this).closest('.panel').data('id');
+        var id = $(this).closest('.item').data('id');
 
         $.get(
             url_item+'/obtener/'+id,
@@ -245,7 +233,7 @@ $(function()
 
     $('#lista-item, #mantener-item').delegate('a[data-role="seleccionar"]', 'click', function(e)
     {
-        var id = $(this).closest('.panel').data('id');
+        var id = $(this).closest('.item').data('id');
         if(id == obtenerItemSeleccionado())
         {
             establecerItemSeleccionado(0);
@@ -301,25 +289,28 @@ $(function()
             });
         } else {
             $('#mantener-insumo').html('');
+            $('#lista-cotizaciones').html('');
         }
+
+        $('#lista-insumo').html('');
 
         e.preventDefault();
     });
 
-    $('#lista-item, #mantener-item').delegate('h4', 'click', function(e)
+    $('#lista-item, #mantener-item').delegate('*[data-islock]', 'click', function(e)
     {
         var islock = $(this).attr('data-islock');
-        var panel = $(this).closest('.panel').clone(true);
-        $(this).closest('.panel').remove();
+        var panel = $(this).closest('.item').clone(true);
+        $(this).closest('.item').remove();
 
         if(islock == 'lock')
         {
-            panel.removeClass('lock').addClass('unlock').find('h4').attr('data-islock', 'unlock').find('i').removeClass('fa-lock').addClass('fa-unlock-alt');
-            $('#lista-item').find('.panel[data-id="'+panel.data('id')+'"]').remove();
+            panel.removeClass('lock').addClass('unlock').find('h5').attr('data-islock', 'unlock').find('i').removeClass('fa-lock').addClass('fa-unlock-alt');
+            $('#lista-item').find('.item[data-id="'+panel.data('id')+'"]').remove();
             $('#lista-item').prepend(panel);
         } else if(islock == 'unlock') {
-            panel.removeClass('unlock').addClass('lock').find('h4').attr('data-islock', 'lock').find('i').removeClass('fa-unlock-alt').addClass('fa-lock');
-            $('#mantener-item').find('.panel[data-id="'+panel.data('id')+'"]').remove();
+            panel.removeClass('unlock').addClass('lock').find('h5').attr('data-islock', 'lock').find('i').removeClass('fa-unlock-alt').addClass('fa-lock');
+            $('#mantener-item').find('.item[data-id="'+panel.data('id')+'"]').remove();
             $('#mantener-item').append(panel);
         }
     });
@@ -379,15 +370,15 @@ $(function()
             $(this).serialize(),
             'json'
         )
-        .done(function(data)
+        .done(function(insumo)
         {
             var $div_errors = $('#modal-agregar-insumos').find('.errores');
             $div_errors.hide();
 
             var en_lista = false;
-            $('#lista-insumo .panel').each(function(i, e)
+            $('#lista-insumo .insumo').each(function(i, e)
             {
-                if ($(e).data('id') == data.Id)
+                if ($(e).data('id') == insumo.Id)
                 {
                     en_lista = true;
                 }
@@ -395,9 +386,9 @@ $(function()
 
             if (en_lista)
             {
-                var panel = $('#lista-insumo').find('.panel[data-id="'+data.Id+'"]');
-                panel.find('h4').html(data.Nombre);
-                panel.find('small').html(data.Codigo+'<br>'+data.Unidad_De_Medida+' - '+data.Descripcion);
+                var panel = $('#lista-insumo').find('.insumo[data-id="'+insumo.Id+'"]');
+                panel.find('h5').html(insumo.Nombre+' ('+insumo.Codigo+')');
+                panel.find('small').html('<strong>Unidad:</strong> '+insumo.Unidad_De_Medida);
             } else {
                 var panel = insumoHtml(data, false);
                 $('#lista-insumo').append(panel);
@@ -423,7 +414,7 @@ $(function()
     // lista-insumos
     $('#lista-insumo').delegate('a[data-role="editar"]', 'click', function(e)
     {
-        var id = $(this).closest('.panel').data('id');
+        var id = $(this).closest('.insumo').data('id');
 
         $.get(
             url_insumo+'/obtener/'+id,
@@ -445,7 +436,7 @@ $(function()
 
     $('#lista-insumo').delegate('a[data-role="agregar"]', 'click', function(e)
     {
-        var id = $(this).closest('.panel').data('id');
+        var id = $(this).closest('.insumo').data('id');
         establecerInsumoSeleccionado(id);
 
         if(obtenerItemSeleccionado() == 0)
@@ -503,7 +494,7 @@ $(function()
                                             html_insumos += insumoHtml(insumo, true);
                                         });
 
-                                        $('#lista-insumo .panel[data-id="'+obtenerInsumoSeleccionado()+'"]').remove();
+                                        $('#lista-insumo .insumo[data-id="'+obtenerInsumoSeleccionado()+'"]').remove();
                                         establecerInsumoSeleccionado(0);
                                     }
 
@@ -522,7 +513,7 @@ $(function()
 
     $('#lista-insumo, #mantener-insumo').delegate('a[data-role="remover"]', 'click', function(e)
     {
-        var id = $(this).closest('.panel').data('id');
+        var id = $(this).closest('.insumo').data('id');
 
         $.post(
             url_item+'/remover_insumo',
@@ -628,7 +619,7 @@ $(function()
                 $div_errors.hide();
 
                 var en_lista = false;
-                $('#lista-cotizaciones .panel').each(function(i, e)
+                $('#lista-cotizaciones .cotizacion').each(function(i, e)
                 {
                     if ($(e).data('id') == cotizacion.Id)
                     {
@@ -637,13 +628,13 @@ $(function()
                 });
 
                 if (cotizacion.Precio_Oficial)
-                    $('#lista-cotizaciones h4 i').remove();
+                    $('#lista-cotizaciones h5 i').remove();
 
                 if (en_lista)
                 {
-                    var panel = $('#lista-cotizaciones').find('.panel[data-id="'+cotizacion.Id+'"]');
-                    panel.find('h4').html((cotizacion.Precio_Oficial ? '<i class="fa fa-star" aria-hidden="true"></i>' : '')+' '+cotizacion.proveedor.Nombre);
-                    panel.find('small').html('Fecha actualización: '+cotizacion.Fecha_Actualizacion+'<br>Precio: $'+cotizacion.Precio);
+                    var panel = $('#lista-cotizaciones').find('.cotizacion[data-id="'+cotizacion.Id+'"]');
+                    panel.find('h5').html((cotizacion.Precio_Oficial ? '<i class="fa fa-star" aria-hidden="true"></i>' : '')+' '+cotizacion.proveedor.Nombre);
+                    panel.find('small').html('<strong>Fecha actualización:</strong> '+cotizacion.Fecha_Actualizacion+' - <strong>Precio:</strong> $'+cotizacion.Precio);
                 } else {
                     var panel = cotizacionHtml(cotizacion);
                     $('#lista-cotizaciones').append(panel);
@@ -668,7 +659,7 @@ $(function()
 
     $('#lista-cotizaciones').delegate('a[data-role="editar"]', 'click', function(e)
     {
-        var id = $(this).closest('.panel').data('id');
+        var id = $(this).closest('.cotizacion').data('id');
 
         $.get(
             utl_cotizaciones+'/obtener/'+id,

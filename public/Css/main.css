@@ -180,24 +180,9 @@ div.oculto {
 	color: #fff !important;
 }
 
-.panel.seleccionado .label-primary:nth-child(1)
+.seleccionado
 {
-    background-color: #fff;
-    color: #333;
-}
-
-.panel.seleccionado .panel-footer {
-    background-color: #333;
-}
-
-.panel.lock .panel-body
-{
-    background-color: #eee;
-}
-
-.panel.unlock .panel-body
-{
-    background-color: #fff;
+    background-color: #D9EDF7;
 }
 
 .selectize-control.multi .selectize-input.has-items
