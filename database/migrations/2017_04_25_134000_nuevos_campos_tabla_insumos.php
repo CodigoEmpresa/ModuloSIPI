@@ -14,8 +14,8 @@ class NuevosCamposTablaInsumos extends Migration
     {
         Schema::table('Insumos', function($table)
         {
-            $table->integer('Precio')->unsigned();
-            $table->enum('Grupo', ['Materiales', 'Maquinaria', 'Mano de obra', 'Transporte']);
+            $table->integer('Precio')->unsigned()->after('Unidad_De_Medida')->nullable();
+            $table->enum('Grupo', ['Materiales', 'Maquinaria', 'Mano de obra', 'Transporte', 'Otro'])->after('Precio')->nullable();
         });
     }
 

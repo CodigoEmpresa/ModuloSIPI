@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CrearItemInsumoRequest;
+use App\Http\Requests\CrearItemRequest;
 use App\Modelos\Item;
 use App\Modelos\Insumo;
 use App\Modelos\Proveedor;
@@ -66,7 +66,7 @@ class ItemController extends Controller {
 		return response()->json($item);
 	}
 
-	public function crear(CrearItemInsumoRequest $request)
+	public function crear(CrearItemRequest $request)
 	{
 		$id = $request->input('Id');
 		if (!$id)

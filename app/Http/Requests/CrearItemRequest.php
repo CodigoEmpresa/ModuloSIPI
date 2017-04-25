@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class CrearItemInsumoRequest extends Request
+class CrearItemRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class CrearItemInsumoRequest extends Request
     public function rules()
     {
         return [
-            'Codigo' => 'required',
+            'Codigo' => 'required|unique:Items,Codigo,'.$this->input('Id'),
             'Nombre' => 'required',
-            'Descripcion' => 'required',
             'Unidad_De_Medida' => 'required'
         ];
     }

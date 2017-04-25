@@ -27,10 +27,10 @@ $(function()
                     '<h5>'+insumo.Nombre+' ('+insumo.Codigo+')</h5>'+
                     '<small>'+
                         (enitem ? '<strong>Cantidad:</strong> '+insumo.pivot.Cantidad+' - ' : '')+
-                        '<strong>Unidad:</strong> '+insumo.Unidad_De_Medida+
+                        '<strong>Unidad:</strong> <span data-role="unidad">'+insumo.Unidad_De_Medida+'</span>'+
                     '</small><br>'+
-                    (enitem ? '<a data-role="remover" class="label label-primary">Remover</a>' : '<a data-role="agregar" class="label label-primary">Agregar</a> ')+
-                    (enitem ? '' : '<a data-role="editar" class="label label-primary">Editar</a> ')+
+                    (enitem ? '<a data-role="remover" class="label label-primary">Remover</a> ' : '<a data-role="agregar" class="label label-primary">Agregar</a> ')+
+                    '<a data-role="editar" class="label label-default">Editar</a>'+
                 '</li>';
     }
 
@@ -41,7 +41,7 @@ $(function()
                     '<small>'+
                         '<strong>Fecha actualizacion:</strong> '+cotizacion.Fecha_Actualizacion+' - <strong>Precio:</strong> $'+cotizacion.Precio+
                     '</small><br>'+
-                    '<a data-role="editar" class="label label-primary">Editar</a>'+
+                    '<a data-role="editar" class="label label-default">Editar</a>'+
                 '</li>';
     }
 
@@ -172,14 +172,7 @@ $(function()
             var $div_errors = $('#modal-agregar-item').find('.errores');
             $div_errors.hide();
 
-            var en_lista = false;
-            $('#lista-item .item').each(function(i, e)
-            {
-                if ($(e).data('id') == item.Id)
-                {
-                    en_lista = true;
-                }
-            });
+            var en_lista = !!$('#lista-item .item[data-id="'+item.Id+'"], #mantener-item .item[data-id="'+item.Id+'"]').length;
 
             if (en_lista)
             {
@@ -187,7 +180,7 @@ $(function()
                 panel.find('h5 span').html(item.Nombre+' ('+item.Codigo+')');
                 panel.find('small').html('<strong>Unidad:</strong> '+item.Unidad_De_Medida);
             } else {
-                var panel = itemHtml(data);
+                var panel = itemHtml(item);
                 $('#lista-item').append(panel);
             }
 
@@ -356,7 +349,9 @@ $(function()
             Codigo: '',
             Unidad_De_Medida: '',
             Nombre: '',
-            Descripcion: ''
+            Descripcion: '',
+            Grupo: '',
+            Precio: ''
         }
 
         populateModal('#modal-agregar-insumo', insumo);
@@ -375,22 +370,15 @@ $(function()
             var $div_errors = $('#modal-agregar-insumos').find('.errores');
             $div_errors.hide();
 
-            var en_lista = false;
-            $('#lista-insumo .insumo').each(function(i, e)
-            {
-                if ($(e).data('id') == insumo.Id)
-                {
-                    en_lista = true;
-                }
-            });
+            var en_lista = !!$('#lista-insumo .insumo[data-id="'+insumo.Id+'"], #mantener-insumo .insumo[data-id="'+insumo.Id+'"]').length;
 
             if (en_lista)
             {
                 var panel = $('#lista-insumo').find('.insumo[data-id="'+insumo.Id+'"]');
                 panel.find('h5').html(insumo.Nombre+' ('+insumo.Codigo+')');
-                panel.find('small').html('<strong>Unidad:</strong> '+insumo.Unidad_De_Medida);
+                panel.find('span[data-role="unidad"]').html('<strong>Unidad:</strong> '+insumo.Unidad_De_Medida);
             } else {
-                var panel = insumoHtml(data, false);
+                var panel = insumoHtml(insumo, false);
                 $('#lista-insumo').append(panel);
             }
 
@@ -412,7 +400,7 @@ $(function()
     });
 
     // lista-insumos
-    $('#lista-insumo').delegate('a[data-role="editar"]', 'click', function(e)
+    $('#lista-insumo, #mantener-insumo').delegate('a[data-role="editar"]', 'click', function(e)
     {
         var id = $(this).closest('.insumo').data('id');
 
@@ -443,7 +431,7 @@ $(function()
         {
             bootbox.alert({
                 title: 'Error',
-                message: 'Debe seleccionar un item para agregar el insumo',
+                message: 'Debe seleccionar un APU para agregar el insumo',
                 buttons: {
                     ok: {
                         label: 'Volver',
@@ -618,22 +606,20 @@ $(function()
                 var $div_errors = $('#modal-agregar-cotizacion').find('.errores');
                 $div_errors.hide();
 
-                var en_lista = false;
-                $('#lista-cotizaciones .cotizacion').each(function(i, e)
-                {
-                    if ($(e).data('id') == cotizacion.Id)
-                    {
-                        en_lista = true;
-                    }
-                });
+                var en_lista = !!$('#lista-cotizaciones .cotizacion[data-id="'+cotizacion.Id+'"]').length;
+                var oficial = $('#lista-cotizaciones .cotizacion.oficial');
 
-                if (cotizacion.Precio_Oficial)
-                    $('#lista-cotizaciones h5 i').remove();
+                if (oficial)
+                {
+                    var id = oficial.attr('data-id');
+                    if (cotizacion.Precio_Oficial == '1' && id != cotizacion.Id)
+                        $('#lista-cotizaciones h5 i').remove();
+                }
 
                 if (en_lista)
                 {
                     var panel = $('#lista-cotizaciones').find('.cotizacion[data-id="'+cotizacion.Id+'"]');
-                    panel.find('h5').html((cotizacion.Precio_Oficial ? '<i class="fa fa-star" aria-hidden="true"></i>' : '')+' '+cotizacion.proveedor.Nombre);
+                    panel.find('h5').html((cotizacion.Precio_Oficial == '1' ? '<i class="fa fa-star" aria-hidden="true"></i>' : '')+' '+cotizacion.proveedor.Nombre);
                     panel.find('small').html('<strong>Fecha actualización:</strong> '+cotizacion.Fecha_Actualizacion+' - <strong>Precio:</strong> $'+cotizacion.Precio);
                 } else {
                     var panel = cotizacionHtml(cotizacion);

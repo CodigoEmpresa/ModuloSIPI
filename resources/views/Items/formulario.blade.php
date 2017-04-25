@@ -9,9 +9,9 @@
         <div class="col-xs-12">
             <br><br>
         </div>
-        <div class="col-md-11 col-md-offset-1">
+        <div class="col-md-12">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12 form-group">
                             <label for="">APU <a href="#" id="agregar-item" class="btn-sm btn-link">Agregar</a></label>
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-md-offset-1">
+                <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12 form-group">
                             <label for="">Insumos <a href="#" id="agregar-insumo" class="btn-sm btn-link">Agregar</a></label>
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-md-offset-1">
+                <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12 form-group">
                             <label for="">Cotizaciones <a href="#" id="agregar-cotizacion" class="btn-sm btn-link">Agregar</a></label>
@@ -94,7 +94,7 @@
                                 <input type="text" name="Nombre" class="form-control">
                             </div>
                             <div class="col-md-12 form-group">
-                                <label for="">Discripción</label>
+                                <label for="">Descripción</label>
                                 <textarea name="Descripcion" class="form-control"></textarea>
                             </div>
                         </div>
@@ -140,8 +140,30 @@
                                 <input type="text" name="Nombre" class="form-control">
                             </div>
                             <div class="col-md-12 form-group">
-                                <label for="">Discripción</label>
+                                <label for="">Descripción</label>
                                 <textarea name="Descripcion" class="form-control"></textarea>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="">Grupo</label> <br>
+                                <label class="radio-inline">
+                                    <input type="radio" name="Grupo" value="Materiales"> Materiales
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="Grupo" value="Maquinaria"> Maquinaria
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="Grupo" value="Mano de obra"> Mano de obra
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="Grupo" value="Transporte"> Transporte
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="Grupo" value="Otro"> Otro
+                                </label>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="">Precio</label>
+                                <input type="text" name="Precio" class="form-control">
                             </div>
                         </div>
                     </div>
