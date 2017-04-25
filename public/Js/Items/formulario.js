@@ -636,13 +636,14 @@ $(function()
                     }
                 });
 
-                $('#lista-cotizaciones .panel.oficial[data-id="'+cotizacion.Id+'"] h4 i').remove();
+                if (cotizacion.Precio_Oficial)
+                    $('#lista-cotizaciones h4 i').remove();
 
                 if (en_lista)
                 {
                     var panel = $('#lista-cotizaciones').find('.panel[data-id="'+cotizacion.Id+'"]');
                     panel.find('h4').html((cotizacion.Precio_Oficial ? '<i class="fa fa-star" aria-hidden="true"></i>' : '')+' '+cotizacion.proveedor.Nombre);
-                    panel.find('small').html(cotizacion.Fecha+'<br>'+cotizacion.Precio);
+                    panel.find('small').html('Fecha actualización: '+cotizacion.Fecha_Actualizacion+'<br>Precio: $'+cotizacion.Precio);
                 } else {
                     var panel = cotizacionHtml(cotizacion);
                     $('#lista-cotizaciones').append(panel);
