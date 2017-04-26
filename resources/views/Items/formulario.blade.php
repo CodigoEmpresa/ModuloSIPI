@@ -1,4 +1,4 @@
-@extends('master', ['full_width' => true, 'no_header' => true])
+@extends('master')
 @section('script')
     @parent
     <script src="{{ asset('public/Js/Items/formulario.js') }}"></script>

@@ -26,7 +26,7 @@ class ItemController extends Controller {
 	public function inicio()
 	{
 		$datos = [
-			'seccion' => 'Gestor de items',
+			'seccion' => 'Gestor de APU',
 			'proveedores' => Proveedor::all()
 		];
 
