@@ -86,8 +86,8 @@ class FichaTecnicaController extends Controller
 			$CodigoProceso = "<td>".$key->Codigo_Proceso."</td>";
 			$Anio = "<td>".$key->Anio."</td>";
 			$Subdireccion = "<td>".$key->subdireccion['Nombre_Subdireccion']."</td>";
-			$Persona = "<td>".$key->persona['Primer_Nombre']." ".$key->persona['Segundo_Nombre']." ".$key->persona['Primer_Apellido']." ".$key->persona['Segundo_Apellido']." "."</td>";
-
+			$Persona = "<td>".$key->persona['Primer_Nombre']." ".$key->persona['Primer_Apellido']."</td>";
+			$objeto = '<td>'.$key->Objeto.'</td>';
 			$Botones = '<td>
 							<a href="'.url('fichaTecnica/'.$key->Id.'/detalles').'" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="bottom" title="Detalles">
 								<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
@@ -100,7 +100,7 @@ class FichaTecnicaController extends Controller
 						</td>';
 
 
-			$h = '<tr>'.$CodigoProceso.$Anio.$Subdireccion.$Persona.$Botones.'</tr>';
+			$h = '<tr>'.$CodigoProceso.$Anio.$Subdireccion.$Persona.$objeto.$Botones.'</tr>';
 			$html = $html.$h;
 		}
 		$Resultado = "<table id='datosTabla' class='default display responsive no-wrap table table-min table-striped' width='100%' name='datosTabla'>
@@ -109,7 +109,8 @@ class FichaTecnicaController extends Controller
 			            	<th width='30px'>Cod.</th>
 			            	<th width='30px'>Año</th>
 							<th width='60px'>Subdirección</th>
-	                        <th>Persona encargada</th>
+	                        <th width='160px'>Persona encargada</th>
+							<th>Objeto</th>
 	                        <th width='30px' data-priority='2' class='no-sort'></th>
 	                        <th width='30px' data-priority='2' class='no-sort'></th>
 						</tr>

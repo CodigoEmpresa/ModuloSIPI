@@ -12,7 +12,6 @@
 			<link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 			<link rel="stylesheet" href="{{ asset('public/components/jquery-ui/themes/base/jquery-ui.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/Css/bootstrap.css') }}" media="screen">
-			<link rel="stylesheet" href="{{ asset('public/components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/bootstrap-select/dist/css/bootstrap-select.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/font-awesome/css/font-awesome.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/datatables.net-bs/css/dataTables.bootstrap.css') }}" media="screen">
@@ -32,7 +31,6 @@
 			<script src="{{ asset('public/components/datatables.net-bs/js/dataTables.bootstrap.js') }}"></script>
 			<script src="{{ asset('public/components/datatables.net-responsive/js/dataTables.responsive.js') }}"></script>
 			<script src="{{ asset('public/components/highcharts/js/highcharts.js') }}"></script>
-			<script src="{{ asset('public/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 			<script src="{{ asset('public/Js/main.js') }}"></script>
 		@show
 		<title>SIPI</title>
@@ -51,9 +49,6 @@
 				</div>
 				<div class="navbar-collapse collapse" id="navbar-main">
 					<ul class="nav navbar-nav">
-						@if ($_SESSION['Usuario']['Permisos']['administrar_usuarios'])
-							<li><a href="{{ url('/personas') }}">Administración</a></li>
-						@endif
 						<li class="{{ $seccion && in_array($seccion, ['Gestor de APU']) ? 'active' : '' }}">
 		                    <a href="{{ URL::to('apu') }}">APU</a>
 						</li>
@@ -66,6 +61,9 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ $_SESSION['Usuario']['Persona']['Primer_Apellido'].' '.$_SESSION['Usuario']['Persona']['Primer_Nombre'] }}<span class="caret"></span></a>
 							<ul class="dropdown-menu">
+								@if ($_SESSION['Usuario']['Permisos']['administrar_usuarios'])
+									<li><a href="{{ url('/personas') }}">Administración</a></li>
+								@endif
 								<li>
 									<a href="{{ url('logout') }}">Cerrar sesión</a>
 								</li>

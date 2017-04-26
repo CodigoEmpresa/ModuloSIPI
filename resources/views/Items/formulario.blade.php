@@ -6,9 +6,6 @@
 @stop
 @section('content')
     <div class="row">
-        <div class="col-xs-12">
-            <br><br>
-        </div>
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-4">

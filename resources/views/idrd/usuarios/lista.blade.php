@@ -1,12 +1,12 @@
 @section('script')
     @parent
 
-    <script src="{{ asset('public/Js/usuarios/usuarios.js') }}"></script>   
+    <script src="{{ asset('public/Js/usuarios/usuarios.js') }}"></script>
 @stop
 
 @section('style')
     @parent
-    
+
     <style>
         .glyphicon.spin-r {
             -webkit-animation: glyphicon-spin-r 1s infinite linear;
@@ -38,14 +38,14 @@
         }
     </style>
 @stop
-    
+
 <div class="content">
     <div id="main_persona" class="row" data-url="{{ url(config('usuarios.prefijo_ruta')) }}">
         <div id="alerta" class="col-xs-12" style="display:none;">
             <div class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     Datos actualizados satisfactoriamente.
-            </div>                                
+            </div>
         </div>
         <div class="col-xs-12 form-group">
             <div class="input-group">
@@ -83,7 +83,7 @@
                 @endforeach
             </ul>
         </div>
-        <div id="paginador" class="col-xs-12">{!! $personas->render() !!}</div>    
+        <div id="paginador" class="col-xs-12">{!! $personas->render() !!}</div>
         <!-- Modal formulario  persona -->
         <div class="modal fade" id="modal_form_persona" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
