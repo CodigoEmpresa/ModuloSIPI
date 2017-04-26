@@ -54,11 +54,11 @@
 						@if ($_SESSION['Usuario']['Permisos']['administrar_usuarios'])
 							<li><a href="{{ url('/personas') }}">Administración</a></li>
 						@endif
+						<li class="{{ $seccion && in_array($seccion, ['Gestor de APU']) ? 'active' : '' }}">
+		                    <a href="{{ URL::to('apu') }}">APU</a>
+						</li>
 						<li class="{{ $seccion && in_array($seccion, ['Gestor de fichas técnicas']) ? 'active' : '' }}">
 		                    <a href="{{ URL::to('registroFT') }}">Fichas técnicas</a>
-						</li>
-						<li class="{{ $seccion && in_array($seccion, ['Gestor de items']) ? 'active' : '' }}">
-		                    <a href="{{ URL::to('item') }}">Items</a>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">

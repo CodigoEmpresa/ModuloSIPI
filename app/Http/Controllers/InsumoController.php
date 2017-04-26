@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CrearItemInsumoRequest;
+use App\Http\Requests\CrearInsumoRequest;
 use App\Modelos\Insumo;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Illuminate\Http\Request;
@@ -47,7 +47,7 @@ class InsumoController extends Controller {
 		return response()->json($insumo);
 	}
 
-	public function crear(CrearItemInsumoRequest $request)
+	public function crear(CrearInsumoRequest $request)
 	{
 		$id = $request->input('Id');
 		if (!$id)
@@ -59,6 +59,8 @@ class InsumoController extends Controller {
 		$insumo->Nombre = $request->input('Nombre');
 		$insumo->Descripcion = $request->input('Descripcion');
 		$insumo->Unidad_De_Medida = $request->input('Unidad_De_Medida');
+		$insumo->Grupo = $request->has('Grupo') ? $request->input('Grupo') : null;
+		$insumo->Precio = $request->input('Precio');
 		$insumo->save();
 
 		return response()->json($insumo);

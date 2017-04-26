@@ -48,7 +48,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('fichaTecnica/{id}/detalles', 'FichaTecnicaController@detalles');
 	Route::get('item/unidades/{unidad?}', 'UnidadController@buscarUnidadesDeMedida');
 
-	Route::get('item', 'ItemController@inicio');
+	Route::get('apu', 'ItemController@inicio');
 	Route::post('item/crear', 'ItemController@crear');
 	Route::get('item/obtener/{item?}', 'ItemController@obtenerItem');
 	Route::get('item/buscar/{item?}', 'ItemController@buscarItem');
