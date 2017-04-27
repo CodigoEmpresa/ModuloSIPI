@@ -38,17 +38,20 @@ Route::any('/logout', 'MainController@logout');
 Route::group(['middleware' => ['web']], function () {
 
 	Route::get('/welcome', 'MainController@welcome');
-	Route::get('registroFT', 'FichaTecnicaController@indexRegistro');
-	Route::post('addFichaTecnica', 'FichaTecnicaController@registroFichaTecnica');
-	Route::post('editFichaTecnica', 'FichaTecnicaController@modificarFichaTecnica');
 
 	Route::get('getFichaTecnicaDatos/','FichaTecnicaController@GetFichaTecnicaDatos');
 	Route::get('getFichaTecnicaDatosOne/{id}','FichaTecnicaController@GetFichaTecnicaDatosOne');
 
-	Route::get('fichaTecnica/{id}/detalles', 'FichaTecnicaController@detalles');
-	Route::get('item/unidades/{unidad?}', 'UnidadController@buscarUnidadesDeMedida');
+	Route::post('addFichaTecnica', 'FichaTecnicaController@registroFichaTecnica');
+	Route::post('editFichaTecnica', 'FichaTecnicaController@modificarFichaTecnica');
+
+	Route::get('fichaTecnica', 'FichaTecnicaController@indexRegistro');
+	Route::get('fichaTecnica/{id}/editar', 'FichaTecnicaController@editar');
+	Route::get('fichaTecnica/crear', 'FichaTecnicaController@crear');
+	Route::get('fichaTecnica/procesar', 'FichaTecnicaController@procesar');
 
 	Route::get('apu', 'ItemController@inicio');
+	Route::get('item/unidades/{unidad?}', 'UnidadController@buscarUnidadesDeMedida');
 	Route::post('item/crear', 'ItemController@crear');
 	Route::get('item/obtener/{item?}', 'ItemController@obtenerItem');
 	Route::get('item/buscar/{item?}', 'ItemController@buscarItem');

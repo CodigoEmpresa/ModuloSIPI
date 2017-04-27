@@ -53,7 +53,7 @@
 		                    <a href="{{ URL::to('apu') }}">APU</a>
 						</li>
 						<li class="{{ $seccion && in_array($seccion, ['Gestor de fichas técnicas']) ? 'active' : '' }}">
-		                    <a href="{{ URL::to('registroFT') }}">Fichas técnicas</a>
+		                    <a href="{{ URL::to('fichaTecnica') }}">Fichas técnicas</a>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">

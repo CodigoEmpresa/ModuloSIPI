@@ -35,7 +35,7 @@ class FichaTecnicaController extends Controller
 			   ->with(compact('Subdireccion'));
     }
 
-    public function registroFichaTecnica(RegistroFT $request)
+    public function procesar(RegistroFT $request)
 	{
     	if ($request->ajax())
 		{
@@ -57,46 +57,44 @@ class FichaTecnicaController extends Controller
     		$FichaTecnica->Presupuesto_Estimado = $request->Presupuesto;
     		$FichaTecnica->Fecha_Entrega_Estimada = $request->FechaEntrega;
     		$FichaTecnica->Observacion = $request->Observaciones;
-    		if($FichaTecnica->save()){
+    		if($FichaTecnica->save())
+			{
     			return response()->json(["Mensaje" => "La ficha técnica ha sido registrada con éxito.", "Id" => $FichaTecnica->Id]);
-    		}else{
+    		} else {
     			return response()->json(["Mensaje" => "Ocurrio un fallo en la inserción de ficha técnica, por favor intentelo más tarde."]);
     		}
     	}
     }
 
-	public function detalles(Request $request, $id)
+	public function crear(Request $request)
+	{
+		$ficha_tecnica = null;
+
+		return $this->popularFichaTecnica($ficha_tecnica);
+	}
+
+	public function editar(Request $request, $id)
 	{
 		$ficha_tecnica = FichaTecnica::with('items', 'items.insumos', 'items.cotizaciones', 'items.cotizaciones.proveedor')->find($id);
 
-		$datos = [
-			'seccion' => 'Gestor de fichas técnicas',
-			'ficha_tecnica' => $ficha_tecnica
-		];
-
-		return view('FichaTecnica/formulario-items', $datos);
+		return $this->popularFichaTecnica($ficha_tecnica);
 	}
 
     public function GetFichaTecnicaDatos(Request $request)
 	{
     	$FichaTecnica = FichaTecnica::with('subdireccion', 'persona')->where('Persona_Id', $this->Usuario[0])->get();
-		$html ="";
+		$html = "";
 		foreach ($FichaTecnica as $key) {
 
 			$CodigoProceso = "<td>".$key->Codigo_Proceso."</td>";
 			$Anio = "<td>".$key->Anio."</td>";
 			$Subdireccion = "<td>".$key->subdireccion['Nombre_Subdireccion']."</td>";
-			$Persona = "<td>".$key->persona['Primer_Nombre']." ".$key->persona['Primer_Apellido']."</td>";
+			$Persona = '<td>$'.number_format($key->Presupuesto_Estimado, 0, '', '.').'</td>';
 			$objeto = '<td>'.$key->Objeto.'</td>';
 			$Botones = '<td>
-							<a href="'.url('fichaTecnica/'.$key->Id.'/detalles').'" class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="bottom" title="Detalles">
-								<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+							<a href="'.url('fichaTecnica/'.$key->Id.'/editar').'" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Editar">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 							</a>
-						</td>
-						<td>
-                          	<button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Editar" data-funcion="modificarFicha" value="'.$key->Id.'" >
-                              	<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                          	</button>
 						</td>';
 
 
@@ -109,9 +107,8 @@ class FichaTecnicaController extends Controller
 			            	<th width='30px'>Cod.</th>
 			            	<th width='30px'>Año</th>
 							<th width='60px'>Subdirección</th>
-	                        <th width='160px'>Persona encargada</th>
+	                        <th width='140px'>Presupuesto estimado</th>
 							<th>Objeto</th>
-	                        <th width='30px' data-priority='2' class='no-sort'></th>
 	                        <th width='30px' data-priority='2' class='no-sort'></th>
 						</tr>
 					</thead>
@@ -127,7 +124,8 @@ class FichaTecnicaController extends Controller
 
 	public function modificarFichaTecnica(RegistroFT $request)
 	{
-    	if ($request->ajax()) {
+    	if ($request->ajax())
+		{
     		$FichaTecnica = FichaTecnica::find($request->Id_FT);
     		$FichaTecnica->Subdireccion_Id = $request->Subdireccion;
     		$FichaTecnica->Anio = $request->Anio;
@@ -135,9 +133,10 @@ class FichaTecnicaController extends Controller
     		$FichaTecnica->Presupuesto_Estimado = $request->Presupuesto;
     		$FichaTecnica->Fecha_Entrega_Estimada = $request->FechaEntrega;
     		$FichaTecnica->Observacion = $request->Observaciones;
-    		$FichaTecnica->Alcance1 = $request->Alcance1;
-    		$FichaTecnica->Alcance2 = $request->Alcance2;
-    		$FichaTecnica->Alcance3 = $request->Alcance3;
+    		$FichaTecnica->Alcance1 = trim($request->Alcance1) == '' ? null : $request->Alcance1;
+    		$FichaTecnica->Alcance2 = trim($request->Alcance2) == '' ? null : $request->Alcance2;
+    		$FichaTecnica->Alcance3 = trim($request->Alcance3) == '' ? null : $request->Alcance3;
+
     		if($FichaTecnica->save()){
     			return response()->json(["Mensaje" => "La ficha técnica ha sido modificada con éxito.", 'Id' => $FichaTecnica->Id]);
     		}else{
@@ -145,4 +144,16 @@ class FichaTecnicaController extends Controller
     		}
     	}
     }
+
+	private function popularFichaTecnica($ficha_tecnica)
+	{
+		$datos = [
+			'seccion' => 'Gestor de fichas técnicas',
+			'ficha_tecnica' => $ficha_tecnica,
+			'subdirecciones' => Subdireccion::all(),
+			'status' => session('status')
+		];
+
+		return view('FichaTecnica/formulario-items', $datos);
+	}
 }
