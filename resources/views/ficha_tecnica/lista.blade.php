@@ -1,7 +1,7 @@
 @extends('master')
 @section('script')
     @parent
-    <script src="{{ asset('public/Js/FichaTecnica/registroFT.js') }}"></script>
+    <script src="{{ asset('public/Js/ficha_tecnica/lista.js') }}"></script>
 @stop
 @section('content')
     <div class="content">

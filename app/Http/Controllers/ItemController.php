@@ -51,7 +51,7 @@ class ItemController extends Controller {
 
 	public function buscarItem(Request $request, $item = '')
 	{
-		$items = Item::where('Nombre', 'LIKE', '%'.$item.'%')
+		$items = Item::with('insumos', 'cotizaciones', 'cotizaciones.proveedor')->where('Nombre', 'LIKE', '%'.$item.'%')
 						->orWhere('Descripcion', 'LIKE', '%'.$item.'%')
 						->orWhere('Codigo', 'LIKE', '%'.$item.'%')
 						->get();

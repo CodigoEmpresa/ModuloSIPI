@@ -30,4 +30,11 @@ class CrearInsumoRequest extends Request
             'Precio' => 'required|numeric'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'Codigo.required' => 'El campo código es requerido'
+        ];
+    }
 }

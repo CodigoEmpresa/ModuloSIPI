@@ -209,6 +209,10 @@ div.panel-body h4 {
     margin-top: 0px;
 }
 
+.ui-datepicker {
+    z-index: 1000000 !important;
+}
+
 @media (min-width: 1200px) {
 	.container {
 		width: 1280px;

@@ -31,39 +31,35 @@ class FichaTecnicaController extends Controller
 			'seccion' => 'Gestor de fichas técnicas'
 		];
 
-		return view('FichaTecnica/registro', $datos)
+		return view('ficha_tecnica.lista', $datos)
 			   ->with(compact('Subdireccion'));
     }
 
     public function procesar(RegistroFT $request)
 	{
-    	if ($request->ajax())
-		{
-    		$a = FichaTecnica::all()->last();
+		$a = FichaTecnica::all()->last();
 
-    		if($a == null)
-			{
-    			$Conteo = 500;
-    		} else {
-    			$Conteo = $a->Codigo_Proceso+1;
-    		}
+		if($request->input('Id') == '0')
+			$FichaTecnica = new FichaTecnica;
+		else
+			$FichaTecnica = FichaTecnica::find($request->input('Id'));
 
-    		$FichaTecnica = new FichaTecnica;
-    		$FichaTecnica->Subdireccion_Id = $request->Subdireccion;
-    		$FichaTecnica->Persona_Id = $this->Usuario[0];
-    		$FichaTecnica->Anio = $request->Anio;
-    		$FichaTecnica->Codigo_Proceso = $Conteo;
-    		$FichaTecnica->Objeto = $request->Objeto;
-    		$FichaTecnica->Presupuesto_Estimado = $request->Presupuesto;
-    		$FichaTecnica->Fecha_Entrega_Estimada = $request->FechaEntrega;
-    		$FichaTecnica->Observacion = $request->Observaciones;
-    		if($FichaTecnica->save())
-			{
-    			return response()->json(["Mensaje" => "La ficha técnica ha sido registrada con éxito.", "Id" => $FichaTecnica->Id]);
-    		} else {
-    			return response()->json(["Mensaje" => "Ocurrio un fallo en la inserción de ficha técnica, por favor intentelo más tarde."]);
-    		}
-    	}
+		if($a == null)
+			$Conteo = 500;
+		else
+			$Conteo = $a->Codigo_Proceso+1;
+
+		$FichaTecnica->Subdireccion_Id = $request->input('Subdireccion_Id');
+		$FichaTecnica->Persona_Id = $this->Usuario[0];
+		$FichaTecnica->Anio = $request->input('Anio');
+		$FichaTecnica->Codigo_Proceso = $request->input('Id') == '0' ? $Conteo : $FichaTecnica->Codigo_Proceso;
+		$FichaTecnica->Objeto = $request->input('Objeto');
+		$FichaTecnica->Presupuesto_Estimado = $request->input('Presupuesto_Estimado');
+		$FichaTecnica->Fecha_Entrega_Estimada = $request->input('Fecha_Entrega_Estimada');
+		$FichaTecnica->Observacion = $request->input('Observacion');
+		$FichaTecnica->save();
+
+		return redirect('fichaTecnica/'.$FichaTecnica->Id.'/editar')->with(['status' => 'success']);
     }
 
 	public function crear(Request $request)
@@ -93,7 +89,7 @@ class FichaTecnicaController extends Controller
 			$objeto = '<td>'.$key->Objeto.'</td>';
 			$Botones = '<td>
 							<a href="'.url('fichaTecnica/'.$key->Id.'/editar').'" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Editar">
-								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+								<i class="fa fa-pencil"></i>
 							</a>
 						</td>';
 
@@ -154,6 +150,6 @@ class FichaTecnicaController extends Controller
 			'status' => session('status')
 		];
 
-		return view('FichaTecnica/formulario-items', $datos);
+		return view('ficha_tecnica.formulario', $datos);
 	}
 }

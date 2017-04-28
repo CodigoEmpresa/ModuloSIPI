@@ -11,7 +11,7 @@
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <label for="">APU <a href="#" id="agregar-item" class="btn-sm btn-link">Agregar</a></label>
+                            <label for="" class="control-label">APU <a href="#" id="agregar-item" class="btn-sm btn-link">Agregar</a></label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="buscador-items" aria-label="..." placeholder="Buscar">
                                 <div class="input-group-btn">
@@ -30,7 +30,7 @@
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <label for="">Insumos <a href="#" id="agregar-insumo" class="btn-sm btn-link">Agregar</a></label>
+                            <label for="" class="control-label">Insumos <a href="#" id="agregar-insumo" class="btn-sm btn-link">Agregar</a></label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="buscador-insumos" aria-label="..." placeholder="Buscar">
                                 <div class="input-group-btn">
@@ -49,7 +49,7 @@
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <label for="">Cotizaciones <a href="#" id="agregar-cotizacion" class="btn-sm btn-link">Agregar</a></label>
+                            <label for="" class="control-label">Cotizaciones <a href="#" id="agregar-cotizacion" class="btn-sm btn-link">Agregar</a></label>
                             <p class="form-control-static">Lista de cotizaciones</p>
                         </div>
                         <div class="col-md-12">
@@ -79,19 +79,19 @@
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="">Código</label>
+                                <label for="" class="control-label">* Código</label>
                                 <input type="text" name="Codigo" class="form-control">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="">Unidad de medida</label>
+                                <label for="" class="control-label">* Unidad de medida</label>
                                 <input type="text" name="Unidad_De_Medida" class="form-control" data-url="{{ url('/item/unidades') }}">
                             </div>
                             <div class="col-md-12 form-group">
-                                <label for="">Nombre</label>
+                                <label for="" class="control-label">* Nombre</label>
                                 <input type="text" name="Nombre" class="form-control">
                             </div>
                             <div class="col-md-12 form-group">
-                                <label for="">Descripción</label>
+                                <label for="" class="control-label">Descripción</label>
                                 <textarea name="Descripcion" class="form-control"></textarea>
                             </div>
                         </div>
@@ -125,23 +125,23 @@
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="">Código</label>
+                                <label for="" class="control-label">* Código</label>
                                 <input type="text" name="Codigo" class="form-control">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="">Unidad de medida</label>
+                                <label for="" class="control-label">* Unidad de medida</label>
                                 <input type="text" name="Unidad_De_Medida" class="form-control" data-url="{{ url('/item/unidades') }}">
                             </div>
                             <div class="col-md-12 form-group">
-                                <label for="">Nombre</label>
+                                <label for="" class="control-label">* Nombre</label>
                                 <input type="text" name="Nombre" class="form-control">
                             </div>
                             <div class="col-md-12 form-group">
-                                <label for="">Descripción</label>
+                                <label for="" class="control-label">Descripción</label>
                                 <textarea name="Descripcion" class="form-control"></textarea>
                             </div>
                             <div class="col-md-12 form-group">
-                                <label for="">Grupo</label> <br>
+                                <label for="" class="control-label">Grupo</label> <br>
                                 <label class="radio-inline">
                                     <input type="radio" name="Grupo" value="Materiales"> Materiales
                                 </label>
@@ -159,7 +159,7 @@
                                 </label>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="">Precio</label>
+                                <label for="" class="control-label">* Precio</label>
                                 <input type="text" name="Precio" class="form-control">
                             </div>
                         </div>
@@ -201,27 +201,27 @@
                                             <h4>Nuevo proveedor</h4>
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <label for="">Nombre</label>
+                                            <label for="" class="control-label">Nombre</label>
                                             <input type="text" name="Nombre" class="form-control">
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <label for="">Ciudad</label>
+                                            <label for="" class="control-label">Ciudad</label>
                                             <input type="text" name="Ciudad" class="form-control">
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <label for="">Contacto</label>
+                                            <label for="" class="control-label">Contacto</label>
                                             <input type="text" name="Nombre_Contacto" class="form-control">
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <label for="">Dirección</label>
+                                            <label for="" class="control-label">Dirección</label>
                                             <input type="text" name="Direccion" class="form-control">
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <label for="">Teléfono</label>
+                                            <label for="" class="control-label">Teléfono</label>
                                             <input type="text" name="Telefono" class="form-control">
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <label for="">Email</label>
+                                            <label for="" class="control-label">Email</label>
                                             <input type="text" name="Email" class="form-control">
                                         </div>
                                         <div class="col-md-12">
@@ -249,7 +249,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="">Proveedor</label>
+                                <label for="" class="control-label">Proveedor</label>
                                 <select name="Id_Proveedor" id="Id_Proveedor" class="form-control" title="Seleccionar" data-live-search="true">
                                     @foreach($proveedores as $proveedor)
                                         <option value="{{ $proveedor['Id'] }}">{{ $proveedor['Nombre'] }}</option>
@@ -257,22 +257,22 @@
                                 </select>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="">&nbsp;</label><br>
+                                <label for="" class="control-label">&nbsp;</label><br>
                                 <a href="#" id="agregar-proveedor" class="btn btn-link">Agregar proveedor</a>
                             </div>
                             <div class="col-md-12">
                                 <hr>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="">Precio</label>
+                                <label for="" class="control-label">Precio</label>
                                 <input type="number" name="Precio" class="form-control">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="">Fecha</label>
+                                <label for="" class="control-label">Fecha</label>
                                 <input type="text" name="Fecha_Actualizacion" data-role="datepicker" class="form-control">
                             </div>
                             <div class="col-md-12 form-group">
-                                <label for="">Precio oficial</label> <br>
+                                <label for="" class="control-label">Precio oficial</label> <br>
                                 <label class="radio-inline">
                                     <input type="radio" name="Precio_Oficial" value="1"> Si
                                 </label>
@@ -281,11 +281,11 @@
                                 </label>
                             </div>
                             <div class="col-md-12 form-group">
-                                <label for="">Observaciones</label>
+                                <label for="" class="control-label">Observaciones</label>
                                 <textarea name="Observaciones" class="form-control"></textarea>
                             </div>
                             <div class="col-md-12 form-group">
-                                <label for="">Precio oficial calculo</label>
+                                <label for="" class="control-label">Precio oficial calculo</label>
                                 <textarea name="Precio_Calculo" class="form-control"></textarea>
                             </div>
                         </div>

@@ -25,12 +25,24 @@ class RegistroFT extends Request
     {
          $validaciones = [
             "Anio" => "required",
-            "Subdireccion" => "required",
+            "Subdireccion_Id" => "required",
             "Objeto" => "required",
-            "Presupuesto" => "required|numeric",
-            "FechaEntrega" => "required|date",
-            "Observaciones" => "required",
-        ];              
+            "Presupuesto_Estimado" => "required|numeric",
+            "Fecha_Entrega_Estimada" => "required|date",
+            "Observacion" => "required",
+        ];
         return $validaciones;
+    }
+
+
+    public function messages()
+    {
+        return [
+            'Subdireccion_Id.required' => 'El campo subdirección es requerido',
+            'Anio.required' => 'El campo año es requerido',
+            'Presupuesto_Estimado.required' => 'El campo presupuesto estimado es requerido',
+            'Fecha_Entrega_Estimada.required' => 'El campo fecha estimada de entrega es requerido',
+            'Observacion.required' => 'El campo observaciones es requerido'
+        ];
     }
 }

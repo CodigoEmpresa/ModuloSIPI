@@ -29,4 +29,11 @@ class CrearItemRequest extends Request
             'Unidad_De_Medida' => 'required'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'Codigo.required' => 'El campo código es requerido'
+        ];
+    }
 }
