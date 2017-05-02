@@ -24,7 +24,19 @@ class CrearCotizacionRequest extends Request
     public function rules()
     {
         return [
-            //
+            'Id_Proveedor' => 'required',
+            'Precio' => 'required',
+            'Fecha_Actualizacion' => 'required',
+            'Precio_Oficial' => 'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'Id_Proveedor.required' => 'El campo proveedor es requerido',
+            'Fecha_Actualizacion.required' => 'El campo fecha de actualización es requerido',
+            'Precio_Oficial.required' => 'El campo precio oficial es requerido'
         ];
     }
 }

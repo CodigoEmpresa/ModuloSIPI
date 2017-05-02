@@ -201,27 +201,27 @@
                                             <h4>Nuevo proveedor</h4>
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <label for="" class="control-label">Nombre</label>
+                                            <label for="" class="control-label">* Nombre</label>
                                             <input type="text" name="Nombre" class="form-control">
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <label for="" class="control-label">Ciudad</label>
+                                            <label for="" class="control-label">* Ciudad</label>
                                             <input type="text" name="Ciudad" class="form-control">
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <label for="" class="control-label">Contacto</label>
+                                            <label for="" class="control-label">* Contacto</label>
                                             <input type="text" name="Nombre_Contacto" class="form-control">
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <label for="" class="control-label">Dirección</label>
+                                            <label for="" class="control-label">* Dirección</label>
                                             <input type="text" name="Direccion" class="form-control">
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <label for="" class="control-label">Teléfono</label>
+                                            <label for="" class="control-label">* Teléfono</label>
                                             <input type="text" name="Telefono" class="form-control">
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <label for="" class="control-label">Email</label>
+                                            <label for="" class="control-label">* Email</label>
                                             <input type="text" name="Email" class="form-control">
                                         </div>
                                         <div class="col-md-12">
@@ -249,7 +249,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="" class="control-label">Proveedor</label>
+                                <label for="" class="control-label">* Proveedor</label>
                                 <select name="Id_Proveedor" id="Id_Proveedor" class="form-control" title="Seleccionar" data-live-search="true">
                                     @foreach($proveedores as $proveedor)
                                         <option value="{{ $proveedor['Id'] }}">{{ $proveedor['Nombre'] }}</option>
@@ -264,15 +264,15 @@
                                 <hr>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="" class="control-label">Precio</label>
+                                <label for="" class="control-label">* Precio</label>
                                 <input type="number" name="Precio" class="form-control">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="" class="control-label">Fecha</label>
+                                <label for="" class="control-label">* Fecha</label>
                                 <input type="text" name="Fecha_Actualizacion" data-role="datepicker" class="form-control">
                             </div>
                             <div class="col-md-12 form-group">
-                                <label for="" class="control-label">Precio oficial</label> <br>
+                                <label for="" class="control-label">* Precio oficial</label> <br>
                                 <label class="radio-inline">
                                     <input type="radio" name="Precio_Oficial" value="1"> Si
                                 </label>
