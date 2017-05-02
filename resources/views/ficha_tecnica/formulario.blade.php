@@ -130,8 +130,21 @@
                         <input type="hidden" name="_method" value="POST">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <a href="{{ url('/fichaTecnica') }}" class="btn btn-default">Volver</a>
+                        @if ($ficha_tecnica)
+                            <div class="btn-group">
+                                <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Eliminar
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li class="dropdown-header">¿Realmente desea eliminar esta ficha técnica?</li>
+                                    <li><a href="{{ url('fichaTecnica/'.$ficha_tecnica['Id'].'/eliminar') }}">Si</a></li>
+                                    <li><a href="#">No</a></li>
+                                </ul>
+                            </div>
+                        @endif
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
+                    <div class="col-md-12"><br><br><br></div>
                 </form>
             </div>
         </div>

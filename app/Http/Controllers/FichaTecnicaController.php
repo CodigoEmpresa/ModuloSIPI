@@ -28,7 +28,8 @@ class FichaTecnicaController extends Controller
     	$Subdireccion = Subdireccion::all();
 
 		$datos = [
-			'seccion' => 'Gestor de fichas técnicas'
+			'seccion' => 'Gestor de fichas técnicas',
+			'status' => session('status')
 		];
 
 		return view('ficha_tecnica.lista', $datos)
@@ -84,6 +85,15 @@ class FichaTecnicaController extends Controller
 		$ficha_tecnica = FichaTecnica::with('items', 'items.insumos', 'items.cotizaciones', 'items.cotizaciones.proveedor')->find($id);
 
 		return $this->popularFichaTecnica($ficha_tecnica);
+	}
+
+	public function eliminar(Request $request, $id)
+	{
+		$ficha_tecnica = FichaTecnica::with('items', 'items.insumos', 'items.cotizaciones', 'items.cotizaciones.proveedor')->find($id);
+		$ficha_tecnica->items()->detach();
+		$ficha_tecnica->delete();
+
+		return redirect('fichaTecnica')->with('status', 'success');
 	}
 
     public function GetFichaTecnicaDatos(Request $request)

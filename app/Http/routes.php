@@ -47,6 +47,7 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::get('fichaTecnica', 'FichaTecnicaController@indexRegistro');
 	Route::get('fichaTecnica/{id}/editar', 'FichaTecnicaController@editar');
+	Route::get('fichaTecnica/{id}/eliminar', 'FichaTecnicaController@eliminar');
 	Route::get('fichaTecnica/crear', 'FichaTecnicaController@crear');
 	Route::post('fichaTecnica/procesar', 'FichaTecnicaController@procesar');
 
