@@ -1,7 +1,25 @@
 $(function(e)
 {
     var apu = {};
+    var old_apus = $.parseJSON($('input[name="apus"]').val()) || {};
     var table_apu = $('#table_apu').DataTable();
+
+    var ajustarAPU = function(apu, cantidad)
+    {
+        apu.Precio_Oficial = 'NaN';
+        $.each(apu.cotizaciones, function(i, e)
+        {
+            if (e.Precio_Oficial == '1')
+            {
+                apu.Precio_Oficial = e.Precio;
+                return false;
+            }
+        });
+
+        apu.Cantidad = cantidad;
+
+        return apu;
+    }
 
     var procesarAPU = function(current_apu)
     {
@@ -16,12 +34,27 @@ $(function(e)
                 '<td>'+e.Cantidad+'</td>'+
                 '<td>'+e.Precio_Oficial+'</td>'+
                 '<td>'+(e.Cantidad * e.Precio_Oficial)+'</td>'+
-                '<td class="no-sort"> <a class="btn btn-xs btn-primary" href="#" data-toggle="tooltip" data-placement="bottom" title="Remover"><i class="fa fa-trash"></i></a> </td>'+
+                '<td class="no-sort"> <a class="btn btn-xs btn-primary" data-role="Remover" href="#" data-toggle="tooltip" data-placement="bottom" title="Remover"><i class="fa fa-trash"></i></a> </td>'+
             '</tr>');
 
             table_apu.row.add($tr).draw(false);
         });
     }
+
+    $('#table_apu tbody').delegate('a[data-role="Remover"]', 'click', function(e)
+    {
+        delete apu[$(this).closest('tr').data('id')];
+        table_apu.row( $(this).closest('tr') )
+                .remove()
+                .draw(false);
+
+        e.preventDefault();
+    });
+
+    $('#form-ficha-tecnica').on('submit', function(e)
+    {
+        $('input[name="apus"]').val(JSON.stringify(apu));
+    });
 
     $('#agregar-apu').on('click', function(e)
     {
@@ -50,21 +83,18 @@ $(function(e)
             'json'
         ).done(function(apu)
         {
-            apu.Precio_Oficial = 'NaN';
-            $.each(apu.cotizaciones, function(i, e)
-            {
-                if (e.Precio_Oficial == '1')
-                {
-                    apu.Precio_Oficial = e.Precio;
-                    return false;
-                }
-            });
-            apu.Cantidad = cantidad_apu;
-
-            procesarAPU(apu);
+            procesarAPU(ajustarAPU(apu, cantidad_apu));
         }).fail(function(xhr, status, error)
         {
             alert(status);
         });
     });
+
+    if(!$.isEmptyObject(old_apus))
+    {
+        $.each(old_apus, function(i, apu)
+        {
+            procesarAPU(ajustarAPU(apu, apu.pivot.Cantidad));
+        });
+    }
 });

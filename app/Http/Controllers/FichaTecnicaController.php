@@ -40,26 +40,36 @@ class FichaTecnicaController extends Controller
 		$a = FichaTecnica::all()->last();
 
 		if($request->input('Id') == '0')
-			$FichaTecnica = new FichaTecnica;
+			$fichatecnica = new FichaTecnica;
 		else
-			$FichaTecnica = FichaTecnica::find($request->input('Id'));
+			$fichatecnica = FichaTecnica::find($request->input('Id'));
 
 		if($a == null)
-			$Conteo = 500;
+			$conteo = 500;
 		else
-			$Conteo = $a->Codigo_Proceso+1;
+			$conteo = $a->Codigo_Proceso+1;
 
-		$FichaTecnica->Subdireccion_Id = $request->input('Subdireccion_Id');
-		$FichaTecnica->Persona_Id = $this->Usuario[0];
-		$FichaTecnica->Anio = $request->input('Anio');
-		$FichaTecnica->Codigo_Proceso = $request->input('Id') == '0' ? $Conteo : $FichaTecnica->Codigo_Proceso;
-		$FichaTecnica->Objeto = $request->input('Objeto');
-		$FichaTecnica->Presupuesto_Estimado = $request->input('Presupuesto_Estimado');
-		$FichaTecnica->Fecha_Entrega_Estimada = $request->input('Fecha_Entrega_Estimada');
-		$FichaTecnica->Observacion = $request->input('Observacion');
-		$FichaTecnica->save();
+		$fichatecnica->Subdireccion_Id = $request->input('Subdireccion_Id');
+		$fichatecnica->Persona_Id = $this->Usuario[0];
+		$fichatecnica->Anio = $request->input('Anio');
+		$fichatecnica->Codigo_Proceso = $request->input('Id') == '0' ? $conteo : $fichatecnica->Codigo_Proceso;
+		$fichatecnica->Objeto = $request->input('Objeto');
+		$fichatecnica->Presupuesto_Estimado = $request->input('Presupuesto_Estimado');
+		$fichatecnica->Fecha_Entrega_Estimada = $request->input('Fecha_Entrega_Estimada');
+		$fichatecnica->Observacion = $request->input('Observacion');
+		$fichatecnica->save();
 
-		return redirect('fichaTecnica/'.$FichaTecnica->Id.'/editar')->with(['status' => 'success']);
+		$apus = json_decode($request->input('apus'));
+		$to_sync = [];
+
+		foreach ($apus as $apu)
+		{
+			$to_sync[$apu->Id] = ['Cantidad' => $apu->Cantidad];
+		}
+
+		$fichatecnica->items()->sync($to_sync);
+
+		return redirect('fichaTecnica/'.$fichatecnica->Id.'/editar')->with(['status' => 'success']);
     }
 
 	public function crear(Request $request)

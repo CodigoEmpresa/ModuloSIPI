@@ -29,7 +29,7 @@
         @endif
         <div class="col-xs-12">
             <div class="row">
-                <form action="{{ url('fichaTecnica/procesar') }}" method="POST">
+                <form id="form-ficha-tecnica" action="{{ url('fichaTecnica/procesar') }}" method="POST">
                     <div class="form-group col-md-3 {{ $errors->has('Subdireccion_Id') ? 'has-error' : '' }}">
                         <label for="Subdireccion_Id" class="control-label">* Subdirección:</label>
                         <select name="Subdireccion_Id" id="Subdireccion_Id" class="form-control" title="Seleccionar" data-value="{{ $ficha_tecnica ? $ficha_tecnica['Subdireccion_Id'] : old('Subdireccion_Id') }}" data-live-search="true">
@@ -109,11 +109,11 @@
                                 <tr>
                                     <th width="30px">Cod.</th>
                                     <th>APU</th>
-                                    <th width="70px">Unidad de m.</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio</th>
-                                    <th>Total</th>
-                                    <th class="no-sort"></th>
+                                    <th width="100px">Unidad de m.</th>
+                                    <th width="70px">Cantidad</th>
+                                    <th width="100px">Precio</th>
+                                    <th width="100px">Total</th>
+                                    <th width="30px" class="no-sort"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -126,6 +126,7 @@
                     </div>
                     <div class="col-md-12">
                         <input type="hidden" name="Id" value="{{ $ficha_tecnica ? $ficha_tecnica['Id'] : 0 }}">
+                        <input type="hidden" name="apus" value="{{ $ficha_tecnica ? json_encode($ficha_tecnica->items) : '{}' }}">
                         <input type="hidden" name="_method" value="POST">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <a href="{{ url('/fichaTecnica') }}" class="btn btn-default">Volver</a>

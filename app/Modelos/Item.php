@@ -12,7 +12,8 @@ class Item extends Model
 
     public function fichasTecnicas()
     {
-        return $this->belongsToMany('App\Modelos\FichaTecnica', 'Fichas_Tecnicas_Items', 'Id_Item', 'Id_Ficha');
+        return $this->belongsToMany('App\Modelos\FichaTecnica', 'Fichas_Tecnicas_Items', 'Id_Item', 'Id_Ficha')
+                    ->withPivot('Cantidad');
     }
 
     public function insumos()

@@ -30,7 +30,6 @@ $(function()
         },
         select: function (event, ui) {
             event.preventDefault();
-            console.log(ui.item);
             $('input[name="apu"]').val(ui.item.label);
             $('#apu_seleccionado').html('<span>'+ui.item.label+' <i data-role="cancel-add-apu" class="pointer fa fa-close"></i></span>');
             $('#addon_unidad').html(ui.item.unidad_de_medida);

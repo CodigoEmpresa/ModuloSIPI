@@ -20,6 +20,7 @@ class FichaTecnica extends Model
 
     public function items()
     {
-        return $this->belongsToMany('App\Modelos\Item', 'Fichas_Tecnicas_Items', 'Id_Ficha', 'Id_Item');
+        return $this->belongsToMany('App\Modelos\Item', 'Fichas_Tecnicas_Items', 'Id_Ficha', 'Id_Item')
+                    ->withPivot('Cantidad');
     }
 }

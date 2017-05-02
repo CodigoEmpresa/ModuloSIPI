@@ -50,7 +50,7 @@
 				<div class="navbar-collapse collapse" id="navbar-main">
 					<ul class="nav navbar-nav">
 						<li class="{{ $seccion && in_array($seccion, ['Gestor de APU']) ? 'active' : '' }}">
-		                    <a href="{{ URL::to('apu') }}">APU</a>
+		                    <a href="{{ URL::to('apu') }}">Gestor de APUS</a>
 						</li>
 						<li class="{{ $seccion && in_array($seccion, ['Gestor de fichas técnicas']) ? 'active' : '' }}">
 		                    <a href="{{ URL::to('fichaTecnica') }}">Fichas técnicas</a>
