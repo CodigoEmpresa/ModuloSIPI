@@ -268,10 +268,13 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="" class="control-label">&nbsp;</label><br>
-                                <a href="#" id="agregar-proveedor" class="btn btn-link">Agregar</a>
-                                <a href="#" id="editar-proveedor" class="btn btn-link">Editar</a>
+                                <a href="#" id="agregar-proveedor" class="btn btn-link">Agregar proveedor</a>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label for="" class="control-label">&nbsp;</label><br>
+                                <a href="#" data-url="{{ url('/proveedor/obtener') }}" id="editar-proveedor" class="btn btn-link">Editar</a>
                             </div>
                             <div class="col-md-12">
                                 <hr>

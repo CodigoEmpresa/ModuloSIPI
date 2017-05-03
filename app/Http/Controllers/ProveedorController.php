@@ -23,7 +23,7 @@ class ProveedorController extends Controller
 
     public function crear(CrearProveedorRequest $request)
     {
-        $id = $request->input('Id');
+        $id = $request->input('Proveedor_Id');
         if (!$id)
             $proveedor = new Proveedor;
         else
@@ -36,6 +36,13 @@ class ProveedorController extends Controller
         $proveedor->Email = $request->input('Email');
         $proveedor->Nombre_Contacto = $request->input('Nombre_Contacto');
         $proveedor->save();
+
+        return response()->json($proveedor);
+    }
+
+    public function obtener(Request $request, $proveedor = '')
+    {
+        $proveedor = Proveedor::find($proveedor);
 
         return response()->json($proveedor);
     }

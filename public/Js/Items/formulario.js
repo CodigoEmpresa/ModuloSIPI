@@ -190,7 +190,8 @@ $(function()
             else if($(container+' *[name="'+key+'"]').is('input[type="file"]'))
                 $(container+' *[name="'+key+'"]').val('');
             else
-                $(container+' *[name="'+key+'"]').val(value);
+                $(modal+' *[name="'+key+'"]').val(value);
+
         });
     }
 
@@ -586,6 +587,25 @@ $(function()
     $('#agregar-proveedor').on('click', function(e)
     {
         $('#agregar-proveedor-form').show();
+    });
+
+    $('#editar-proveedor').on('click', function(e)
+    {
+        $('#agregar-proveedor-form').show();
+        var Id_Proveedor = $('select[name="Id_Proveedor"]').selectpicker('val');
+
+        if (Id_Proveedor)
+        {
+            $.get(
+                $(this).data('url')+'/'+Id_Proveedor,
+                {},
+                'json'
+            ).done(function(data)
+            {
+                populateForm('#agregar-cotizacion-form', data);
+                $('#agregar-proveedor-form').show();
+            });
+        }
     });
 
     $('#cancelar-proveedor').on('click', function(e)
