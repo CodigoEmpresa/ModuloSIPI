@@ -22,6 +22,8 @@ class CrearTablaFichaTecnica extends Migration
             $table->string('Objeto', 1500);
             $table->string('Presupuesto_Estimado');
             $table->date('Fecha_Entrega_Estimada');
+            $table->date('Fecha_De_Llegada')->nullable();
+            $table->time('Hora_De_Llegada')->nullable();
             $table->string('Observacion', 1500);
             $table->date('Alcance1')->nullable();
             $table->date('Alcance2')->nullable();

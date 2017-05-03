@@ -34,7 +34,7 @@ class InsumoController extends Controller {
 	{
 		$insumos = Insumo::where('Nombre', 'LIKE', '%'.$insumo.'%')
 						->orWhere('Descripcion', 'LIKE', '%'.$insumo.'%')
-						->orWhere('Codigo', 'LIKE', '%'.$insumo.'%')
+						->orWhere('Id', 'LIKE', '%'.$insumo.'%')
 						->get();
 
 		return response()->json($insumos);
@@ -42,7 +42,7 @@ class InsumoController extends Controller {
 
 	public function obtenerInsumo(Request $request, $insumo = '')
 	{
-		$insumo = Insumo::find($insumo);
+		$insumo = Insumo::with('cotizaciones', 'cotizaciones.proveedor')->find($insumo);
 
 		return response()->json($insumo);
 	}
@@ -55,12 +55,10 @@ class InsumoController extends Controller {
 		else
 			$insumo = Insumo::find($id);
 
-		$insumo->Codigo = $request->input('Codigo');
+		$insumo->Id_Item = $request->input('Id_Item');
 		$insumo->Nombre = $request->input('Nombre');
 		$insumo->Descripcion = $request->input('Descripcion');
 		$insumo->Unidad_De_Medida = $request->input('Unidad_De_Medida');
-		$insumo->Grupo = $request->has('Grupo') ? $request->input('Grupo') : null;
-		$insumo->Precio = $request->input('Precio');
 		$insumo->save();
 
 		return response()->json($insumo);

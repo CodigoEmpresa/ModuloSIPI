@@ -24,16 +24,7 @@ class CrearItemRequest extends Request
     public function rules()
     {
         return [
-            'Codigo' => 'required|unique:Items,Codigo,'.$this->input('Id'),
-            'Nombre' => 'required',
-            'Unidad_De_Medida' => 'required'
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'Codigo.required' => 'El campo código es requerido'
+            'Nombre' => 'required'
         ];
     }
 }

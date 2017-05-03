@@ -24,17 +24,8 @@ class CrearInsumoRequest extends Request
     public function rules()
     {
         return [
-            'Codigo' => 'required|unique:Insumos,Codigo,'.$this->input('Id'),
             'Nombre' => 'required',
             'Unidad_De_Medida' => 'required',
-            'Precio' => 'required|numeric'
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'Codigo.required' => 'El campo código es requerido'
         ];
     }
 }

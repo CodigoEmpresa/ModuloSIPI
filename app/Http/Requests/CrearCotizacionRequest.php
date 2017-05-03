@@ -27,7 +27,6 @@ class CrearCotizacionRequest extends Request
             'Id_Proveedor' => 'required',
             'Precio' => 'required',
             'Fecha_Actualizacion' => 'required',
-            'Precio_Oficial' => 'required'
         ];
     }
 
@@ -36,7 +35,6 @@ class CrearCotizacionRequest extends Request
         return [
             'Id_Proveedor.required' => 'El campo proveedor es requerido',
             'Fecha_Actualizacion.required' => 'El campo fecha de actualización es requerido',
-            'Precio_Oficial.required' => 'El campo precio oficial es requerido'
         ];
     }
 }

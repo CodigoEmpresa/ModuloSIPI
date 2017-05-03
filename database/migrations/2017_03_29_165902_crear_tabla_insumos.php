@@ -15,20 +15,25 @@ class CrearTablaInsumos extends Migration
         Schema::create('Insumos', function($table)
         {
             $table->increments('Id');
-            $table->string('Codigo', 50);
+            $table->integer('Id_Item')->unsigned();
             $table->string('Nombre', 100);
             $table->text('Descripcion')->nullable();
             $table->text('Unidad_De_Medida')->nullable();
+            $table->integer('Precio_Oficial')->nullable();
+            $table->integer('Precio_Adjudicado')->nullable();
+            $table->text('Precio_Oficial_Calculo')->nullable();
             $table->timestamps();
+
+            $table->foreign('Id_Item')->references('Id')->on('Items');
         });
 
-        Schema::create('Items_Insumos', function($table)
+        Schema::create('Fichas_Tecnicas_Insumos', function($table)
         {
-            $table->integer('Id_Item')->unsigned();
+            $table->integer('Id_Ficha')->unsigned();
             $table->integer('Id_Insumo')->unsigned();
             $table->integer('Cantidad')->unsigned()->default(0);
 
-            $table->foreign('Id_Item')->references('Id')->on('Items');
+            $table->foreign('Id_Ficha')->references('Id')->on('ficha_tecnica');
             $table->foreign('Id_Insumo')->references('Id')->on('Insumos');
         });
     }
@@ -40,13 +45,18 @@ class CrearTablaInsumos extends Migration
      */
     public function down()
     {
-        Schema::table('Items_Insumos', function($table)
+        Schema::table('Insumos', function($table)
         {
             $table->dropForeign(['Id_Item']);
+        });
+
+        Schema::table('Fichas_Tecnicas_Insumos', function($table)
+        {
+            $table->dropForeign(['Id_Ficha']);
             $table->dropForeign(['Id_Insumo']);
         });
 
-        Schema::drop('Items_Insumos');
+        Schema::drop('Fichas_Tecnicas_Insumos');
         Schema::drop('Insumos');
     }
 }

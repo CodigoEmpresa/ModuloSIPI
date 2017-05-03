@@ -27,15 +27,13 @@ class CrearTablaCotizacion extends Migration
         Schema::create('Cotizaciones', function($table)
         {
             $table->increments('Id');
-            $table->integer('Id_Item')->unsigned();
+            $table->integer('Id_Insumo')->unsigned();
             $table->integer('Id_Proveedor')->unsigned();
-            $table->boolean('Precio_Oficial')->default(0);
             $table->integer('Precio')->unsigned();
-            $table->string('Precio_Calculo')->nullable();
             $table->date('Fecha_Actualizacion');
             $table->timestamps();
 
-            $table->foreign('Id_Item')->references('Id')->on('Items');
+            $table->foreign('Id_Insumo')->references('Id')->on('Insumos');
             $table->foreign('Id_Proveedor')->references('Id')->on('Proveedores');
         });
     }
@@ -49,7 +47,7 @@ class CrearTablaCotizacion extends Migration
     {
         Schema::table('Cotizaciones', function($table)
         {
-            $table->dropForeign(['Id_Item']);
+            $table->dropForeign(['Id_Insumo']);
             $table->dropForeign(['Id_Proveedor']);
         });
 

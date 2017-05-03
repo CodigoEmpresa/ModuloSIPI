@@ -26,34 +26,18 @@ class ItemController extends Controller {
 	public function inicio()
 	{
 		$datos = [
-			'seccion' => 'Gestor de APU',
+			'seccion' => 'Gestor de Insumos',
 			'proveedores' => Proveedor::all()
 		];
 
 		return view('Items.formulario', $datos);
 	}
 
-	public function buscarUnidadesDeMedida(Request $request, $unidad = '')
-	{
-		$unidades_items = Item::where('Unidad_De_Medida', 'LIKE', '%'.$unidad.'%')->groupBy('Unidad_De_Medida')->get();
-		$unidades_insumos = Insumo::where('Unidad_De_Medida', 'LIKE', '%'.$unidad.'%')->groupBy('Unidad_De_Medida')->get();
-		$unidades_de_medida = array_merge($unidades_items->pluck('Unidad_De_Medida')->toArray(), $unidades_insumos->pluck('Unidad_De_Medida')->toArray());
-		$unidades = collect([]);
-
-		foreach ($unidades_de_medida as $value) {
-			$unidades->put($value, $value);
-		}
-
-		$unidades->sort();
-
-		return response()->json($unidades->toArray());
-	}
-
 	public function buscarItem(Request $request, $item = '')
 	{
-		$items = Item::with('insumos', 'cotizaciones', 'cotizaciones.proveedor')->where('Nombre', 'LIKE', '%'.$item.'%')
+		$items = Item::with('insumos', 'insumos')->where('Nombre', 'LIKE', '%'.$item.'%')
 						->orWhere('Descripcion', 'LIKE', '%'.$item.'%')
-						->orWhere('Codigo', 'LIKE', '%'.$item.'%')
+						->orWhereRaw('LPAD(Id, 4, "0") LIKE "%'.$item.'%"')
 						->get();
 
 		return response()->json($items);
@@ -61,7 +45,7 @@ class ItemController extends Controller {
 
 	public function obtenerItem(Request $request, $item = 0)
 	{
-		$item = Item::with('insumos', 'cotizaciones', 'cotizaciones.proveedor')->find($item);
+		$item = Item::with('insumos')->find($item);
 
 		return response()->json($item);
 	}
@@ -74,10 +58,8 @@ class ItemController extends Controller {
 		else
 			$item = Item::find($id);
 
-		$item->Codigo = $request->input('Codigo');
 		$item->Nombre = $request->input('Nombre');
 		$item->Descripcion = $request->input('Descripcion');
-		$item->Unidad_De_Medida = $request->input('Unidad_De_Medida');
 		$item->save();
 
 		return response()->json($item);

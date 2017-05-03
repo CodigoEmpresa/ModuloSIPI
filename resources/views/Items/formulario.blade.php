@@ -1,4 +1,4 @@
-@extends('master')
+@extends('master', ['no_header' => true, 'full_width' => true])
 @section('script')
     @parent
     <script src="{{ asset('public/Js/Items/formulario.js') }}"></script>
@@ -7,20 +7,20 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
+            <br><br>
+        </div>
+        <div class="col-md-12">
             <div class="row">
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <label for="" class="control-label">APU <a href="#" id="agregar-item" class="btn-sm btn-link">Agregar</a></label>
+                            <label for="" class="control-label">Item <a href="#" id="agregar-item" class="btn-sm btn-link">Agregar</a></label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="buscador-items" aria-label="..." placeholder="Buscar">
                                 <div class="input-group-btn">
                                     <button id="buscar-item" type="button" class="btn btn-default" data-url="{{ url('item/buscar') }}" name="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <ul class="list-group" id="mantener-item"></ul>
                         </div>
                         <div class="col-md-12">
                             <ul class="list-group" id="lista-item" data-url="{{ url('/item') }}"></ul>
@@ -31,15 +31,7 @@
                     <div class="row">
                         <div class="col-md-12 form-group">
                             <label for="" class="control-label">Insumos <a href="#" id="agregar-insumo" class="btn-sm btn-link">Agregar</a></label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="buscador-insumos" aria-label="..." placeholder="Buscar">
-                                <div class="input-group-btn">
-                                    <button id="buscar-insumo" type="button" class="btn btn-default" data-url="{{ url('insumo/buscar') }}"  name="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <ul class="list-group" id="mantener-insumo"></ul>
+                            <p class="form-control-static">Lista de insumos</p>
                         </div>
                         <div class="col-md-12">
                             <ul class="list-group" id="lista-insumo" data-url="{{ url('/insumo') }}"></ul>
@@ -79,12 +71,8 @@
                                 </div>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="" class="control-label">* Código</label>
-                                <input type="text" name="Codigo" class="form-control">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="" class="control-label">* Unidad de medida</label>
-                                <input type="text" name="Unidad_De_Medida" class="form-control" data-url="{{ url('/item/unidades') }}">
+                                <label for="" class="control-label">Código</label>
+                                <p class="form-control-static" name="Codigo">Automático</p>
                             </div>
                             <div class="col-md-12 form-group">
                                 <label for="" class="control-label">* Nombre</label>
@@ -124,9 +112,9 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-12 form-group">
                                 <label for="" class="control-label">* Código</label>
-                                <input type="text" name="Codigo" class="form-control">
+                                <p class="form-control-static" name="Codigo"></p>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="" class="control-label">* Unidad de medida</label>
@@ -141,31 +129,18 @@
                                 <textarea name="Descripcion" class="form-control"></textarea>
                             </div>
                             <div class="col-md-12 form-group">
-                                <label for="" class="control-label">Grupo</label> <br>
-                                <label class="radio-inline">
-                                    <input type="radio" name="Grupo" value="Materiales"> Materiales
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="Grupo" value="Maquinaria"> Maquinaria
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="Grupo" value="Mano de obra"> Mano de obra
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="Grupo" value="Transporte"> Transporte
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="Grupo" value="Otro"> Otro
-                                </label>
+                                <label for="" class="control-label">Precio oficial</label>
+                                <p class="form-control-static" name="Precio_Oficial">Sin determinar</p>
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label for="" class="control-label">* Precio</label>
-                                <input type="text" name="Precio" class="form-control">
+                            <div class="col-md-12 form-group">
+                                <label for="" class="control-label">Precio oficial detalles</label>
+                                <p class="form-control-static" name="Precio_Oficial_Calculo">Sin determinar</p>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <input type="hidden" name="Id" value="0">
+                        <input type="hidden" name="Id_Item" value="0">
                         <input type="hidden" name="_method" value="POST">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
@@ -272,27 +247,14 @@
                                 <input type="text" name="Fecha_Actualizacion" data-role="datepicker" class="form-control">
                             </div>
                             <div class="col-md-12 form-group">
-                                <label for="" class="control-label">* Precio oficial</label> <br>
-                                <label class="radio-inline">
-                                    <input type="radio" name="Precio_Oficial" value="1"> Si
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="Precio_Oficial" value="0"> No
-                                </label>
-                            </div>
-                            <div class="col-md-12 form-group">
                                 <label for="" class="control-label">Observaciones</label>
                                 <textarea name="Observaciones" class="form-control"></textarea>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <label for="" class="control-label">Precio oficial calculo</label>
-                                <textarea name="Precio_Calculo" class="form-control"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <input type="hidden" name="Id" value="0">
-                        <input type="hidden" name="Id_Item" value="0">
+                        <input type="hidden" name="Id_Insumo" value="0">
                         <input type="hidden" name="_method" value="POST">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>

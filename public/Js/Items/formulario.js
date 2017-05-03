@@ -9,14 +9,14 @@ $(function()
     var no_se_encontraron_insumos = '';
     var no_se_encontraron_cotizaciones = '';
 
-    function itemHtml(item, islock)
+    function itemHtml(item)
     {
-        return '<li data-id="'+item.Id+'" class="item list-group-item '+(islock ? 'lock' : 'unlock')+'">'+
-                    '<h5 data-islock="'+(islock ? 'lock' : 'unlock')+'" class="pointer"><i class="fa '+(islock ? 'fa-lock' : 'fa-unlock-alt')+'"></i> <span data-rel="Nombre">'+item.Nombre+'</span> (<span data-rel="Codigo">'+item.Codigo+'</span>)</h5>'+
+        return '<li data-id="'+item.Id+'" class="item list-group-item">'+
+                    '<h5><span data-rel="Codigo">'+item.Id.pad(4)+'</span> | <span data-rel="Nombre">'+item.Nombre+'</span></h5>'+
                     '<div class="row">'+
                         '<div class="col-md-12">'+
                             '<small>'+
-                                '<strong>Unidad:</strong> <span data-rel="Unidad_De_Medida">'+item.Unidad_De_Medida+'</span>'+
+                                '<strong>Descripcion:</strong> <span data-rel="Descripcion">'+(item.Descripcion ? item.Descripcion.substring(0, 100) : 'Sin descripción')+'</span>'+
                             '</small>'+
                         '</div>'+
                         '<div class="col-md-12">'+
@@ -32,39 +32,35 @@ $(function()
                 '</li>';
     }
 
-    function insumoHtml(insumo, enitem)
+    function insumoHtml(insumo)
     {
-        return '<li data-id="'+insumo.Id+'" class="insumo list-group-item '+(enitem ? 'seleccionado' : '')+'">'+
-                    '<h5><span data-rel="Nombre">'+insumo.Nombre+'</span> (<span data-rel="Codigo">'+insumo.Codigo+'</span>)</h5>'+
+        return '<li data-id="'+insumo.Id+'" class="insumo list-group-item">'+
+                    '<h5><span data-rel="Codigo">'+insumo.Id_Item.pad(4)+'-'+insumo.Id.pad(3)+'</span> | <span data-rel="Nombre">'+insumo.Nombre+'</span></h5>'+
                     '<div class="row">'+
-                        '<div class="col-md-6">'+
+                        '<div class="col-md-12">'+
                             '<small>'+
                                 '<strong>Unidad:</strong> <span data-rel="Unidad_De_Medida">'+insumo.Unidad_De_Medida+'</span>'+
                             '</small>'+
                         '</div>'+
-                        '<div class="col-md-6">'+
+                        '<div class="col-md-12">'+
                             '<small>'+
-                                '<strong>Precio:</strong> $ <span data-rel="Precio">'+insumo.Precio+'</span>'+
+                                '<strong>Descripción:</strong> <span data-rel="Descripcion">'+(insumo.Descripcion ? insumo.Descripcion.substring(0, 100) : 'Sin descripción')+'</span>'+
                             '</small>'+
                         '</div>'+
-                        (enitem ?
-                            '<div class="col-md-6">'+
-                                '<small>'+
-                                    '<strong>Cantidad:</strong> <span data-rel="Cantidad">'+insumo.pivot.Cantidad+'</span>'+
-                                '</small>'+
-                            '</div>'+
-                            '<div class="col-md-6">'+
-                                '<small>'+
-                                    '<strong>Total:</strong> $ <span data-rel="Total">'+(+insumo.pivot.Cantidad * insumo.Precio)+'</span>'+
-                                '</small>'+
-                            '</div>'
-                            :
-                            ''
-                        )+
+                        '<div class="col-md-12">'+
+                            '<small>'+
+                                '<strong>Precio oficial:</strong> <span data-rel="Precio">'+(insumo.Precio_Oficial ? insumo.Precio_Oficial : 'Sin determinar')+'</span>'+
+                            '</small>'+
+                        '</div>'+
+                        '<div class="col-md-12">'+
+                            '<small>'+
+                                '<strong>Calculo precio oficial:</strong> <span data-rel="Precio">'+(insumo.Precio_Oficial_Calculo ? insumo.Precio_Oficial_Calculo : 'Sin determinar')+'</span>'+
+                            '</small>'+
+                        '</div>'+
                     '</div>'+
                     '<div class="row">'+
                         '<div class="col-md-12">'+
-                            (enitem ? '<a data-role="remover" class="label label-primary">Remover</a> ' : '<a data-role="agregar" class="label label-primary">Agregar</a> ')+
+                            '<a data-role="seleccionar" class="label label-primary">Seleccionar</a> '+
                             '<a data-role="editar" class="label label-default">Editar</a>'+
                         '</div>'+
                     '</div>'+
@@ -73,8 +69,8 @@ $(function()
 
     function cotizacionHtml(cotizacion)
     {
-        return '<li data-id="'+cotizacion.Id+'" class="cotizacion list-group-item '+(cotizacion.Precio_Oficial ? 'oficial' : '')+' seleccionado">'+
-                    '<h5>'+(cotizacion.Precio_Oficial ? '<i class="fa fa-star" aria-hidden="true"></i> ' : '')+' <span data-rel="Nombre">'+cotizacion.proveedor.Nombre+'</span></h5>'+
+        return '<li data-id="'+cotizacion.Id+'" class="cotizacion seleccionado list-group-item">'+
+                    '<h5><span data-rel="Nombre">'+cotizacion.proveedor.Nombre+'</span></h5>'+
                     '<div class="row">'+
                         '<div class="col-md-12">'+
                             '<small>'+
@@ -83,7 +79,12 @@ $(function()
                         '</div>'+
                         '<div class="col-md-12">'+
                             '<small>'+
-                                '<strong>Precio:</strong> $ <span data-rel="Precio">'+cotizacion.Precio+'</span>'+
+                                '<strong>Observaciones:</strong> <span data-rel="Observaciones">'+cotizacion.Observaciones+'</span>'+
+                            '</small>'+
+                        '</div>'+
+                        '<div class="col-md-12">'+
+                            '<small>'+
+                                '<strong>Precio:</strong> <span data-rel="Precio">'+cotizacion.Precio+'</span>'+
                             '</small>'+
                         '</div>'+
                     '</div>'+
@@ -97,11 +98,11 @@ $(function()
 
     function establecerItemSeleccionado(id)
     {
-        $('#lista-item .item, #mantener-item .item').removeClass('seleccionado').find('a[data-role="seleccionar"]').text('Seleccionar');
+        $('#lista-item .item').removeClass('seleccionado').find('a[data-role="seleccionar"]').text('Seleccionar');
         if(id !== 0)
         {
-            $('#lista-item .item[data-id="'+id+'"], #mantener-item .item[data-id="'+id+'"]').addClass('seleccionado');
-            $('#lista-item .item[data-id="'+id+'"], #mantener-item .item[data-id="'+id+'"]').find('a[data-role="seleccionar"]').text('Cancelar');
+            $('#lista-item .item[data-id="'+id+'"]').addClass('seleccionado');
+            $('#lista-item .item[data-id="'+id+'"]').find('a[data-role="seleccionar"]').text('Cancelar');
         }
 
         item_seleccionado = id;
@@ -115,6 +116,13 @@ $(function()
 
     function establecerInsumoSeleccionado(id)
     {
+        $('#lista-insumo .insumo').removeClass('seleccionado').find('a[data-role="seleccionar"]').text('Seleccionar');
+        if(id !== 0)
+        {
+            $('#lista-insumo .insumo[data-id="'+id+'"]').addClass('seleccionado');
+            $('#lista-insumo .insumo[data-id="'+id+'"]').find('a[data-role="seleccionar"]').text('Cancelar');
+        }
+
         insumo_seleccionado = id;
     }
 
@@ -139,18 +147,25 @@ $(function()
         $div_errors.show();
     }
 
-    function populateModal(modal, item)
+    function populateForm(contaier, item)
     {
         $.each(item, function(key, value)
         {
-            if($(modal+' *[name="'+key+'"]').is(':radio'))
-                $(modal+' *[name="'+key+'"][value="'+value+'"]').trigger('click');
-            else if($(modal+' *[name="'+key+'"]').is('select'))
-                $(modal+' *[name="'+key+'"]').selectpicker('val', value);
+            value = value ? value : '';
+            if($(contaier+' *[name="'+key+'"]').is(':radio'))
+                $(contaier+' *[name="'+key+'"][value="'+value+'"]').trigger('click');
+            else if($(contaier+' *[name="'+key+'"]').is('select'))
+                $(contaier+' *[name="'+key+'"]').selectpicker('val', value);
+            else if($(contaier+' *[name="'+key+'"]').is('p'))
+                $(contaier+' *[name="'+key+'"]').text(value);
             else
-                $(modal+' *[name="'+key+'"]').val(value);
-
+                $(contaier+' *[name="'+key+'"]').val(value);
         });
+    }
+
+    function populateModal(modal, item)
+    {
+        populateForm(modal, item);
 
         $(modal).modal('show');
     }
@@ -160,39 +175,42 @@ $(function()
     {
         var matcher = $('input[name="buscador-items"]').val();
 
-        $.get(
-            $(this).data('url')+'/'+matcher,
-            {},
-            'json'
-        )
-        .done(function(data)
+        if(matcher.length > 0)
         {
-            var html = '';
-            var item_seleccionado = obtenerItemSeleccionado();
-
-            if (item_seleccionado != 0)
+            $.get(
+                $(this).data('url')+'/'+matcher,
+                {},
+                'json'
+            )
+            .done(function(data)
             {
-                html += $('.item.unlock[data-id="'+item_seleccionado+'"]').length ? $('.item.unlock[data-id="'+item_seleccionado+'"]').clone().wrap('<div>').parent().html() : '';
-            }
+                var html = '';
+                var item_seleccionado = obtenerItemSeleccionado();
 
-            if (data.length)
-            {
-                $.each(data, function(i, e)
+                if (item_seleccionado != 0)
                 {
-                    if (!$('#mantener-item .item[data-id="'+e.Id+'"]').length && !$('.item.seleccionado[data-id="'+e.Id+'"]').length)
-                        html += itemHtml(e, false);
-                });
-            } else {
-                html += no_se_encontraron_resultados;
-            }
+                    html += $('.item[data-id="'+item_seleccionado+'"]').length ? $('.item[data-id="'+item_seleccionado+'"]').clone().wrap('<div>').parent().html() : '';
+                }
 
-            $('#lista-item').html(html);
-        }).fail(function(xhr, status, error)
-        {
-            var html = no_se_encontraron_resultados;
+                if (data.length)
+                {
+                    $.each(data, function(i, e)
+                    {
+                        if (!$('.item.seleccionado[data-id="'+e.Id+'"]').length)
+                            html += itemHtml(e, false);
+                    });
+                } else {
+                    html += no_se_encontraron_resultados;
+                }
 
-            $('#lista-item').html(html);
-        });
+                $('#lista-item').html(html);
+            }).fail(function(xhr, status, error)
+            {
+                var html = no_se_encontraron_resultados;
+
+                $('#lista-item').html(html);
+            });
+        }
     });
 
     // modal-items
@@ -200,8 +218,7 @@ $(function()
     {
         var item = {
             Id: 0,
-            Codigo: '',
-            Unidad_De_Medida: '',
+            Codigo: 'Automático',
             Nombre: '',
             Descripcion: ''
         }
@@ -222,14 +239,14 @@ $(function()
             var $div_errors = $('#modal-agregar-item').find('.errores');
             $div_errors.hide();
 
-            var en_lista = !!$('#lista-item .item[data-id="'+item.Id+'"], #mantener-item .item[data-id="'+item.Id+'"]').length;
+            var en_lista = !!$('#lista-item .item[data-id="'+item.Id+'"]').length;
 
             if (en_lista)
             {
                 var panel = $('.item[data-id="'+item.Id+'"]');
+                panel.find('span[data-rel="Codigo"]').text(item.Id.pad(4));
                 panel.find('span[data-rel="Nombre"]').text(item.Nombre);
-                panel.find('span[data-rel="Codigo"]').text(item.Codigo);
-                panel.find('span[data-rel="Unidad_De_Medida"]').text(item.Unidad_De_Medida);
+                panel.find('span[data-rel="Descripcion"]').text(item.Descripcion ? item.Descripcion : 'Sin descripción');
             } else {
                 var panel = itemHtml(item);
                 $('#lista-item').append(panel);
@@ -253,7 +270,7 @@ $(function()
     });
 
     // lista-items
-    $('#lista-item, #mantener-item').delegate('a[data-role="editar"]', 'click', function(e)
+    $('#lista-item').delegate('a[data-role="editar"]', 'click', function(e)
     {
         var id = $(this).closest('.item').data('id');
 
@@ -261,11 +278,12 @@ $(function()
             url_item+'/obtener/'+id,
             {},
             'json'
-        ).done(function(data)
+        ).done(function(item)
         {
-            if (data)
+            if (item)
             {
-                populateModal('#modal-agregar-item', data);
+                item.Codigo = item.Id.pad(4);
+                populateModal('#modal-agregar-item', item);
             }
         }).fail(function(xhr, status, error)
         {
@@ -275,7 +293,7 @@ $(function()
         e.preventDefault();
     });
 
-    $('#lista-item, #mantener-item').delegate('a[data-role="seleccionar"]', 'click', function(e)
+    $('#lista-item').delegate('a[data-role="seleccionar"]', 'click', function(e)
     {
         var id = $(this).closest('.item').data('id');
         if(id == obtenerItemSeleccionado())
@@ -296,7 +314,6 @@ $(function()
                 if (data)
                 {
                     var html_insumos = '';
-                    var html_cotizaciones = '';
                     if (data)
                     {
                         // popular lista de insumos
@@ -311,85 +328,19 @@ $(function()
                             html_insumos = no_se_encontraron_insumos;
                         }
 
-                        if (data.cotizaciones.length)
-                        {
-                            $.each(data.cotizaciones, function(i, cotizacion)
-                            {
-                                html_cotizaciones += cotizacionHtml(cotizacion);
-                            });
-                        } else {
-                            html_cotizaciones = no_se_encontraron_cotizaciones;
-                        }
-
-                        $('#mantener-insumo').html(html_insumos);
-                        $('#lista-cotizaciones').html(html_cotizaciones);
+                        $('#lista-insumo').html(html_insumos);
                     }
                 }
             }).fail(function(xhr, status, error)
             {
                 var html_insumos = no_se_encontraron_insumos;
-
-                $('#mantener-insumo').html(html_insumos);
+                $('#lista-insumo').html(html_insumos);
             });
         } else {
-            $('#mantener-insumo').html('');
-            $('#lista-cotizaciones').html('');
+            $('#lista-insumo').html('');
         }
-
-        $('#lista-insumo').html('');
 
         e.preventDefault();
-    });
-
-    $('#lista-item, #mantener-item').delegate('*[data-islock]', 'click', function(e)
-    {
-        var islock = $(this).attr('data-islock');
-        var panel = $(this).closest('.item').clone(true);
-        $(this).closest('.item').remove();
-
-        if(islock == 'lock')
-        {
-            panel.removeClass('lock').addClass('unlock').find('h5').attr('data-islock', 'unlock').find('i').removeClass('fa-lock').addClass('fa-unlock-alt');
-            $('#lista-item').find('.item[data-id="'+panel.data('id')+'"]').remove();
-            $('#lista-item').prepend(panel);
-        } else if(islock == 'unlock') {
-            panel.removeClass('unlock').addClass('lock').find('h5').attr('data-islock', 'lock').find('i').removeClass('fa-unlock-alt').addClass('fa-lock');
-            $('#mantener-item').find('.item[data-id="'+panel.data('id')+'"]').remove();
-            $('#mantener-item').append(panel);
-        }
-    });
-
-    // buscador-insumos
-    $('#buscar-insumo').on('click', function(e)
-    {
-        var matcher = $('input[name="buscador-insumos"]').val();
-
-        $.get(
-            $(this).data('url')+'/'+matcher,
-            {},
-            'json'
-        )
-        .done(function(data)
-        {
-            var html = '';
-            if (data.length)
-            {
-                $.each(data, function(i, e)
-                {
-                    if (!$('#mantener-insumo .insumo[data-id="'+e.Id+'"]').length && !$('.insumo.seleccionado[data-id="'+e.Id+'"]').length)
-                        html += insumoHtml(e, false);
-                });
-            } else {
-                html += no_se_encontraron_resultados;
-            }
-
-            $('#lista-insumo').html(html);
-        }).fail(function(xhr, status, error)
-        {
-            var html = no_se_encontraron_resultados;
-
-            $('#lista-insumo').html(html);
-        });
     });
 
     // modal-insumos
@@ -397,15 +348,30 @@ $(function()
     {
         var insumo = {
             Id: 0,
-            Codigo: '',
+            Id_Item: obtenerItemSeleccionado(),
+            Codigo: 'Automático',
             Unidad_De_Medida: '',
             Nombre: '',
             Descripcion: '',
-            Grupo: '',
-            Precio: ''
+            Precio_Oficial: 'Sin determinar',
+            Precio_Oficial_Calculo: 'Sin determinar',
         }
 
-        populateModal('#modal-agregar-insumo', insumo);
+        if(obtenerItemSeleccionado() == 0)
+        {
+            bootbox.alert({
+                title: 'Error',
+                message: 'Debe seleccionar un item para agregar un insumo',
+                buttons: {
+                    ok: {
+                        label: 'Volver',
+                        className: 'btn-default'
+                    }
+                }
+            });
+        } else {
+            populateModal('#modal-agregar-insumo', insumo);
+        }
         e.preventDefault();
     });
 
@@ -420,6 +386,7 @@ $(function()
         {
             var $div_errors = $('#modal-agregar-insumos').find('.errores');
             $div_errors.hide();
+            insumo.Id_Item = +insumo.Id_Item;
 
             var en_lista = !!$('#lista-insumo .insumo[data-id="'+insumo.Id+'"], #mantener-insumo .insumo[data-id="'+insumo.Id+'"]').length;
 
@@ -427,14 +394,10 @@ $(function()
             {
                 var panel = $('.insumo[data-id="'+insumo.Id+'"]');
                 panel.find('span[data-rel="Nombre"]').text(insumo.Nombre);
-                panel.find('span[data-rel="Codigo"]').text(insumo.Codigo);
+                panel.find('span[data-rel="Descripcion"]').text(insumo.Descripcion);
                 panel.find('span[data-rel="Unidad_De_Medida"]').text(insumo.Unidad_De_Medida);
-                panel.find('span[data-rel="Precio"]').text(insumo.Precio);
-
-                if(panel.find('span[data-rel="Cantidad"]').length)
-                {
-                    panel.find('span[data-rel="Total"]').text(+panel.find('span[data-rel="Cantidad"]').text() * +panel.find('span[data-rel="Precio"]').text());
-                }
+                panel.find('span[data-rel="Precio_Oficial"]').text(insumo.Precio_Oficial);
+                panel.find('span[data-rel="Precio_Oficial_Calculo"]').text(insumo.Precio_Oficial_Calculo);
             } else {
                 var panel = insumoHtml(insumo, false);
                 $('#lista-insumo').append(panel);
@@ -458,7 +421,7 @@ $(function()
     });
 
     // lista-insumos
-    $('#lista-insumo, #mantener-insumo').delegate('a[data-role="editar"]', 'click', function(e)
+    $('#lista-insumo').delegate('a[data-role="editar"]', 'click', function(e)
     {
         var id = $(this).closest('.insumo').data('id');
 
@@ -470,6 +433,10 @@ $(function()
         {
             if (data)
             {
+                data.Codigo = data.Id_Item.pad(4)+'-'+data.Id.pad(3);
+                data.Precio_Oficial = data.Precio_Oficial ? data.Precio_Oficial : 'Sin determinar';
+                data.Precio_Oficial_Calculo = data.Precio_Oficial_Calculo ? data.Precio_Oficial_Calculo : 'Sin determinar';
+
                 populateModal('#modal-agregar-insumo', data);
             }
         }).fail(function(xhr, status, error)
@@ -480,123 +447,75 @@ $(function()
         e.preventDefault();
     });
 
-    $('#lista-insumo').delegate('a[data-role="agregar"]', 'click', function(e)
+    $('#lista-insumo').delegate('a[data-role="seleccionar"]', 'click', function(e)
     {
         var id = $(this).closest('.insumo').data('id');
-        establecerInsumoSeleccionado(id);
 
-        if(obtenerItemSeleccionado() == 0)
+        if(id == obtenerInsumoSeleccionado())
         {
-            bootbox.alert({
-                title: 'Error',
-                message: 'Debe seleccionar un APU para agregar el insumo',
-                buttons: {
-                    ok: {
-                        label: 'Volver',
-                        className: 'btn-default'
+            establecerInsumoSeleccionado(0);
+        } else {
+            establecerInsumoSeleccionado(id);
+        }
+
+        if(obtenerInsumoSeleccionado() != 0)
+        {
+            $.get(
+                url_insumo+'/obtener/'+obtenerInsumoSeleccionado(),
+                {},
+                'json'
+            ).done(function(data)
+            {
+                if (data)
+                {
+                    var html_cotizaciones = '';
+                    if (data)
+                    {
+                        // popular lista de cotizaciones
+                        if (data.cotizaciones.length)
+                        {
+                            $.each(data.cotizaciones, function(i, cotizacion)
+                            {
+                                html_cotizaciones += cotizacionHtml(cotizacion, true);
+                                $('#lista-cotizaciones .cotizaciones[data-id="'+cotizacion.Id+'"]').remove();
+                            });
+                        } else {
+                            html_cotizaciones = no_se_encontraron_cotizaciones;
+                        }
+
+                        $('#lista-cotizaciones').html(html_cotizaciones);
                     }
                 }
+            }).fail(function(xhr, status, error)
+            {
+                var html_cotizaciones = no_se_encontraron_cotizaciones;
+                $('#lista-cotizaciones').html(html_cotizaciones);
             });
         } else {
-            bootbox.prompt({
-                title: 'Cantidad',
-                inputType: 'number',
-                buttons: {
-                    cancel: {
-                        label: 'Volver',
-                        className: 'btn-default'
-                    },
-                    confirm: {
-                        label: 'Agregar',
-                        className: 'btn-primary'
-                    }
-                },
-                callback: function(result)
-                {
-                    if(result != null)
-                    {
-                        if(isNaN(+result))
-                            result = 0;
-                        $.post(
-                            url_item+'/agregar_insumo',
-                            {
-                                item: obtenerItemSeleccionado(),
-                                insumo: obtenerInsumoSeleccionado(),
-                                cantidad: result
-                            },
-                            'json'
-                        ).done(function(data)
-                        {
-                            if (data)
-                            {
-                                var html_insumos = '';
-                                if (data)
-                                {
-                                    // popular lista de insumos
-                                    if (data.insumos.length)
-                                    {
-                                        $.each(data.insumos, function(i, insumo)
-                                        {
-                                            html_insumos += insumoHtml(insumo, true);
-                                        });
-
-                                        $('#lista-insumo .insumo[data-id="'+obtenerInsumoSeleccionado()+'"]').remove();
-                                        establecerInsumoSeleccionado(0);
-                                    }
-
-                                    $('#mantener-insumo').html(html_insumos);
-                                }
-                            }
-                        }).fail(function(xhr, status, error)
-                        {
-                            alert(error);
-                        });
-                    }
-                }
-            });
+            $('#lista-insumo').html('');
         }
+
+        e.preventDefault();
     });
 
-    $('#lista-insumo, #mantener-insumo').delegate('a[data-role="remover"]', 'click', function(e)
-    {
-        var id = $(this).closest('.insumo').data('id');
-
-        $.post(
-            url_item+'/remover_insumo',
-            {
-                item: obtenerItemSeleccionado(),
-                insumo: id
-            },
-            'json'
-        ).done(function(data)
-        {
-            $('#mantener-insumo .insumo[data-id="'+id+'"]').remove();
-            var panel = insumoHtml(data, false);
-            $('#lista-insumo').append(panel);
-        }).fail(function(xhr, status, error)
-        {
-            alert(error);
-        });
-    });
 
     // modal-cotizacion
     $('#agregar-cotizacion').on('click', function(e)
     {
         var item = {
             Id: 0,
-            Id_Item: obtenerItemSeleccionado(),
+            Id_Insumo: obtenerInsumoSeleccionado(),
             Id_Proveedor: '',
             Precio: '',
-            Precio_Oficial: '0',
-            Precio_Calculo: '',
+            Observaciones: '',
             Fecha_Actualizacion: ''
         }
 
-        if(obtenerItemSeleccionado() == 0)
+        if(obtenerInsumoSeleccionado() == 0)
         {
             bootbox.alert({
                 title: 'Error',
-                message: 'Debe seleccionar un APU para agregar una cotización',
+                message: 'Debe seleccionar un insumo para agregar una cotización',
                 buttons: {
                     ok: {
                         label: 'Volver',
@@ -665,26 +584,13 @@ $(function()
                 $div_errors.hide();
 
                 var en_lista = !!$('#lista-cotizaciones .cotizacion[data-id="'+cotizacion.Id+'"]').length;
-                var oficial = $('#lista-cotizaciones .cotizacion.oficial');
-
-                if (oficial)
-                {
-                    var id = oficial.attr('data-id');
-                    if (cotizacion.Precio_Oficial == '1' && id != cotizacion.Id)
-                    {
-                        $('#lista-cotizaciones .cotizacion').removeClass('oficial');
-                        $('#lista-cotizaciones h5 i').remove();
-                    }
-                }
 
                 if (en_lista)
                 {
                     var panel = $('#lista-cotizaciones').find('.cotizacion[data-id="'+cotizacion.Id+'"]');
-                    if (cotizacion.Precio_Oficial == '1')
-                        panel.addClass("oficial");
-
-                    panel.find('h5').html((cotizacion.Precio_Oficial == '1' ? '<i class="fa fa-star" aria-hidden="true"></i>' : '')+' <span data-rel="Nombre">'+cotizacion.proveedor.Nombre+'</span>');
+                    panel.find('span[data-rel="Nombre"]').text(cotizacion.proveedor.Nombre);
                     panel.find('span[data-rel="Fecha_Actualizacion"]').text(cotizacion.Fecha_Actualizacion);
+                    panel.find('span[data-rel="Observaciones"]').text(cotizacion.Observaciones);
                     panel.find('span[data-rel="Precio"]').text(cotizacion.Precio);
                 } else {
                     var panel = cotizacionHtml(cotizacion);

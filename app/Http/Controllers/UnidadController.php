@@ -24,9 +24,8 @@ class UnidadController extends Controller {
 
 	public function buscarUnidadesDeMedida(Request $request, $unidad = '')
 	{
-		$unidades_items = Item::where('Unidad_De_Medida', 'LIKE', '%'.$unidad.'%')->groupBy('Unidad_De_Medida')->get();
 		$unidades_insumos = Insumo::where('Unidad_De_Medida', 'LIKE', '%'.$unidad.'%')->groupBy('Unidad_De_Medida')->get();
-		$unidades_de_medida = array_merge($unidades_items->pluck('Unidad_De_Medida')->toArray(), $unidades_insumos->pluck('Unidad_De_Medida')->toArray());
+		$unidades_de_medida = $unidades_insumos->pluck('Unidad_De_Medida')->toArray();
 		$unidades = collect([]);
 
 		foreach ($unidades_de_medida as $value) {

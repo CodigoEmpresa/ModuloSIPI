@@ -231,3 +231,7 @@ $(function()
 		]
 	});
 });
+
+Number.prototype.pad = function(n) {
+    return new Array(n).join('0').slice((n || 2) * -1) + this;
+}

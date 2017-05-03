@@ -11,8 +11,8 @@ $(function()
             ).done(function(data){
                 response($.map(data, function(k, v){
                     return {
-                        label: k.Nombre,
-                        value: k.Nombre
+                        label: k,
+                        value: k
                     };
                 }));
             });
