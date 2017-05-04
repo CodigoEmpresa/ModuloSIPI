@@ -117,8 +117,8 @@ class FichaTecnicaController extends Controller
 		$Resultado = "<table id='datosTabla' class='default display responsive no-wrap table table-min table-striped' width='100%' name='datosTabla'>
 			        <thead>
 			            <tr>
-			            	<th width='30px'>Cod.</th>
-			            	<th width='30px'>Año</th>
+			            	<th width='60px'>Cod.</th>
+			            	<th width='60px'>Año</th>
 							<th width='60px'>Subdirección</th>
 	                        <th width='140px'>Presupuesto estimado</th>
 							<th>Objeto</th>
