@@ -1,21 +1,11 @@
 $(function(e)
 {
     var apu = {};
-    var old_apus = $.parseJSON($('input[name="apus"]').val()) || {};
+    var old_apus = $.parseJSON($('input[name="apus"]').val() || null) || {};
     var table_apu = $('#table_apu').DataTable();
 
     var ajustarAPU = function(apu, cantidad)
     {
-        apu.Precio_Oficial = 'NaN';
-        $.each(apu.cotizaciones, function(i, e)
-        {
-            if (e.Precio_Oficial == '1')
-            {
-                apu.Precio_Oficial = e.Precio;
-                return false;
-            }
-        });
-
         apu.Cantidad = cantidad;
 
         return apu;
@@ -28,7 +18,7 @@ $(function(e)
         $.each(apu, function(i, e)
         {
             var $tr = $('<tr data-id="'+e.Id+'">'+
-                '<td width="30px">'+e.Codigo+'</td>'+
+                '<td width="30px">'+e.Id_Item.pad(3)+'-'+e.Id+'</td>'+
                 '<td>'+e.Nombre+'</td>'+
                 '<td>'+e.Unidad_De_Medida+'</td>'+
                 '<td>'+e.Cantidad+'</td>'+
@@ -65,7 +55,7 @@ $(function(e)
         {
             bootbox.alert({
                 title: 'Error',
-                message: 'Debe seleccionar un APU y cantidad',
+                message: 'Debe seleccionar un insumo y cantidad',
                 buttons: {
                     ok: {
                         label: 'Volver',
@@ -94,7 +84,10 @@ $(function(e)
     {
         $.each(old_apus, function(i, apu)
         {
-            procesarAPU(ajustarAPU(apu, apu.pivot.Cantidad));
+            if (apu.pivot)
+                procesarAPU(ajustarAPU(apu, apu.pivot.Cantidad));
+            else
+                procesarAPU(ajustarAPU(apu, apu.Cantidad));
         });
     }
 });

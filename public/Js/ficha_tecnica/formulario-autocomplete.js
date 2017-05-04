@@ -19,7 +19,7 @@ $(function()
             ).done(function(data){
                 response($.map(data, function(k, v){
                     return {
-                        label: k.Codigo+' | '+k.Nombre,
+                        label: k.Id_Item.pad(4)+'-'+k.Id+' | '+k.Nombre,
                         value: k.Id,
                         nombre: k.Nombre,
                         codigo: k.Codigo,

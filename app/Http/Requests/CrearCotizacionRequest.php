@@ -26,7 +26,7 @@ class CrearCotizacionRequest extends Request
         return [
             'Id_Proveedor' => 'required',
             'Precio' => 'required',
-            'Fecha_Actualizacion' => 'required',
+            'Fecha_Actualizacion' => 'required'
         ];
     }
 

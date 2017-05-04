@@ -35,7 +35,7 @@ $(function()
     function insumoHtml(insumo)
     {
         return '<li data-id="'+insumo.Id+'" class="insumo list-group-item">'+
-                    '<h5><span data-rel="Codigo">'+insumo.Id_Item.pad(4)+'-'+insumo.Id.pad(3)+'</span> | <span data-rel="Nombre">'+insumo.Nombre+'</span></h5>'+
+                    '<h5><span data-rel="Codigo">'+insumo.Id_Item.pad(4)+'-'+insumo.Id+'</span> | <span data-rel="Nombre">'+insumo.Nombre+'</span></h5>'+
                     '<div class="row">'+
                         '<div class="col-md-12">'+
                             '<small>'+
@@ -442,7 +442,7 @@ $(function()
         {
             if (data)
             {
-                data.Codigo = data.Id_Item.pad(4)+'-'+data.Id.pad(3);
+                data.Codigo = data.Id_Item.pad(4)+'-'+data.Id;
                 data.Precio_Oficial = data.Precio_Oficial ? data.Precio_Oficial : 'Sin determinar';
                 data.Precio_Oficial_Calculo = data.Precio_Oficial_Calculo ? data.Precio_Oficial_Calculo : 'Sin determinar';
 

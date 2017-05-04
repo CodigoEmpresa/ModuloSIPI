@@ -30,6 +30,10 @@
         <div class="col-xs-12">
             <div class="row">
                 <form id="form-ficha-tecnica" action="{{ url('fichaTecnica/procesar') }}" method="POST">
+                    <div class="form-group col-md-3">
+                        <label for="Código" class="control-label">Código</label>
+                        <p class="form-control-static">{{ $ficha_tecnica ? $ficha_tecnica['Codigo_Proceso'] : 'Automático' }}</p>
+                    </div>
                     <div class="form-group col-md-3 {{ $errors->has('Subdireccion_Id') ? 'has-error' : '' }}">
                         <label for="Subdireccion_Id" class="control-label">* Subdirección:</label>
                         <select name="Subdireccion_Id" id="Subdireccion_Id" class="form-control" title="Seleccionar" data-value="{{ $ficha_tecnica ? $ficha_tecnica['Subdireccion_Id'] : old('Subdireccion_Id') }}" data-live-search="true">
@@ -61,9 +65,20 @@
                         <label for="Observacion" class="control-label">* Observaciones:</label>
                         <textarea class="form-control" placeholder="Observaciones" id="Observacion" name="Observacion">{{ $ficha_tecnica ? $ficha_tecnica['Observacion'] : old('Observacion') }}</textarea>
                     </div>
+                    <div class="form-group col-md-3 {{ $errors->has('Fecha_De_Llegada') ? 'has-error' : '' }}">
+                        <label for="Fecha_De_Llegada" class="control-label">* Fecha de llegada:</label>
+                        <input id="Fecha_De_Llegada" class="form-control " type="text" value="{{ $ficha_tecnica ? $ficha_tecnica['Fecha_De_Llegada'] : old('Fecha_De_Llegada') }}" name="Fecha_De_Llegada" data-role="datepicker">
+                    </div>
+                    <div class="form-group col-md-3 {{ $errors->has('Hora_De_Llegada') ? 'has-error' : '' }}">
+                        <label for="Hora_De_Llegada" class="control-label">* Hora de llegada:</label>
+                        <input id="Hora_De_Llegada" class="form-control " type="text" value="{{ $ficha_tecnica ? $ficha_tecnica['Hora_De_Llegada'] : old('Hora_De_Llegada') }}" name="Hora_De_Llegada" data-role="clockpicker">
+                    </div>
                     <div class="form-group col-md-3 {{ $errors->has('Fecha_Entrega_Estimada') ? 'has-error' : '' }}">
-                        <label for="inputEmail" class="control-label">* Fecha estimada de entrega:</label>
+                        <label for="Fecha_Entrega_Estimada" class="control-label">* Fecha estimada de entrega:</label>
                         <input id="Fecha_Entrega_Estimada" class="form-control " type="text" value="{{ $ficha_tecnica ? $ficha_tecnica['Fecha_Entrega_Estimada'] : old('Fecha_Entrega_Estimada') }}" name="Fecha_Entrega_Estimada" data-role="datepicker">
+                    </div>
+                    <div class="col-md-12">
+                        <hr>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="Alcance1" class="control-label">Alcance N° 1:</label>
@@ -81,11 +96,11 @@
                         <hr>
                     </div>
                     <div class="col-md-12 form-group">
-                        <label for="" class="control-label">APU</label>
-                        <input type="text" class="form-control" data-url="{{ url('item/buscar') }}" name="apu" aria-label="..." placeholder="Buscar">
+                        <label for="" class="control-label">Insumo</label>
+                        <input type="text" class="form-control" data-url="{{ url('insumo/buscar') }}" name="apu" aria-label="..." placeholder="Buscar">
                     </div>
                     <div class="col-md-4 form-group">
-                        <label for="" class="control-label">APU Seleccionado</label>
+                        <label for="" class="control-label">Insumo Seleccionado</label>
                         <p class="form-control-static" id="apu_seleccionado">No se ha seleccionado ningún APU</p>
                     </div>
                     <div class="col-md-4 form-group">
@@ -98,7 +113,7 @@
                     <div class="col-md-4 form-group">
                         <label for="" class="control-label">&nbsp;</label><br>
                         <input type="hidden" name="id_apu" value="0">
-                        <button id="agregar-apu" data-url="{{ url('item/obtener') }}" type="button" class="btn btn-default">Agregar</button>
+                        <button id="agregar-apu" data-url="{{ url('insumo/obtener') }}" type="button" class="btn btn-default">Agregar</button>
                     </div>
                     <div class="col-xs-12">
                         <br>
@@ -126,7 +141,7 @@
                     </div>
                     <div class="col-md-12">
                         <input type="hidden" name="Id" value="{{ $ficha_tecnica ? $ficha_tecnica['Id'] : 0 }}">
-                        <input type="hidden" name="apus" value="{{ $ficha_tecnica ? json_encode($ficha_tecnica->items) : '{}' }}">
+                        <input type="hidden" name="apus" value="{{ $ficha_tecnica ? json_encode($ficha_tecnica->insumos) : old('apus') }}">
                         <input type="hidden" name="_method" value="POST">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <a href="{{ url('/fichaTecnica') }}" class="btn btn-default">Volver</a>

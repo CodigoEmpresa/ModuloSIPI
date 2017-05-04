@@ -34,7 +34,7 @@ class InsumoController extends Controller {
 	{
 		$insumos = Insumo::where('Nombre', 'LIKE', '%'.$insumo.'%')
 						->orWhere('Descripcion', 'LIKE', '%'.$insumo.'%')
-						->orWhere('Id', 'LIKE', '%'.$insumo.'%')
+						->orWhereRaw('CONCAT(LPAD(Id_Item, 4, "0"), "-", Id) LIKE "%'.$insumo.'%"')
 						->get();
 
 		return response()->json($insumos);

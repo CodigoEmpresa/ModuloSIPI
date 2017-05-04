@@ -41,25 +41,22 @@ class FichaTecnicaController extends Controller
 		$a = FichaTecnica::all()->last();
 
 		if($request->input('Id') == '0')
-			$fichatecnica = new FichaTecnica;
+			$ficha_tecnica = new FichaTecnica;
 		else
-			$fichatecnica = FichaTecnica::find($request->input('Id'));
+			$ficha_tecnica = FichaTecnica::find($request->input('Id'));
 
-		if($a == null)
-			$conteo = 500;
-		else
-			$conteo = $a->Codigo_Proceso+1;
+		$ficha_tecnica->Subdireccion_Id = $request->input('Subdireccion_Id');
+		$ficha_tecnica->Persona_Id = $this->Usuario[0];
+		$ficha_tecnica->Anio = $request->input('Anio');
+		$ficha_tecnica->Objeto = $request->input('Objeto');
+		$ficha_tecnica->Presupuesto_Estimado = $request->input('Presupuesto_Estimado');
+		$ficha_tecnica->Fecha_Entrega_Estimada = $request->input('Fecha_Entrega_Estimada');
+		$ficha_tecnica->Fecha_De_Llegada = $request->input('Fecha_De_Llegada');
+		$ficha_tecnica->Hora_De_Llegada = $request->input('Hora_De_Llegada');
+		$ficha_tecnica->Observacion = $request->input('Observacion');
+		$ficha_tecnica->save();
 
-		$fichatecnica->Subdireccion_Id = $request->input('Subdireccion_Id');
-		$fichatecnica->Persona_Id = $this->Usuario[0];
-		$fichatecnica->Anio = $request->input('Anio');
-		$fichatecnica->Codigo_Proceso = $request->input('Id') == '0' ? $conteo : $fichatecnica->Codigo_Proceso;
-		$fichatecnica->Objeto = $request->input('Objeto');
-		$fichatecnica->Presupuesto_Estimado = $request->input('Presupuesto_Estimado');
-		$fichatecnica->Fecha_Entrega_Estimada = $request->input('Fecha_Entrega_Estimada');
-		$fichatecnica->Observacion = $request->input('Observacion');
-		$fichatecnica->save();
-
+		$this->establecerCodigoProceso($ficha_tecnica);
 		$apus = json_decode($request->input('apus'));
 		$to_sync = [];
 
@@ -68,9 +65,9 @@ class FichaTecnicaController extends Controller
 			$to_sync[$apu->Id] = ['Cantidad' => $apu->Cantidad];
 		}
 
-		$fichatecnica->items()->sync($to_sync);
+		$ficha_tecnica->insumos()->sync($to_sync);
 
-		return redirect('fichaTecnica/'.$fichatecnica->Id.'/editar')->with(['status' => 'success']);
+		return redirect('fichaTecnica/'.$ficha_tecnica->Id.'/editar')->with(['status' => 'success']);
     }
 
 	public function crear(Request $request)
@@ -82,15 +79,15 @@ class FichaTecnicaController extends Controller
 
 	public function editar(Request $request, $id)
 	{
-		$ficha_tecnica = FichaTecnica::with('items', 'items.insumos', 'items.cotizaciones', 'items.cotizaciones.proveedor')->find($id);
+		$ficha_tecnica = FichaTecnica::with('insumos', 'insumos.cotizaciones', 'insumos.cotizaciones.proveedor')->find($id);
 
 		return $this->popularFichaTecnica($ficha_tecnica);
 	}
 
 	public function eliminar(Request $request, $id)
 	{
-		$ficha_tecnica = FichaTecnica::with('items', 'items.insumos', 'items.cotizaciones', 'items.cotizaciones.proveedor')->find($id);
-		$ficha_tecnica->items()->detach();
+		$ficha_tecnica = FichaTecnica::with('insumos')->find($id);
+		$ficha_tecnica->insumos()->detach();
 		$ficha_tecnica->delete();
 
 		return redirect('fichaTecnica')->with('status', 'success');
@@ -171,5 +168,11 @@ class FichaTecnicaController extends Controller
 		];
 
 		return view('ficha_tecnica.formulario', $datos);
+	}
+
+	private function establecerCodigoProceso($ficha_tecnica)
+	{
+		$ficha_tecnica->Codigo_Proceso = $ficha_tecnica->subdireccion['Nombre_Subdireccion'].$ficha_tecnica['Anio'].'-'.$ficha_tecnica->Id;
+		$ficha_tecnica->save();
 	}
 }

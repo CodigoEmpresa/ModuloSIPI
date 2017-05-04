@@ -29,6 +29,8 @@ class RegistroFT extends Request
             "Objeto" => "required",
             "Presupuesto_Estimado" => "required|numeric",
             "Fecha_Entrega_Estimada" => "required|date",
+            'Fecha_De_Llegada' => 'required|date',
+            'Hora_De_Llegada' => 'required',
             "Observacion" => "required",
         ];
         return $validaciones;
