@@ -45,6 +45,29 @@
                             <p class="form-control-static">Lista de cotizaciones</p>
                         </div>
                         <div class="col-md-12">
+                            <ul class="list-group" id="precio-oficial" style="display:none;">
+                                <li class="cotizacion seleccionado list-group-item">
+                                    <form id="precio-oficial-form" action="{{ url('insumo/precioOficial') }}" method="post">
+                                        <div class="row">
+                                            <div class="col-md-12 form-group">
+                                                <label for="" class="control-label">Precio oficial</label>
+                                                <input type="number" class="form-control" name="Precio_Oficial">
+                                            </div>
+                                            <div class="col-md-12 form-group">
+                                                <label for="" class="control-label">Detalles</label>
+                                                <textarea name="Precio_Oficial_Calculo" class="form-control"></textarea>
+                                            </div>
+                                            <div class="col-md-12 form-group">
+                                                <input type="hidden" name="Id" value="0">
+                                                <input type="hidden" name="_method" value="POST">
+                                                <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-12">
                             <ul class="list-group" id="lista-cotizaciones" data-url="{{ url('/cotizacion') }}"></ul>
                         </div>
                     </div>

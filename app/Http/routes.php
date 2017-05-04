@@ -60,6 +60,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('item/remover_insumo', 'ItemController@removerInsumo');
 
 	Route::post('insumo/crear', 'InsumoController@crear');
+	Route::post('insumo/precioOficial', 'InsumoController@actualizarPrecioOficial');
 	Route::get('insumo/obtener/{insumo?}', 'InsumoController@obtenerInsumo');
 	Route::get('insumo/buscar/{insumo?}', 'InsumoController@buscarInsumo');
 

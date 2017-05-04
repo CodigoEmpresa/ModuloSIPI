@@ -49,13 +49,16 @@ $(function()
                         '</div>'+
                         '<div class="col-md-12">'+
                             '<small>'+
-                                '<strong>Precio oficial:</strong> <span data-rel="Precio">'+(insumo.Precio_Oficial ? insumo.Precio_Oficial : 'Sin determinar')+'</span>'+
+                                '<strong>Precio oficial:</strong> <span data-rel="Precio_Oficial">'+(insumo.Precio_Oficial ? insumo.Precio_Oficial : 'Sin determinar')+'</span>'+
                             '</small>'+
                         '</div>'+
                         '<div class="col-md-12">'+
                             '<small>'+
-                                '<strong>Calculo precio oficial:</strong> <span data-rel="Precio">'+(insumo.Precio_Oficial_Calculo ? insumo.Precio_Oficial_Calculo : 'Sin determinar')+'</span>'+
+                                '<strong>Calculo precio oficial:</strong> <span data-rel="Precio_Oficial_Calculo">'+(insumo.Precio_Oficial_Calculo ? insumo.Precio_Oficial_Calculo : 'Sin determinar')+'</span>'+
                             '</small>'+
+                        '</div>'+
+                        '<div class="col-md-12">'+
+                            '<br>'+
                         '</div>'+
                     '</div>'+
                     '<div class="row">'+
@@ -79,13 +82,16 @@ $(function()
                         '</div>'+
                         '<div class="col-md-12">'+
                             '<small>'+
-                                '<strong>Observaciones:</strong> <span data-rel="Observaciones">'+cotizacion.Observaciones+'</span>'+
+                                '<strong>Observaciones:</strong> <span data-rel="Observaciones">'+(cotizacion.Observaciones ? cotizacion.Observaciones : 'Sin observaciones')+'</span>'+
                             '</small>'+
                         '</div>'+
                         '<div class="col-md-12">'+
                             '<small>'+
                                 '<strong>Precio:</strong> <span data-rel="Precio">'+cotizacion.Precio+'</span>'+
                             '</small>'+
+                        '</div>'+
+                        '<div class="col-md-12">'+
+                            '<br>'+
                         '</div>'+
                     '</div>'+
                     '<div class="row">'+
@@ -296,7 +302,7 @@ $(function()
     $('#lista-item').delegate('a[data-role="seleccionar"]', 'click', function(e)
     {
         var id = $(this).closest('.item').data('id');
-        if(id == obtenerItemSeleccionado())
+        if (id == obtenerItemSeleccionado())
         {
             establecerItemSeleccionado(0);
         } else {
@@ -339,6 +345,9 @@ $(function()
         } else {
             $('#lista-insumo').html('');
         }
+
+        $('#lista-cotizaciones').html('');
+        $('#precio-oficial').hide();
 
         e.preventDefault();
     });
@@ -484,6 +493,10 @@ $(function()
                         }
 
                         $('#lista-cotizaciones').html(html_cotizaciones);
+                        $('#precio-oficial').find('input[name="Precio_Oficial"]').val(data.Precio_Oficial);
+                        $('#precio-oficial').find('textarea[name="Precio_Oficial_Calculo"]').val(data.Precio_Oficial_Calculo);
+                        $('#precio-oficial').find('input[name="Id"]').val(data.Id);
+                        $('#precio-oficial').show();
                     }
                 }
             }).fail(function(xhr, status, error)
@@ -492,12 +505,12 @@ $(function()
                 $('#lista-cotizaciones').html(html_cotizaciones);
             });
         } else {
-            $('#lista-insumo').html('');
+            $('#lista-cotizaciones').html('');
+            $('#precio-oficial').hide();
         }
 
         e.preventDefault();
     });
-
 
     // modal-cotizacion
     $('#agregar-cotizacion').on('click', function(e)
@@ -590,7 +603,7 @@ $(function()
                     var panel = $('#lista-cotizaciones').find('.cotizacion[data-id="'+cotizacion.Id+'"]');
                     panel.find('span[data-rel="Nombre"]').text(cotizacion.proveedor.Nombre);
                     panel.find('span[data-rel="Fecha_Actualizacion"]').text(cotizacion.Fecha_Actualizacion);
-                    panel.find('span[data-rel="Observaciones"]').text(cotizacion.Observaciones);
+                    panel.find('span[data-rel="Observaciones"]').text(cotizacion.Observaciones ? cotizacion.Observaciones : 'Sin observaciones');
                     panel.find('span[data-rel="Precio"]').text(cotizacion.Precio);
                 } else {
                     var panel = cotizacionHtml(cotizacion);
@@ -609,6 +622,33 @@ $(function()
             } else {
                 alert(error);
             }
+        });
+
+        e.preventDefault();
+    });
+
+    $('#precio-oficial-form').on('submit', function(e)
+    {
+        $.post(
+            $(this).prop('action'),
+            $(this).serialize(),
+            'json'
+        ).done(function(insumo)
+        {
+            var panel = $('.insumo[data-id="'+insumo.Id+'"]');
+            panel.find('span[data-rel="Precio_Oficial"]').text(insumo.Precio_Oficial);
+            panel.find('span[data-rel="Precio_Oficial_Calculo"]').text(insumo.Precio_Oficial_Calculo);
+
+            bootbox.alert({
+                title: 'Mensaje',
+                message: 'El precio oficial ha sido actualizado satisfactoriamente',
+                buttons: {
+                    ok: {
+                        label: 'Volver',
+                        className: 'btn-default'
+                    }
+                }
+            });
         });
 
         e.preventDefault();

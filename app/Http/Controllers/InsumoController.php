@@ -63,4 +63,16 @@ class InsumoController extends Controller {
 
 		return response()->json($insumo);
 	}
+
+	public function actualizarPrecioOficial(Request $request)
+	{
+		$id = $request->input('Id');
+		$insumo = Insumo::find($id);
+
+		$insumo->Precio_Oficial = $request->input('Precio_Oficial');
+		$insumo->Precio_Oficial_Calculo = $request->input('Precio_Oficial_Calculo');
+
+		$insumo->save();
+		return response()->json($insumo);
+	}
 }
