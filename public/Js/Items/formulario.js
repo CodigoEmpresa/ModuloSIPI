@@ -13,20 +13,24 @@ $(function()
     {
         return '<li data-id="'+item.Id+'" class="item list-group-item">'+
                     '<h5><span data-rel="Codigo">'+item.Id.pad(4)+'</span> | <span data-rel="Nombre">'+item.Nombre+'</span></h5>'+
-                    '<div class="row">'+
-                        '<div class="col-md-12">'+
-                            '<small>'+
-                                '<strong>Descripcion:</strong> <span data-rel="Descripcion">'+(item.Descripcion ? item.Descripcion.substring(0, 100) : 'Sin descripción')+'</span>'+
-                            '</small>'+
-                        '</div>'+
-                        '<div class="col-md-12">'+
-                            '<br>'+
+                    '<div class="list-group-item-text">'+
+                        '<div class="row">'+
+                            '<div class="col-md-12">'+
+                                '<small>'+
+                                    '<strong>Descripcion:</strong> <span data-rel="Descripcion">'+(item.Descripcion ? item.Descripcion : 'Sin descripción')+'</span>'+
+                                '</small>'+
+                            '</div>'+
+                            '<div class="col-md-12">'+
+                                '<br>'+
+                            '</div>'+
                         '</div>'+
                     '</div>'+
-                    '<div class="row">'+
-                        '<div class="col-md-12">'+
-                            '<a data-role="seleccionar" class="label label-primary">Seleccionar</a> '+
-                            '<a data-role="editar" class="label label-default">Editar</a> '+
+                    '<div class="list-group-item-footer">'+
+                        '<div class="row">'+
+                            '<div class="col-md-12">'+
+                                '<a data-role="seleccionar" class="label label-primary">Seleccionar</a> '+
+                                '<a data-role="editar" class="label label-default">Editar</a> '+
+                            '</div>'+
                         '</div>'+
                     '</div>'+
                 '</li>';
@@ -36,35 +40,39 @@ $(function()
     {
         return '<li data-id="'+insumo.Id+'" class="insumo list-group-item">'+
                     '<h5><span data-rel="Codigo">'+insumo.Id_Item.pad(4)+'-'+insumo.Id+'</span> | <span data-rel="Nombre">'+insumo.Nombre+'</span></h5>'+
-                    '<div class="row">'+
-                        '<div class="col-md-12">'+
-                            '<small>'+
-                                '<strong>Unidad:</strong> <span data-rel="Unidad_De_Medida">'+insumo.Unidad_De_Medida+'</span>'+
-                            '</small>'+
-                        '</div>'+
-                        '<div class="col-md-12">'+
-                            '<small>'+
-                                '<strong>Descripción:</strong> <span data-rel="Descripcion">'+(insumo.Descripcion ? insumo.Descripcion.substring(0, 100) : 'Sin descripción')+'</span>'+
-                            '</small>'+
-                        '</div>'+
-                        '<div class="col-md-12">'+
-                            '<small>'+
-                                '<strong>Precio oficial:</strong> <span data-rel="Precio_Oficial">'+(insumo.Precio_Oficial ? insumo.Precio_Oficial : 'Sin determinar')+'</span>'+
-                            '</small>'+
-                        '</div>'+
-                        '<div class="col-md-12">'+
-                            '<small>'+
-                                '<strong>Calculo precio oficial:</strong> <span data-rel="Precio_Oficial_Calculo">'+(insumo.Precio_Oficial_Calculo ? insumo.Precio_Oficial_Calculo : 'Sin determinar')+'</span>'+
-                            '</small>'+
-                        '</div>'+
-                        '<div class="col-md-12">'+
-                            '<br>'+
+                    '<div class="list-group-item-text">'+
+                        '<div class="row">'+
+                            '<div class="col-md-12">'+
+                                '<small>'+
+                                    '<strong>Unidad:</strong> <span data-rel="Unidad_De_Medida">'+insumo.Unidad_De_Medida+'</span>'+
+                                '</small>'+
+                            '</div>'+
+                            '<div class="col-md-12">'+
+                                '<small>'+
+                                    '<strong>Descripción:</strong> <span data-rel="Descripcion">'+(insumo.Descripcion ? insumo.Descripcion : 'Sin descripción')+'</span>'+
+                                '</small>'+
+                            '</div>'+
+                            '<div class="col-md-12">'+
+                                '<small>'+
+                                    '<strong>Precio oficial:</strong> <span data-rel="Precio_Oficial">'+(insumo.Precio_Oficial ? insumo.Precio_Oficial : 'Sin determinar')+'</span>'+
+                                '</small>'+
+                            '</div>'+
+                            '<div class="col-md-12">'+
+                                '<small>'+
+                                    '<strong>Calculo precio oficial:</strong> <span data-rel="Precio_Oficial_Calculo">'+(insumo.Precio_Oficial_Calculo ? insumo.Precio_Oficial_Calculo : 'Sin determinar')+'</span>'+
+                                '</small>'+
+                            '</div>'+
+                            '<div class="col-md-12">'+
+                                '<br>'+
+                            '</div>'+
                         '</div>'+
                     '</div>'+
-                    '<div class="row">'+
-                        '<div class="col-md-12">'+
-                            '<a data-role="seleccionar" class="label label-primary">Seleccionar</a> '+
-                            '<a data-role="editar" class="label label-default">Editar</a>'+
+                    '<div class="list-group-item-footer">'+
+                        '<div class="row">'+
+                            '<div class="col-md-12">'+
+                                '<a data-role="seleccionar" class="label label-primary">Seleccionar</a> '+
+                                '<a data-role="editar" class="label label-default">Editar</a>'+
+                            '</div>'+
                         '</div>'+
                     '</div>'+
                 '</li>';
@@ -74,29 +82,33 @@ $(function()
     {
         return '<li data-id="'+cotizacion.Id+'" class="cotizacion seleccionado list-group-item">'+
                     '<h5><span data-rel="Nombre">'+cotizacion.proveedor.Nombre+'</span></h5>'+
-                    '<div class="row">'+
-                        '<div class="col-md-12">'+
-                            '<small>'+
-                                '<strong>Fecha actualización:</strong> <span data-rel="Fecha_Actualizacion">'+cotizacion.Fecha_Actualizacion+'</span>'+
-                            '</small>'+
-                        '</div>'+
-                        '<div class="col-md-12">'+
-                            '<small>'+
-                                '<strong>Observaciones:</strong> <span data-rel="Observaciones">'+(cotizacion.Observaciones ? cotizacion.Observaciones : 'Sin observaciones')+'</span>'+
-                            '</small>'+
-                        '</div>'+
-                        '<div class="col-md-12">'+
-                            '<small>'+
-                                '<strong>Precio:</strong> <span data-rel="Precio">'+cotizacion.Precio+'</span>'+
-                            '</small>'+
-                        '</div>'+
-                        '<div class="col-md-12">'+
-                            '<br>'+
+                    '<div class="list-group-item-text">'+
+                        '<div class="row">'+
+                            '<div class="col-md-12">'+
+                                '<small>'+
+                                    '<strong>Fecha actualización:</strong> <span data-rel="Fecha_Actualizacion">'+cotizacion.Fecha_Actualizacion+'</span>'+
+                                '</small>'+
+                            '</div>'+
+                            '<div class="col-md-12">'+
+                                '<small>'+
+                                    '<strong>Precio:</strong> <span data-rel="Precio">'+cotizacion.Precio+'</span>'+
+                                '</small>'+
+                            '</div>'+
+                            '<div class="col-md-12">'+
+                                '<small>'+
+                                    '<strong>Observaciones:</strong> <span data-rel="Observaciones">'+(cotizacion.Observaciones ? cotizacion.Observaciones : 'Sin observaciones')+'</span>'+
+                                '</small>'+
+                            '</div>'+
+                            '<div class="col-md-12">'+
+                                '<br>'+
+                            '</div>'+
                         '</div>'+
                     '</div>'+
-                    '<div class="row">'+
-                        '<div class="col-md-12">'+
-                            '<a data-role="editar" class="label label-default">Editar</a>'+
+                    '<div class="list-group-item-footer">'+
+                        '<div class="row">'+
+                            '<div class="col-md-12">'+
+                                '<a data-role="editar" class="label label-default">Editar</a>'+
+                            '</div>'+
                         '</div>'+
                     '</div>'+
                 '</li>';
@@ -386,11 +398,22 @@ $(function()
 
     $('#agregar-insumo-form').on('submit', function(e)
     {
+        var data = new FormData(this);
+
+        $.ajax({
+            url: $(this).prop('action'),
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            dataType: 'json'
+        })/*;
         $.post(
             $(this).prop('action'),
             $(this).serialize(),
             'json'
-        )
+        )*/
         .done(function(insumo)
         {
             var $div_errors = $('#modal-agregar-insumos').find('.errores');

@@ -8,7 +8,7 @@ class Insumo extends Model
 {
     protected $table = 'Insumos';
     protected $primaryKey = 'Id';
-    protected $fillable = ['Id_Item', 'Nombre', 'Descripcion', 'Unidad_De_Medida', 'Precio_Oficial', 'Precio_Adjudicado', 'Precio_Oficial_Calculo'];
+    protected $fillable = ['Id_Item', 'Nombre', 'Descripcion', 'Unidad_De_Medida', 'Precio_Oficial', 'Precio_Adjudicado', 'Precio_Oficial_Calculo', 'Foto_1', 'Foto_2', 'Foto_3'];
 
     public function item()
     {

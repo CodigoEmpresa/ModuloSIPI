@@ -59,6 +59,22 @@ class InsumoController extends Controller {
 		$insumo->Nombre = $request->input('Nombre');
 		$insumo->Descripcion = $request->input('Descripcion');
 		$insumo->Unidad_De_Medida = $request->input('Unidad_De_Medida');
+
+		if ($request->hasFile('Foto_1'))
+		{
+			$insumo->Foto_1 = $this->uploadFile($request->file('Foto_1'));
+		}
+
+		if ($request->hasFile('Foto_2'))
+		{
+			$insumo->Foto_2 = $this->uploadFile($request->file('Foto_2'));
+		}
+
+		if ($request->hasFile('Foto_3'))
+		{
+			$insumo->Foto_3 = $this->uploadFile($request->file('Foto_3'));
+		}
+
 		$insumo->save();
 
 		return response()->json($insumo);
@@ -71,8 +87,17 @@ class InsumoController extends Controller {
 
 		$insumo->Precio_Oficial = $request->input('Precio_Oficial');
 		$insumo->Precio_Oficial_Calculo = $request->input('Precio_Oficial_Calculo');
-
 		$insumo->save();
+
 		return response()->json($insumo);
+	}
+
+	private function uploadFile($file)
+	{
+		$path = public_path().'/storage';
+		$filename = md5($file->getClientOriginalName().date('Y-m-d H:i:s:u')).'.'.$file->getClientOriginalExtension();
+		$file->move($path, $filename);
+
+		return $filename;
 	}
 }

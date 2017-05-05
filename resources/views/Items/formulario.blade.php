@@ -124,7 +124,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h3 class="modal-title" id="myModalLabel">Insumo</h3>
                 </div>
-                <form id="agregar-insumo-form" action="{{ url('/insumo/crear') }}">
+                <form id="agregar-insumo-form" action="{{ url('/insumo/crear') }}" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="row">
                             <div class="errores col-md-12" style="display: none;">
@@ -143,7 +143,7 @@
                                 <label for="" class="control-label">* Unidad de medida</label>
                                 <input type="text" name="Unidad_De_Medida" class="form-control" data-url="{{ url('/item/unidades') }}">
                             </div>
-                            <div class="col-md-12 form-group">
+                            <div class="col-md-6 form-group">
                                 <label for="" class="control-label">* Nombre</label>
                                 <input type="text" name="Nombre" class="form-control">
                             </div>
@@ -158,6 +158,18 @@
                             <div class="col-md-12 form-group">
                                 <label for="" class="control-label">Precio oficial detalles</label>
                                 <p class="form-control-static" name="Precio_Oficial_Calculo">Sin determinar</p>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="Foto_1" class="control-label">Foto 1</label>
+                                <input type="file" name="Foto_1">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="Foto_2" class="control-label">Foto 2</label>
+                                <input type="file" name="Foto_2">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="Foto_3" class="control-label">Foto 3</label>
+                                <input type="file" name="Foto_3">
                             </div>
                         </div>
                     </div>
