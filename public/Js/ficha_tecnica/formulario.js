@@ -11,6 +11,40 @@ $(function(e)
         return apu;
     }
 
+    var evaluarTotales = function()
+    {
+        var presupuestado = $('input[name="Presupuesto_Estimado"]').val();
+        var total = 0;
+        var porcentaje = 0;
+        var clase = 'progress-bar-success';
+
+        if (+presupuestado > 0)
+        {
+            $.each(apu, function(i, a)
+            {
+                total += a.Cantidad * a.Precio_Oficial;
+            });
+
+            porcentaje = (total * 100) / +presupuestado;
+
+            if(porcentaje > 100)
+                clase = 'progress-bar-danger';
+            else if(porcentaje > 75)
+                clase = 'progress-bar-warning';
+            else if(porcentaje > 0)
+                clase = 'progress-bar-success';
+
+            porcentaje = porcentaje > 100 ? 100 : porcentaje;
+
+            $('#Presupuesto_Utilizado').text(total);
+
+        } else {
+            porcentaje = 0;
+        }
+
+        $('#progress').removeClass('progress-bar-danger progress-bar-warning progress-bar-success').addClass(clase).css('width', porcentaje+'%');
+    }
+
     var procesarAPU = function(current_apu)
     {
         apu[current_apu.Id] = current_apu;
@@ -29,6 +63,8 @@ $(function(e)
 
             table_apu.row.add($tr).draw(false);
         });
+
+        evaluarTotales();
     }
 
     $('#table_apu tbody').delegate('a[data-role="Remover"]', 'click', function(e)
@@ -44,6 +80,10 @@ $(function(e)
     $('#form-ficha-tecnica').on('submit', function(e)
     {
         $('input[name="apus"]').val(JSON.stringify(apu));
+    });
+
+    $('input[name="Presupuesto_Estimado"]').on('change', function(e){
+        evaluarTotales();
     });
 
     $('#agregar-apu').on('click', function(e)

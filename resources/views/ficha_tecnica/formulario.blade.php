@@ -53,9 +53,9 @@
                             @endfor
                         </select>
                     </div>
-                    <div class="form-group col-md-3 {{ $errors->has('Presupuesto_Estimado') ? 'has-error' : '' }}">
-                        <label for="Presupuesto_Estimado" class="control-label">* Presupuesto estimado:</label>
-                        <input type="number" class="form-control" min=0 step=1000 placeholder="Presupuesto estimado" id="Presupuesto_Estimado" name="Presupuesto_Estimado" min="0" value="{{ $ficha_tecnica ? $ficha_tecnica['Presupuesto_Estimado'] : old('Presupuesto_Estimado') }}">
+                    <div class="form-group col-md-3 {{ $errors->has('Fecha_Entrega_Estimada') ? 'has-error' : '' }}">
+                        <label for="Fecha_Entrega_Estimada" class="control-label">* Fecha estimada de entrega:</label>
+                        <input id="Fecha_Entrega_Estimada" class="form-control " type="text" value="{{ $ficha_tecnica ? $ficha_tecnica['Fecha_Entrega_Estimada'] : old('Fecha_Entrega_Estimada') }}" name="Fecha_Entrega_Estimada" data-role="datepicker">
                     </div>
                     <div class="form-group col-md-6 {{ $errors->has('Objeto') ? 'has-error' : '' }}">
                         <label for="Objeto" class="control-label">* Objeto:</label>
@@ -73,9 +73,19 @@
                         <label for="Hora_De_Llegada" class="control-label">* Hora de llegada:</label>
                         <input id="Hora_De_Llegada" class="form-control " type="text" value="{{ $ficha_tecnica ? $ficha_tecnica['Hora_De_Llegada'] : old('Hora_De_Llegada') }}" name="Hora_De_Llegada" data-role="clockpicker">
                     </div>
-                    <div class="form-group col-md-3 {{ $errors->has('Fecha_Entrega_Estimada') ? 'has-error' : '' }}">
-                        <label for="Fecha_Entrega_Estimada" class="control-label">* Fecha estimada de entrega:</label>
-                        <input id="Fecha_Entrega_Estimada" class="form-control " type="text" value="{{ $ficha_tecnica ? $ficha_tecnica['Fecha_Entrega_Estimada'] : old('Fecha_Entrega_Estimada') }}" name="Fecha_Entrega_Estimada" data-role="datepicker">
+                    <div class="form-group col-md-3 {{ $errors->has('Presupuesto_Estimado') ? 'has-error' : '' }}">
+                        <label for="Presupuesto_Estimado" class="control-label">* Presupuesto estimado:</label>
+                        <input type="number" class="form-control" min=0 step=1000 placeholder="Presupuesto estimado" id="Presupuesto_Estimado" name="Presupuesto_Estimado" min="0" value="{{ $ficha_tecnica ? $ficha_tecnica['Presupuesto_Estimado'] : old('Presupuesto_Estimado') }}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="Presupuesto_Utilizado">Presupuesto utilizado</label>
+                        <p class="form-control-static" id="Presupuesto_Utilizado">0</p>
+                    </div>
+                    <div class="col-md-6 col-md-offset-6">
+                        <div class="progress">
+                            <div id="progress" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <hr>
