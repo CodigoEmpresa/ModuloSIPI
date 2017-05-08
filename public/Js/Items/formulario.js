@@ -18,7 +18,7 @@ $(function()
                         '<div class="row">'+
                             '<div class="col-md-12">'+
                                 '<small>'+
-                                    '<strong>Descripcion:</strong> <span data-rel="Descripcion">'+(item.Descripcion ? item.Descripcion : 'Sin descripción')+'</span>'+
+                                    '<strong>Descripción:</strong> <span data-rel="Descripcion">'+(item.Descripcion ? item.Descripcion : 'Sin descripción')+'</span>'+
                                 '</small>'+
                             '</div>'+
                             '<div class="col-md-12">'+

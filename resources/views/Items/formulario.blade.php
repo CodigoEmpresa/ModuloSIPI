@@ -202,55 +202,49 @@
                 <form id="agregar-proveedor-form" style="display:none;" method="post" action="{{ url('proveedor/crear') }}">
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="errores col-md-12" style="display: none;">
-                                        <div class="alert alert-danger alert-dismissible">
-                                            <strong>Solucione los siguientes inconvenientes y vuelva a intentarlo</strong>
-                                            <ul>
+                            <div class="errores col-md-12" style="display: none;">
+                                <div class="alert alert-danger alert-dismissible">
+                                    <strong>Solucione los siguientes inconvenientes y vuelva a intentarlo</strong>
+                                    <ul>
 
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    </ul>
                                 </div>
-                                <div class="col-md-12" style="background-color: #efefef;">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <h4>Nuevo proveedor</h4>
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label for="" class="control-label">* Nombre</label>
-                                            <input type="text" name="Nombre" class="form-control">
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label for="" class="control-label">* Ciudad</label>
-                                            <input type="text" name="Ciudad" class="form-control">
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label for="" class="control-label">* Contacto</label>
-                                            <input type="text" name="Nombre_Contacto" class="form-control">
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label for="" class="control-label">* Dirección</label>
-                                            <input type="text" name="Direccion" class="form-control">
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label for="" class="control-label">* Teléfono</label>
-                                            <input type="text" name="Telefono" class="form-control">
-                                        </div>
-                                        <div class="col-md-6 form-group">
-                                            <label for="" class="control-label">* Email</label>
-                                            <input type="text" name="Email" class="form-control">
-                                        </div>
-                                        <div class="col-md-12">
-                                            <button type="button" class="btn btn-danger btn-sm" id="cancelar-proveedor">Cancelar</button>
-                                            <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <br>
-                                        </div>
-                                    </div>
-                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5>Formulario proveedor</h5>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="" class="control-label">* Nombre</label>
+                                <input type="text" name="Nombre" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="" class="control-label">* Ciudad</label>
+                                <input type="text" name="Ciudad" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="" class="control-label">* Contacto</label>
+                                <input type="text" name="Nombre_Contacto" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="" class="control-label">* Dirección</label>
+                                <input type="text" name="Direccion" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="" class="control-label">* Teléfono</label>
+                                <input type="text" name="Telefono" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="" class="control-label">* Email</label>
+                                <input type="text" name="Email" class="form-control">
+                            </div>
+                            <div class="col-md-12" style="text-align:right;">
+                                <button type="submit" class="btn btn-primary pull-right" style="margin-left:10px;">Guardar</button>
+                                <button type="button" class="btn btn-default pull-right" id="cancelar-proveedor">Cancelar</button>
+                            </div>
+                            <div class="col-md-12">
+                                <hr>
                             </div>
                         </div>
                     </div>
@@ -276,7 +270,8 @@
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="" class="control-label">&nbsp;</label><br>
-                                <a href="#" id="agregar-proveedor" class="btn btn-link">Agregar proveedor</a>
+                                <a href="#" id="agregar-proveedor" class="btn btn-link">Agregar</a>
+                                <a href="#" id="editar-proveedor" class="btn btn-link">Editar</a>
                             </div>
                             <div class="col-md-12">
                                 <hr>
