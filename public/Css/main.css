@@ -178,6 +178,7 @@ div.list-group-item-text {
     min-height: 100px;
     max-height: 100px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .festivo a
@@ -217,6 +218,10 @@ div.panel-body h4 {
 
 .ui-datepicker {
     z-index: 1000000 !important;
+}
+
+.insumo-img {
+    margin-left: 10px;
 }
 
 @media (min-width: 1200px) {

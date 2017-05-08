@@ -34,7 +34,7 @@
                             <p class="form-control-static">Lista de insumos</p>
                         </div>
                         <div class="col-md-12">
-                            <ul class="list-group" id="lista-insumo" data-url="{{ url('/insumo') }}"></ul>
+                            <ul class="list-group" id="lista-insumo" data-url="{{ url('/insumo') }}" data-url-assets="{{ asset('public/storage') }}"></ul>
                         </div>
                     </div>
                 </div>
@@ -158,6 +158,14 @@
                             <div class="col-md-12 form-group">
                                 <label for="" class="control-label">Precio oficial detalles</label>
                                 <p class="form-control-static" name="Precio_Oficial_Calculo">Sin determinar</p>
+                            </div>
+                            <div class="col-md-12">
+                                <img name="Foto_1" data-url="{{ asset('public/storage') }}" src="{{ asset('public/storage/default.jpg') }}" style="height:30px" alt="" class="pointer pull-left img-responsive img-rounded">
+                                <img name="Foto_2" data-url="{{ asset('public/storage') }}" src="{{ asset('public/storage/default.jpg') }}" style="height:30px" alt="" class="pointer insumo-img pull-left img-responsive img-rounded">
+                                <img name="Foto_3" data-url="{{ asset('public/storage') }}" src="{{ asset('public/storage/default.jpg') }}" style="height:30px" alt="" class="pointer insumo-img pull-left img-responsive img-rounded">
+                            </div>
+                            <div class="col-md-12">
+                                <br>
                             </div>
                             <div class="col-md-12 form-group">
                                 <label for="Foto_1" class="control-label">Foto 1</label>

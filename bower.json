@@ -29,6 +29,7 @@
     "bootstrap-select": "^1.12.2",
     "selectize": "^0.12.4",
     "font-awesome": "^4.7.0",
-    "bootbox.js": "bootbox#^4.4.0"
+    "bootbox.js": "bootbox#^4.4.0",
+    "magnific-popup": "^1.1.0"
   }
 }

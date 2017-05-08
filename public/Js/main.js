@@ -18,6 +18,11 @@ $(function()
 	    selector: '[data-toggle="tooltip"]'
 	});
 
+	$('body').magnificPopup({
+		delegate: 'a[data-toggle="image"]',
+		type: 'image'
+	});
+
 	$('body').delegate('input[type="text"][data-number]', 'keypress', function(event) {
     	if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
 			event.preventDefault();

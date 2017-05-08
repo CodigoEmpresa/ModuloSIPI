@@ -5,6 +5,7 @@ $(function()
     var url_item = $('#lista-item').data('url');
     var url_insumo = $('#lista-insumo').data('url');
     var utl_cotizaciones = $('#lista-cotizaciones').data('url');
+    var url_assets = $('#lista-insumo').data('url-assets');
     var no_se_encontraron_resultados = '';
     var no_se_encontraron_insumos = '';
     var no_se_encontraron_cotizaciones = '';
@@ -42,6 +43,11 @@ $(function()
                     '<h5><span data-rel="Codigo">'+insumo.Id_Item.pad(4)+'-'+insumo.Id+'</span> | <span data-rel="Nombre">'+insumo.Nombre+'</span></h5>'+
                     '<div class="list-group-item-text">'+
                         '<div class="row">'+
+                            '<div class="col-md-12">'+
+                                '<a data-toggle="image" data-rel="Foto_1" href="'+url_assets+'/'+(insumo.Foto_1 ? insumo.Foto_1 : 'default.jpg')+'" class="pull-left"><img height="20px"; src="'+url_assets+'/'+(insumo.Foto_1 ? insumo.Foto_1 : 'default.jpg')+'" alt="" /></a>'+
+                                '<a data-toggle="image" data-rel="Foto_2" href="'+url_assets+'/'+(insumo.Foto_2 ? insumo.Foto_2 : 'default.jpg')+'" class="insumo-img pull-left"><img height="20px"; src="'+url_assets+'/'+(insumo.Foto_2 ? insumo.Foto_2 : 'default.jpg')+'" alt="" /></a>'+
+                                '<a data-toggle="image" data-rel="Foto_3" href="'+url_assets+'/'+(insumo.Foto_3 ? insumo.Foto_3 : 'default.jpg')+'" class="insumo-img pull-left"><img height="20px"; src="'+url_assets+'/'+(insumo.Foto_3 ? insumo.Foto_3 : 'default.jpg')+'" alt="" /></a>'+
+                            '</div>'+
                             '<div class="col-md-12">'+
                                 '<small>'+
                                     '<strong>Unidad:</strong> <span data-rel="Unidad_De_Medida">'+insumo.Unidad_De_Medida+'</span>'+
@@ -165,19 +171,26 @@ $(function()
         $div_errors.show();
     }
 
-    function populateForm(contaier, item)
+    function populateForm(container, item)
     {
+        if($(container).find('form'))
+            $(container).find('form')[0].reset();
+
         $.each(item, function(key, value)
         {
             value = value ? value : '';
-            if($(contaier+' *[name="'+key+'"]').is(':radio'))
-                $(contaier+' *[name="'+key+'"][value="'+value+'"]').trigger('click');
-            else if($(contaier+' *[name="'+key+'"]').is('select'))
-                $(contaier+' *[name="'+key+'"]').selectpicker('val', value);
-            else if($(contaier+' *[name="'+key+'"]').is('p'))
-                $(contaier+' *[name="'+key+'"]').text(value);
+            if($(container+' *[name="'+key+'"]').is(':radio'))
+                $(container+' *[name="'+key+'"][value="'+value+'"]').trigger('click');
+            else if($(container+' *[name="'+key+'"]').is('select'))
+                $(container+' *[name="'+key+'"]').selectpicker('val', value);
+            else if($(container+' *[name="'+key+'"]').is('p'))
+                $(container+' *[name="'+key+'"]').text(value);
+            else if($(container+' *[name="'+key+'"]').is('img'))
+                $(container+' *[name="'+key+'"]').attr('src', $(container+' *[name="'+key+'"]').data('url')+'/'+value);
+            else if($(container+' *[name="'+key+'"]').is('input[type="file"]'))
+                $(container+' *[name="'+key+'"]').val('');
             else
-                $(contaier+' *[name="'+key+'"]').val(value);
+                $(container+' *[name="'+key+'"]').val(value);
         });
     }
 
@@ -374,6 +387,9 @@ $(function()
             Unidad_De_Medida: '',
             Nombre: '',
             Descripcion: '',
+            Foto_1: 'default.jpg',
+            Foto_2: 'default.jpg',
+            Foto_3: 'default.jpg',
             Precio_Oficial: 'Sin determinar',
             Precio_Oficial_Calculo: 'Sin determinar',
         }
@@ -408,12 +424,7 @@ $(function()
             processData: false,
             type: 'POST',
             dataType: 'json'
-        })/*;
-        $.post(
-            $(this).prop('action'),
-            $(this).serialize(),
-            'json'
-        )*/
+        })
         .done(function(insumo)
         {
             var $div_errors = $('#modal-agregar-insumos').find('.errores');
@@ -430,6 +441,9 @@ $(function()
                 panel.find('span[data-rel="Unidad_De_Medida"]').text(insumo.Unidad_De_Medida);
                 panel.find('span[data-rel="Precio_Oficial"]').text(insumo.Precio_Oficial);
                 panel.find('span[data-rel="Precio_Oficial_Calculo"]').text(insumo.Precio_Oficial_Calculo);
+                panel.find('a[data-rel="Foto_1"]').attr('href', url_assets+'/'+(insumo.Foto_1 ? insumo.Foto_1 : 'default.jpg')).find('img').attr('src', url_assets+'/'+(insumo.Foto_1 ? insumo.Foto_1 : 'default.jpg'));
+                panel.find('a[data-rel="Foto_2"]').attr('href', url_assets+'/'+(insumo.Foto_2 ? insumo.Foto_2 : 'default.jpg')).find('img').attr('src', url_assets+'/'+(insumo.Foto_2 ? insumo.Foto_2 : 'default.jpg'));
+                panel.find('a[data-rel="Foto_3"]').attr('href', url_assets+'/'+(insumo.Foto_3 ? insumo.Foto_3 : 'default.jpg')).find('img').attr('src', url_assets+'/'+(insumo.Foto_3 ? insumo.Foto_3 : 'default.jpg'));
             } else {
                 var panel = insumoHtml(insumo, false);
                 $('#lista-insumo').append(panel);
@@ -468,6 +482,9 @@ $(function()
                 data.Codigo = data.Id_Item.pad(4)+'-'+data.Id;
                 data.Precio_Oficial = data.Precio_Oficial ? data.Precio_Oficial : 'Sin determinar';
                 data.Precio_Oficial_Calculo = data.Precio_Oficial_Calculo ? data.Precio_Oficial_Calculo : 'Sin determinar';
+                data.Foto_1 = data.Foto_1 ? data.Foto_1 : 'default.jpg';
+                data.Foto_2 = data.Foto_2 ? data.Foto_2 : 'default.jpg';
+                data.Foto_3 = data.Foto_3 ? data.Foto_3 : 'default.jpg';
 
                 populateModal('#modal-agregar-insumo', data);
             }
