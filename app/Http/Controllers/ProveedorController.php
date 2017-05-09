@@ -23,7 +23,7 @@ class ProveedorController extends Controller
 
     public function crear(CrearProveedorRequest $request)
     {
-        $id = $request->input('Proveedor_Id');
+        $id = $request->input('Id');
         if (!$id)
             $proveedor = new Proveedor;
         else

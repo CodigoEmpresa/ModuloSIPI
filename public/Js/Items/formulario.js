@@ -173,8 +173,11 @@ $(function()
 
     function populateForm(container, item)
     {
-        if($(container).find('form'))
+        if($(container).find('form').length > 0)
             $(container).find('form')[0].reset();
+        else if ($(container).is('form'))
+            $(container)[0].reset();
+
 
         $.each(item, function(key, value)
         {
@@ -190,8 +193,7 @@ $(function()
             else if($(container+' *[name="'+key+'"]').is('input[type="file"]'))
                 $(container+' *[name="'+key+'"]').val('');
             else
-                $(modal+' *[name="'+key+'"]').val(value);
-
+                $(container+' *[name="'+key+'"]').val(value);
         });
     }
 
@@ -591,7 +593,6 @@ $(function()
 
     $('#editar-proveedor').on('click', function(e)
     {
-        $('#agregar-proveedor-form').show();
         var Id_Proveedor = $('select[name="Id_Proveedor"]').selectpicker('val');
 
         if (Id_Proveedor)
@@ -602,10 +603,12 @@ $(function()
                 'json'
             ).done(function(data)
             {
-                populateForm('#agregar-cotizacion-form', data);
+                populateForm('#agregar-proveedor-form', data);
                 $('#agregar-proveedor-form').show();
             });
         }
+
+        e.preventDefault();
     });
 
     $('#cancelar-proveedor').on('click', function(e)
@@ -624,8 +627,11 @@ $(function()
             if(proveedor)
             {
                 $('#agregar-proveedor-form').find('input').val('');
+                $('select[name="Id_Proveedor"] option[value="'+proveedor.Id+'"]').remove();
+
                 $('select[name="Id_Proveedor"]').append('<option value="'+proveedor.Id+'">'+proveedor.Nombre+'</option>');
                 $('select[name="Id_Proveedor"]').selectpicker('refresh');
+                $('select[name="Id_Proveedor"]').selectpicker('val', proveedor.Id);
                 $('#agregar-proveedor-form').hide();
             }
         }).fail(function(xhr, status, error)
