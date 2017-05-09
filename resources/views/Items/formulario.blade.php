@@ -240,6 +240,7 @@
                                 <input type="text" name="Email" class="form-control">
                             </div>
                             <div class="col-md-12" style="text-align:right;">
+                                <input type="hidden" name="Id" value="0">
                                 <button type="submit" class="btn btn-primary pull-right" style="margin-left:10px;">Guardar</button>
                                 <button type="button" class="btn btn-default pull-right" id="cancelar-proveedor">Cancelar</button>
                             </div>
@@ -268,10 +269,13 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-3 form-group">
                                 <label for="" class="control-label">&nbsp;</label><br>
                                 <a href="#" id="agregar-proveedor" class="btn btn-link">Agregar</a>
-                                <a href="#" id="editar-proveedor" class="btn btn-link">Editar</a>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label for="" class="control-label">&nbsp;</label><br>
+                                <a href="#" data-url="{{ url('/proveedor/obtener') }}" id="editar-proveedor" class="btn btn-link">Editar</a>
                             </div>
                             <div class="col-md-12">
                                 <hr>

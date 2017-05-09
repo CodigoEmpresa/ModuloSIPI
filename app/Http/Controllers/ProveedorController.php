@@ -39,4 +39,11 @@ class ProveedorController extends Controller
 
         return response()->json($proveedor);
     }
+
+    public function obtener(Request $request, $proveedor = '')
+    {
+        $proveedor = Proveedor::find($proveedor);
+
+        return response()->json($proveedor);
+    }
 }
