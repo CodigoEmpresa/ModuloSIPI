@@ -39,8 +39,11 @@ class MainController extends Controller {
 
 			$permisos = [
 				'administrar_usuarios' => array_key_exists(1, $permissions_array) ? intval($permissions_array[1]) : 0,
-				'gestor_de_fichas_tecnicas' => array_key_exists(1, $permissions_array) ? intval($permissions_array[1]) : 0,
-				'gestor_de_items' => array_key_exists(1, $permissions_array) ? intval($permissions_array[1]) : 0
+				'gestionar_fichas_tecnicas' => array_key_exists(1, $permissions_array) ? intval($permissions_array[2]) : 0,
+				'administrar_fichas_tecnicas' => array_key_exists(1, $permissions_array) ? intval($permissions_array[3]) : 0,
+				'gestionar_categorias' => array_key_exists(1, $permissions_array) ? intval($permissions_array[4]) : 0,
+				'gestionar_insumos' => array_key_exists(1, $permissions_array) ? intval($permissions_array[5]) : 0,
+				'gestionar_cotizaciones' => array_key_exists(1, $permissions_array) ? intval($permissions_array[6]) : 0
 			];
 
 			$_SESSION['Usuario'] = $user_array;

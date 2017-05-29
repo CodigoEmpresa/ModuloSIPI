@@ -47,7 +47,7 @@ $(function()
 						            '</li>';
 						});
 						$('#personas').html(html);
-						$('#paginador').fadeOut();
+						//$('#paginador').fadeOut();
 					}
 				},
 				'json'
@@ -72,25 +72,26 @@ $(function()
 						html += '<option value="'+e['Nombre_Ciudad']+'">'+e['Nombre_Ciudad']+'</option>';
 					});
 				}
-				$('select[name="Nombre_Ciudad"]').html(html).val($('select[name="Nombre_Ciudad"]').data('value'));
+				$('select[name="Nombre_Ciudad"]').html(html);
+				$('select[name="Nombre_Ciudad"]').selectpicker('refresh');
+				$('select[name="Nombre_Ciudad"]').selectpicker('val', $('select[name="Nombre_Ciudad"]').data('value'));
 			}
 		});
 	};
 
 	var popular_modal_persona = function(persona)
 	{
-		$('select[name="Id_TipoDocumento"]').val(persona['Id_TipoDocumento']);
+		$('select[name="Id_TipoDocumento"]').val(persona['Id_TipoDocumento']).trigger('change');
 		$('input[name="Cedula"]').val($.trim(persona['Cedula']));
 		$('input[name="Primer_Apellido"]').val($.trim(persona['Primer_Apellido']));
 		$('input[name="Segundo_Apellido"]').val(persona['Segundo_Apellido']);
 		$('input[name="Primer_Nombre"]').val($.trim(persona['Primer_Nombre']));
 		$('input[name="Segundo_Nombre"]').val($.trim(persona['Segundo_Nombre']));
 		$('input[name="Fecha_Nacimiento"]').val($.trim(persona['Fecha_Nacimiento']));
-		$('select[name="Id_Etnia"]').val(persona['Id_Etnia']);
+		$('select[name="Id_Etnia"]').val(persona['Id_Etnia']).trigger('change');
 		$('select[name="Nombre_Ciudad"]').data('value', persona['Nombre_Ciudad']);
 		$('select[name="Id_Pais"]').val(persona['Id_Pais']).trigger('change');
 		$('input[name="Id_Persona"]').val(persona['Id_Persona']);
-
 		$('input[name="Id_Genero"]').removeAttr('checked').parent('.btn').removeClass('active');
 		$('input[name="Id_Genero"][value="'+persona['Id_Genero']+'"]').trigger('click');
 
@@ -220,21 +221,23 @@ $(function()
 		$.post(
 			URL+'/service/procesar',
 			$(this).serialize(),
-			function(data){
-				if(data.status == 'error')
-				{
-					popular_errores_modal(data.errors);
-				} else {
-					$('#alerta').show();
-					$('#modal_form_persona').modal('hide');
-
-					setTimeout(function(){
-						$('#alerta').hide();
-					}, 4000)
-				}
-			},
 			'json'
-		);
+		).done(function(data)
+		{
+			if(data.status == 'error')
+			{
+				popular_errores_modal(data.errors);
+			} else {
+				$('#alerta').show();
+				$('#modal_form_persona').modal('hide');
+
+				setTimeout(function(){
+					$('#alerta').hide();
+				}, 4000)
+			}
+
+			buscar();
+		});
 
 		e.preventDefault();
 	});

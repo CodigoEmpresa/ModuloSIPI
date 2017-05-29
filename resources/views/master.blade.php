@@ -53,6 +53,11 @@
 				</div>
 				<div class="navbar-collapse collapse" id="navbar-main">
 					<ul class="nav navbar-nav">
+						@if ($_SESSION['Usuario']['Permisos']['administrar_usuarios'])
+							<li class="{{ $seccion && in_array($seccion, ['Personas']) ? 'active' : '' }}">
+								<a href="{{ url('/personas') }}">Administración</a>
+							</li>
+						@endif
 						<li class="{{ $seccion && in_array($seccion, ['Gestor de Insumos']) ? 'active' : '' }}">
 		                    <a href="{{ URL::to('insumos') }}">Gestor de insumos</a>
 						</li>
@@ -65,9 +70,6 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ $_SESSION['Usuario']['Persona']['Primer_Apellido'].' '.$_SESSION['Usuario']['Persona']['Primer_Nombre'] }}<span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								@if ($_SESSION['Usuario']['Permisos']['administrar_usuarios'])
-									<li><a href="{{ url('/personas') }}">Administración</a></li>
-								@endif
 								<li>
 									<a href="{{ url('logout') }}">Cerrar sesión</a>
 								</li>
@@ -88,7 +90,7 @@
 					<div class="col-lg-8 col-md-7 col-sm-6">
 						<h1>Sistema integrado de precios IDRD</h1>
 						<p class="lead">
-							<h4>Módulo para gestión de precios de cotizaciones del IDRD</h4>
+							<h4>Módulo para la gestión de precios, insumos y cotizaciones del IDRD</h4>
 						</p>
 					</div>
 					<div class="col-lg-4 col-md-5 col-sm-6">
