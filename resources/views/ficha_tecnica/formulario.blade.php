@@ -133,12 +133,12 @@
                             <thead>
                                 <tr>
                                     <th width="30px">Cod.</th>
-                                    <th>APU</th>
-                                    <th width="100px">Unidad de m.</th>
-                                    <th width="70px">Cantidad</th>
-                                    <th width="100px">Precio</th>
-                                    <th width="100px">Total</th>
-                                    <th width="30px" class="no-sort"></th>
+                                    <th width="200px">APU</th>
+                                    <th width="60px">Cantidad</th>
+                                    <th width="60px">Precio</th>
+                                    <th width="60px">Total</th>
+                                    <th width="60px">Unidad de m.</th>
+                                    <th width="30px" data-priority="2" class="no-sort"></th>
                                 </tr>
                             </thead>
                             <tbody>
