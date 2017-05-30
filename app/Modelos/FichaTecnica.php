@@ -3,12 +3,18 @@
 namespace App\Modelos;
 
 use Illuminate\Database\Eloquent\Model;
+use Idrd\Usuarios\Seguridad\TraitSeguridad;
 
 class FichaTecnica extends Model
 {
     protected $table = 'Fichas_Tecnicas';
     protected $primaryKey = 'Id';
     protected $fillable = ['Subdireccion_Id', 'Persona_Id', 'Anio', 'Codigo_Proceso', 'Objeto', 'Presupuesto_Estimado', 'Fecha_Entrega_Estimada', 'Observacion', 'Alcance1', 'Alcance2', 'Alcance3'];
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     public function persona()
     {
@@ -30,4 +36,6 @@ class FichaTecnica extends Model
         return $this->belongsToMany('App\Modelos\Insumo', 'Fichas_Tecnicas_Insumos', 'Id_Ficha', 'Id_Insumo')
                     ->withPivot('Cantidad');
     }
+
+    use TraitSeguridad;
 }

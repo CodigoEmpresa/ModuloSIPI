@@ -171,7 +171,10 @@ class FichaTecnicaController extends Controller
 							->where('Nombre', 'Gestion SIPI')
 							->first();
 
-		$usuarios = $tipo_gestor->personas;
+		if($tipo_gestor)
+			$usuarios = $tipo_gestor->personas;
+		else
+			$usuarios = collect([]);
 
 		if ($ficha_tecnica)
 		{
