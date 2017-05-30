@@ -28,13 +28,6 @@ class CrearTablaItems extends Migration
      */
     public function down()
     {
-        Schema::table('Fichas_Tecnicas_Items', function($table)
-        {
-            $table->dropForeign(['Id_Ficha']);
-            $table->dropForeign(['Id_Item']);
-        });
-
-        Schema::drop('Fichas_Tecnicas_Items');
         Schema::drop('Items');
     }
 }

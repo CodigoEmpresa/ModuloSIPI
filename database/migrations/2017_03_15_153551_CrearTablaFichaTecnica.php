@@ -12,11 +12,12 @@ class CrearTablaFichaTecnica extends Migration
      */
      public function up()
     {
-       Schema::create('ficha_tecnica', function (Blueprint $table) {
+        Schema::create('Fichas_Tecnicas', function (Blueprint $table) {
 
             $table->increments('Id');
             $table->integer('Subdireccion_Id')->unsigned();
-            $table->integer('Persona_Id');
+            $table->integer('Persona_Id')->unsigned();
+            $table->integer('Administrador_Id')->unsigned();
             $table->string('Anio');
             $table->integer('Codigo_Proceso');
             $table->string('Objeto', 1500);
@@ -42,9 +43,10 @@ class CrearTablaFichaTecnica extends Migration
      */
     public function down()
     {
-        Schema::table('ficha_tecnica', function(Blueprint $table){
+        Schema::table('Fichas_Tecnicas', function(Blueprint $table){
             $table->dropForeign(['Subdireccion_Id']);
         });
-        Schema::drop('ficha_tecnica');
+
+        Schema::drop('Fichas_Tecnicas');
     }
 }

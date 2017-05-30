@@ -14,11 +14,15 @@
                     </div>
                 </div>
             @endif
+            @if(
+                $_SESSION['Usuario']['Permisos']['administrar_fichas_tecnicas']
+            )
             <div class="col-xs-12">
                 <ul class="nav nav-pills">
                     <li class="active"><a href="{{ url('fichaTecnica/crear') }}" name="Enviar" id="Agregar_Ficha">Crear ficha técnica</a></li>
                 </ul>
             </div>
+            @endif
             <div class="col-md-12">
                 <br>
             </div>

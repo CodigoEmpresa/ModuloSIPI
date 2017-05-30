@@ -33,7 +33,7 @@ class CrearTablaInsumos extends Migration
             $table->integer('Id_Insumo')->unsigned();
             $table->integer('Cantidad')->unsigned()->default(0);
 
-            $table->foreign('Id_Ficha')->references('Id')->on('ficha_tecnica');
+            $table->foreign('Id_Ficha')->references('Id')->on('Fichas_Tecnicas');
             $table->foreign('Id_Insumo')->references('Id')->on('Insumos');
         });
     }

@@ -6,13 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class FichaTecnica extends Model
 {
-    protected $table = 'ficha_tecnica';
+    protected $table = 'Fichas_Tecnicas';
     protected $primaryKey = 'Id';
     protected $fillable = ['Subdireccion_Id', 'Persona_Id', 'Anio', 'Codigo_Proceso', 'Objeto', 'Presupuesto_Estimado', 'Fecha_Entrega_Estimada', 'Observacion', 'Alcance1', 'Alcance2', 'Alcance3'];
 
     public function persona()
     {
         return $this->belongsTo('App\Modelos\Persona', 'Persona_Id');
+    }
+
+    public function administrador()
+    {
+        return $this->belongsTo('App\Modelos\Persona', 'Administrador_Id');
     }
 
     public function subdireccion()

@@ -14,7 +14,7 @@ use App\Modelos\Persona;
 
 class FichaTecnicaController extends Controller
 {
-
+	
 	public function __construct(PersonaInterface $repositorio_personas)
 	{
 		if (isset($_SESSION['Usuario']))
@@ -115,16 +115,16 @@ class FichaTecnicaController extends Controller
 			$html = $html.$h;
 		}
 		$Resultado = "<table id='datosTabla' class='default display responsive no-wrap table table-min table-striped' width='100%' name='datosTabla'>
-			        <thead>
-			            <tr>
-			            	<th width='60px'>Cod.</th>
-			            	<th width='60px'>Año</th>
-							<th width='60px'>Subdirección</th>
-	                        <th width='140px'>Presupuesto estimado</th>
-							<th>Objeto</th>
-	                        <th width='30px' data-priority='2' class='no-sort'></th>
-						</tr>
-					</thead>
+					        <thead>
+					            <tr>
+					            	<th width='60px'>Cod.</th>
+					            	<th width='60px'>Año</th>
+									<th width='60px'>Subdirección</th>
+			                        <th width='140px'>Presupuesto estimado</th>
+									<th>Objeto</th>
+			                        <th width='30px' data-priority='2' class='no-sort'></th>
+								</tr>
+							</thead>
 						<tbody>".$html."</tbody></table>";
 		return ($Resultado);
 	}
