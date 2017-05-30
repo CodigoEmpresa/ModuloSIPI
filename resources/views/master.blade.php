@@ -55,15 +55,27 @@
 					<ul class="nav navbar-nav">
 						@if ($_SESSION['Usuario']['Permisos']['administrar_usuarios'])
 							<li class="{{ $seccion && in_array($seccion, ['Personas']) ? 'active' : '' }}">
-								<a href="{{ url('/personas') }}">Administración</a>
+								<a href="{{ url('/personas') }}">Usuarios</a>
 							</li>
 						@endif
-						<li class="{{ $seccion && in_array($seccion, ['Gestor de Insumos']) ? 'active' : '' }}">
-		                    <a href="{{ URL::to('insumos') }}">Gestor de insumos</a>
-						</li>
-						<li class="{{ $seccion && in_array($seccion, ['Gestor de fichas técnicas']) ? 'active' : '' }}">
-		                    <a href="{{ URL::to('fichaTecnica') }}">Fichas técnicas</a>
-						</li>
+						@if(
+							$_SESSION['Usuario']['Permisos']['gestion_de_categorias'] ||
+							$_SESSION['Usuario']['Permisos']['gestion_de_insumos'] ||
+							$_SESSION['Usuario']['Permisos']['gestion_de_cotizaciones'] ||
+							$_SESSION['Usuario']['Permisos']['gestion_de_proveedores'] 
+						)
+							<li class="{{ $seccion && in_array($seccion, ['Gestor de Insumos']) ? 'active' : '' }}">
+			                    <a href="{{ URL::to('insumos') }}">Gestor de insumos</a>
+							</li>
+						@endif
+						@if(
+							$_SESSION['Usuario']['Permisos']['gestion_de_fichas_tecnicas'] ||
+							$_SESSION['Usuario']['Permisos']['administrar_fichas_tecnicas']
+						)
+							<li class="{{ $seccion && in_array($seccion, ['Gestor de fichas técnicas']) ? 'active' : '' }}">
+			                    <a href="{{ URL::to('fichaTecnica') }}">Fichas técnicas</a>
+							</li>
+						@endif
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="http://www.idrd.gov.co/sitio/idrd/" target="_blank">I.D.R.D</a></li>

@@ -14,7 +14,7 @@
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <label for="" class="control-label">Item <a href="#" id="agregar-item" class="btn-sm btn-link">Agregar</a></label>
+                            <label for="" class="control-label">Item @if($_SESSION['Usuario']['Permisos']['gestion_de_categorias']) <a href="#" id="agregar-item" class="btn-sm btn-link">Agregar</a> @endif</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="buscador-items" aria-label="..." placeholder="Buscar">
                                 <div class="input-group-btn">
@@ -30,7 +30,7 @@
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <label for="" class="control-label">Insumos <a href="#" id="agregar-insumo" class="btn-sm btn-link">Agregar</a></label>
+                            <label for="" class="control-label">Insumos @if($_SESSION['Usuario']['Permisos']['gestion_de_insumos']) <a href="#" id="agregar-insumo" class="btn-sm btn-link">Agregar</a> @endif</label>
                             <p class="form-control-static">Lista de insumos</p>
                         </div>
                         <div class="col-md-12">
@@ -41,7 +41,7 @@
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <label for="" class="control-label">Cotizaciones <a href="#" id="agregar-cotizacion" class="btn-sm btn-link">Agregar</a></label>
+                            <label for="" class="control-label">Cotizaciones  @if($_SESSION['Usuario']['Permisos']['gestion_de_cotizaciones']) <a href="#" id="agregar-cotizacion" class="btn-sm btn-link">Agregar</a> @endif</label>
                             <p class="form-control-static">Lista de cotizaciones</p>
                         </div>
                         <div class="col-md-12">
@@ -111,7 +111,7 @@
                         <input type="hidden" name="Id" value="0">
                         <input type="hidden" name="_method" value="POST">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        @if($_SESSION['Usuario']['Permisos']['gestion_de_categorias']) <button type="submit" class="btn btn-primary">Guardar</button> @endif
                     </div>
                 </form>
             </div>
@@ -186,7 +186,7 @@
                         <input type="hidden" name="Id_Item" value="0">
                         <input type="hidden" name="_method" value="POST">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        @if($_SESSION['Usuario']['Permisos']['gestion_de_insumos']) <button type="submit" class="btn btn-primary">Guardar</button> @endif
                     </div>
                 </form>
             </div>
@@ -241,7 +241,7 @@
                             </div>
                             <div class="col-md-12" style="text-align:right;">
                                 <input type="hidden" name="Id" value="0">
-                                <button type="submit" class="btn btn-primary pull-right" style="margin-left:10px;">Guardar</button>
+                                @if($_SESSION['Usuario']['Permisos']['gestion_de_proveedores']) <button type="submit" class="btn btn-primary pull-right" style="margin-left:10px;">Guardar</button> @endif
                                 <button type="button" class="btn btn-default pull-right" id="cancelar-proveedor">Cancelar</button>
                             </div>
                             <div class="col-md-12">
@@ -299,7 +299,7 @@
                         <input type="hidden" name="Id_Insumo" value="0">
                         <input type="hidden" name="_method" value="POST">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        @if($_SESSION['Usuario']['Permisos']['gestion_de_cotizaciones']) <button type="submit" class="btn btn-primary">Guardar</button> @endif
                     </div>
                 </form>
             </div>

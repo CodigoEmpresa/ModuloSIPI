@@ -28,7 +28,7 @@ class MainController extends Controller {
 
     public function index(Request $request)
 	{
-		$fake_permissions = ['1307', '1'];
+		$fake_permissions = ['1307', '0', '0', '0', '0', '0', '0', '0'];
 		//$fake_permissions = null;
 
 		if ($request->has('vector_modulo') || $fake_permissions)
@@ -39,11 +39,12 @@ class MainController extends Controller {
 
 			$permisos = [
 				'administrar_usuarios' => array_key_exists(1, $permissions_array) ? intval($permissions_array[1]) : 0,
-				'gestionar_fichas_tecnicas' => array_key_exists(1, $permissions_array) ? intval($permissions_array[2]) : 0,
+				'gestion_de_fichas_tecnicas' => array_key_exists(1, $permissions_array) ? intval($permissions_array[2]) : 0,
 				'administrar_fichas_tecnicas' => array_key_exists(1, $permissions_array) ? intval($permissions_array[3]) : 0,
-				'gestionar_categorias' => array_key_exists(1, $permissions_array) ? intval($permissions_array[4]) : 0,
-				'gestionar_insumos' => array_key_exists(1, $permissions_array) ? intval($permissions_array[5]) : 0,
-				'gestionar_cotizaciones' => array_key_exists(1, $permissions_array) ? intval($permissions_array[6]) : 0
+				'gestion_de_categorias' => array_key_exists(1, $permissions_array) ? intval($permissions_array[4]) : 0,
+				'gestion_de_insumos' => array_key_exists(1, $permissions_array) ? intval($permissions_array[5]) : 0,
+				'gestion_de_cotizaciones' => array_key_exists(1, $permissions_array) ? intval($permissions_array[6]) : 0,
+				'gestion_de_proveedores' => array_key_exists(1, $permissions_array) ? intval($permissions_array[7]) : 0
 			];
 
 			$_SESSION['Usuario'] = $user_array;
