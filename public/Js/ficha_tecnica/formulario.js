@@ -56,10 +56,10 @@ $(function(e)
             var $tr = $('<tr data-id="'+e.Id+'">'+
                 '<td width="30px">'+e.Id_Item.pad(3)+'-'+e.Id+'</td>'+
                 '<td>'+e.Nombre+'</td>'+
-                '<td>'+e.Unidad_De_Medida+'</td>'+
                 '<td>'+e.Cantidad+'</td>'+
                 '<td>'+(+e.Precio_Oficial)+'</td>'+
                 '<td>'+(e.Cantidad * e.Precio_Oficial)+'</td>'+
+                '<td>'+e.Unidad_De_Medida+'</td>'+
                 '<td class="no-sort">'+(perfil == 'gestor' ? '<a class="btn btn-xs btn-primary" data-role="Remover" href="#" data-toggle="tooltip" data-placement="bottom" title="Remover"><i class="fa fa-trash"></i></a>' : '')+'</td>'+
             '</tr>');
 
