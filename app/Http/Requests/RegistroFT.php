@@ -26,6 +26,7 @@ class RegistroFT extends Request
          $validaciones = [
             "Anio" => "required",
             "Subdireccion_Id" => "required",
+            "Persona_Id" => "required",
             "Objeto" => "required",
             "Presupuesto_Estimado" => "required|numeric",
             "Fecha_Entrega_Estimada" => "required|date",
@@ -41,6 +42,7 @@ class RegistroFT extends Request
     {
         return [
             'Subdireccion_Id.required' => 'El campo subdirección es requerido',
+            'Persona_Id.required' => 'El campo encargado es requerido',
             'Anio.required' => 'El campo año es requerido',
             'Presupuesto_Estimado.required' => 'El campo presupuesto estimado es requerido',
             'Fecha_Entrega_Estimada.required' => 'El campo fecha estimada de entrega es requerido',

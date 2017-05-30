@@ -47,6 +47,8 @@ $(function(e)
 
     var procesarAPU = function(current_apu)
     {
+        var perfil = $('#table_apu').data('perfil');
+
         apu[current_apu.Id] = current_apu;
         table_apu.clear().draw(false);
         $.each(apu, function(i, e)
@@ -58,7 +60,7 @@ $(function(e)
                 '<td>'+e.Cantidad+'</td>'+
                 '<td>'+(+e.Precio_Oficial)+'</td>'+
                 '<td>'+(e.Cantidad * e.Precio_Oficial)+'</td>'+
-                '<td class="no-sort"> <a class="btn btn-xs btn-primary" data-role="Remover" href="#" data-toggle="tooltip" data-placement="bottom" title="Remover"><i class="fa fa-trash"></i></a> </td>'+
+                '<td class="no-sort">'+(perfil == 'gestor' ? '<a class="btn btn-xs btn-primary" data-role="Remover" href="#" data-toggle="tooltip" data-placement="bottom" title="Remover"><i class="fa fa-trash"></i></a>' : '')+'</td>'+
             '</tr>');
 
             table_apu.row.add($tr).draw(false);
@@ -118,6 +120,16 @@ $(function(e)
         {
             alert(status);
         });
+    });
+
+    $('#agregar_alcance').on('click', function(e)
+    {
+        if(!$('#div_alcance_1').is(':visible'))
+            $('#div_alcance_1').fadeIn();
+        else if(!$('#div_alcance_2').is(':visible'))
+            $('#div_alcance_2').fadeIn();
+        else if(!$('#div_alcance_3').is(':visible'))
+            $('#div_alcance_3').fadeIn();
     });
 
     if(!$.isEmptyObject(old_apus))
