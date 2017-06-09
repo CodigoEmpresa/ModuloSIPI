@@ -19,7 +19,7 @@ class CrearTablaFichaTecnica extends Migration
             $table->integer('Persona_Id')->unsigned();
             $table->integer('Administrador_Id')->unsigned();
             $table->string('Anio');
-            $table->integer('Codigo_Proceso');
+            $table->string('Codigo_Proceso');
             $table->string('Objeto', 1500);
             $table->string('Presupuesto_Estimado');
             $table->date('Fecha_Entrega_Estimada');

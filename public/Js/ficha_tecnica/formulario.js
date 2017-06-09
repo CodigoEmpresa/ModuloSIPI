@@ -29,8 +29,6 @@ $(function(e)
 
             if(porcentaje > 100)
                 clase = 'progress-bar-danger';
-            else if(porcentaje > 75)
-                clase = 'progress-bar-warning';
             else if(porcentaje > 0)
                 clase = 'progress-bar-success';
 
@@ -60,7 +58,7 @@ $(function(e)
                 '<td>'+(+e.Precio_Oficial)+'</td>'+
                 '<td>'+(e.Cantidad * e.Precio_Oficial)+'</td>'+
                 '<td>'+e.Unidad_De_Medida+'</td>'+
-                '<td class="no-sort">'+(perfil == 'gestor' ? '<a class="btn btn-xs btn-primary" data-role="Remover" href="#" data-toggle="tooltip" data-placement="bottom" title="Remover"><i class="fa fa-trash"></i></a>' : '')+'</td>'+
+                '<td class="no-sort">'+(perfil == 'Gestor' ? '<a class="btn btn-xs btn-primary" data-role="Remover" href="#" data-toggle="tooltip" data-placement="bottom" title="Remover"><i class="fa fa-trash"></i></a>' : '')+'</td>'+
             '</tr>');
 
             table_apu.row.add($tr).draw(false);
