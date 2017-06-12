@@ -18,6 +18,10 @@ $(function()
 	    selector: '[data-toggle="tooltip"]'
 	});
 
+    $('body').popover({
+        selector: '[data-toggle="popover"]'
+    });
+
 	$('body').magnificPopup({
 		delegate: 'a[data-toggle="image"]',
 		type: 'image'

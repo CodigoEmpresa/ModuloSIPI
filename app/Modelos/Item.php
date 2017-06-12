@@ -21,5 +21,10 @@ class Item extends Model
         return $this->hasMany('App\Modelos\Insumo', 'Id_Item');
     }
 
+    public function getCode()
+    {
+        return str_pad($this->Id, 4, '0', STR_PAD_LEFT);
+    }
+
     use TraitSeguridad;
 }

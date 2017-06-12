@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Modelos\Cotizacion;
 use App\Modelos\Insumo;
 use Idrd\Usuarios\Repo\PersonaInterface;

@@ -30,9 +30,9 @@ Route::get('/asignarActividad', '\Idrd\Usuarios\Controllers\AsignarActividadCont
 Route::get('/actividadesModulo', '\Idrd\Usuarios\Controllers\AsignarActividadController@moduloActividades');
 Route::get('/actividadesPersona/{id}', '\Idrd\Usuarios\Controllers\AsignarActividadController@personaActividades');
 Route::any('PersonasActividadesProceso', '\Idrd\Usuarios\Controllers\AsignarActividadController@PersonasActividadesProceso');
-
 Route::any('/', 'MainController@index');
 Route::any('/logout', 'MainController@logout');
+Route::any('/buscador', 'BuscadorController@buscar');
 
 //rutas con filtro de autenticación
 Route::group(['middleware' => ['web']], function () {

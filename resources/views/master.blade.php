@@ -53,6 +53,9 @@
 				</div>
 				<div class="navbar-collapse collapse" id="navbar-main">
 					<ul class="nav navbar-nav">
+						<li class="{{ $seccion && in_array($seccion, ['Buscador']) ? 'active' : '' }}">
+							<a href="{{ url('/buscador') }}">Buscador</a>
+						</li>
 						@if ($_SESSION['Usuario']['Permisos']['administrar_usuarios'])
 							<li class="{{ $seccion && in_array($seccion, ['Personas']) ? 'active' : '' }}">
 								<a href="{{ url('/personas') }}">Usuarios</a>
