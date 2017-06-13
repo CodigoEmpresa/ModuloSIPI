@@ -401,7 +401,7 @@ $(function()
         {
             bootbox.alert({
                 title: 'Error',
-                message: 'Debe seleccionar un item para agregar un insumo',
+                message: 'Debe seleccionar una categoría para agregar un insumo',
                 buttons: {
                     ok: {
                         label: 'Volver',

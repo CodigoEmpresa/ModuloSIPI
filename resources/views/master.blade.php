@@ -56,40 +56,44 @@
 						<li class="{{ $seccion && in_array($seccion, ['Buscador']) ? 'active' : '' }}">
 							<a href="{{ url('/buscador') }}">Buscador</a>
 						</li>
-						@if ($_SESSION['Usuario']['Permisos']['administrar_usuarios'])
-							<li class="{{ $seccion && in_array($seccion, ['Personas']) ? 'active' : '' }}">
-								<a href="{{ url('/personas') }}">Usuarios</a>
-							</li>
-						@endif
-						@if(
-							$_SESSION['Usuario']['Permisos']['gestion_de_categorias'] ||
-							$_SESSION['Usuario']['Permisos']['gestion_de_insumos'] ||
-							$_SESSION['Usuario']['Permisos']['gestion_de_cotizaciones'] ||
-							$_SESSION['Usuario']['Permisos']['gestion_de_proveedores'] 
-						)
-							<li class="{{ $seccion && in_array($seccion, ['Gestor de Insumos']) ? 'active' : '' }}">
-			                    <a href="{{ URL::to('insumos') }}">Gestor de insumos</a>
-							</li>
-						@endif
-						@if(
-							$_SESSION['Usuario']['Permisos']['gestion_de_fichas_tecnicas'] ||
-							$_SESSION['Usuario']['Permisos']['administrar_fichas_tecnicas']
-						)
-							<li class="{{ $seccion && in_array($seccion, ['Gestor de fichas técnicas']) ? 'active' : '' }}">
-			                    <a href="{{ URL::to('fichaTecnica') }}">Fichas técnicas</a>
-							</li>
+						@if(isset($_SESSION['Usuario']))
+							@if(
+								$_SESSION['Usuario']['Permisos']['gestion_de_categorias'] ||
+								$_SESSION['Usuario']['Permisos']['gestion_de_insumos'] ||
+								$_SESSION['Usuario']['Permisos']['gestion_de_cotizaciones'] ||
+								$_SESSION['Usuario']['Permisos']['gestion_de_proveedores']
+							)
+								<li class="{{ $seccion && in_array($seccion, ['Gestor de Insumos']) ? 'active' : '' }}">
+									<a href="{{ URL::to('insumos') }}">Gestor de insumos</a>
+								</li>
+							@endif
+							@if(
+								$_SESSION['Usuario']['Permisos']['gestion_de_fichas_tecnicas'] ||
+								$_SESSION['Usuario']['Permisos']['administrar_fichas_tecnicas']
+							)
+								<li class="{{ $seccion && in_array($seccion, ['Gestor de fichas técnicas']) ? 'active' : '' }}">
+									<a href="{{ URL::to('fichaTecnica') }}">Fichas técnicas</a>
+								</li>
+							@endif
+							@if ($_SESSION['Usuario']['Permisos']['administrar_usuarios'])
+								<li class="{{ $seccion && in_array($seccion, ['Personas']) ? 'active' : '' }}">
+									<a href="{{ url('/personas') }}">Usuarios</a>
+								</li>
+							@endif
 						@endif
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="http://www.idrd.gov.co/sitio/idrd/" target="_blank">I.D.R.D</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ $_SESSION['Usuario']['Persona']['Primer_Apellido'].' '.$_SESSION['Usuario']['Persona']['Primer_Nombre'] }}<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li>
-									<a href="{{ url('logout') }}">Cerrar sesión</a>
-								</li>
-							</ul>
-						</li>
+						@if(isset($_SESSION['Usuario']))
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ $_SESSION['Usuario']['Persona']['Primer_Apellido'].' '.$_SESSION['Usuario']['Persona']['Primer_Nombre'] }}<span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="{{ url('logout') }}">Cerrar sesión</a>
+									</li>
+								</ul>
+							</li>
+						@endif
 					</ul>
 				</div>
 			</div>
@@ -103,7 +107,10 @@
 			<div class="page-header" id="banner">
 				<div class="row">
 					<div class="col-lg-8 col-md-7 col-sm-6">
-						<h1>Sistema integrado de precios IDRD</h1>
+						<h1>
+							<img src="http://idrd.gov.co/SIM/images/sipix2.png" alt="" height="48px" style="margin-top: -13px;">
+							Sistema integrado de precios IDRD
+						</h1>
 						<p class="lead">
 							<h4>Módulo para la gestión de precios, insumos y cotizaciones del IDRD</h4>
 						</p>

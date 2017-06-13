@@ -113,7 +113,7 @@ class FichaTecnicaController extends Controller
 			$or = true;
 		}
     	
-    	if($_SESSION['Usuario']['Permisos']['administrar_fichas_tecnicas'])
+    	if($_SESSION['Usuario']['Permisos']['gestion_de_fichas_tecnicas'])
     	{
     		if ($or)
     		{

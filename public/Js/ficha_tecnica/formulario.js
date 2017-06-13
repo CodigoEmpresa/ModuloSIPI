@@ -52,7 +52,7 @@ $(function(e)
         $.each(apu, function(i, e)
         {
             var $tr = $('<tr data-id="'+e.Id+'">'+
-                '<td width="30px">'+e.Id_Item.pad(3)+'-'+e.Id+'</td>'+
+                '<td width="30px">'+e.Id_Item.pad(4)+'-'+e.Id+'</td>'+
                 '<td>'+e.Nombre+'</td>'+
                 '<td>'+e.Cantidad+'</td>'+
                 '<td>'+(+e.Precio_Oficial)+'</td>'+

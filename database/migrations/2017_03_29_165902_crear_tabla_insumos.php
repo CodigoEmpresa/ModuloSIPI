@@ -21,6 +21,7 @@ class CrearTablaInsumos extends Migration
             $table->text('Unidad_De_Medida')->nullable();
             $table->integer('Precio_Oficial')->nullable();
             $table->integer('Precio_Adjudicado')->nullable();
+            $table->date('Precio_Oficial_Fecha')->nullable();
             $table->text('Precio_Oficial_Calculo')->nullable();
             $table->timestamps();
 

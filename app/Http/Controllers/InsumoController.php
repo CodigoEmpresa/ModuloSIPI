@@ -87,6 +87,7 @@ class InsumoController extends Controller {
 
 		$insumo->Precio_Oficial = $request->input('Precio_Oficial');
 		$insumo->Precio_Oficial_Calculo = $request->input('Precio_Oficial_Calculo');
+		$insumo->Precio_Oficial_Fecha = date('Y-m-d');
 		$insumo->save();
 
 		return response()->json($insumo);

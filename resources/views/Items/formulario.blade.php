@@ -13,8 +13,14 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="row">
+                        <div class="col-md-12">
+                            <h3>1. <small>Selecciona una categoría</small></h3>
+                        </div>
+                        <div class="col-md-12">
+                            <br>
+                        </div>
                         <div class="col-md-12 form-group">
-                            <label for="" class="control-label">Item @if($_SESSION['Usuario']['Permisos']['gestion_de_categorias']) <a href="#" id="agregar-item" class="btn-sm btn-link">Agregar</a> @endif</label>
+                            <label for="" class="control-label">Categoría @if($_SESSION['Usuario']['Permisos']['gestion_de_categorias']) <a href="#" id="agregar-item" class="btn-sm btn-link">Agregar</a> @endif</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="buscador-items" aria-label="..." placeholder="Buscar">
                                 <div class="input-group-btn">
@@ -29,6 +35,12 @@
                 </div>
                 <div class="col-md-4">
                     <div class="row">
+                        <div class="col-md-12">
+                            <h3>2. <small>Elige o crea un insumo</small></h3>
+                        </div>
+                        <div class="col-md-12">
+                            <br>
+                        </div>
                         <div class="col-md-12 form-group">
                             <label for="" class="control-label">Insumos @if($_SESSION['Usuario']['Permisos']['gestion_de_insumos']) <a href="#" id="agregar-insumo" class="btn-sm btn-link">Agregar</a> @endif</label>
                             <p class="form-control-static">Lista de insumos</p>
@@ -40,6 +52,12 @@
                 </div>
                 <div class="col-md-4">
                     <div class="row">
+                        <div class="col-md-12">
+                            <h3>3. <small>Administra las cotizaciones y asigna un precio oficial</small></h3>
+                        </div>
+                        <div class="col-md-12">
+                            <br>
+                        </div>
                         <div class="col-md-12 form-group">
                             <label for="" class="control-label">Cotizaciones  @if($_SESSION['Usuario']['Permisos']['gestion_de_cotizaciones']) <a href="#" id="agregar-cotizacion" class="btn-sm btn-link">Agregar</a> @endif</label>
                             <p class="form-control-static">Lista de cotizaciones</p>
@@ -80,7 +98,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title" id="myModalLabel">Item</h3>
+                    <h3 class="modal-title" id="myModalLabel">Categoría</h3>
                 </div>
                 <form id="agregar-item-form" action="{{ url('/item/crear') }}">
                     <div class="modal-body">
@@ -269,12 +287,9 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-3 form-group">
+                            <div class="col-md-6 form-group">
                                 <label for="" class="control-label">&nbsp;</label><br>
-                                <a href="#" id="agregar-proveedor" class="btn btn-link">Agregar</a>
-                            </div>
-                            <div class="col-md-3 form-group">
-                                <label for="" class="control-label">&nbsp;</label><br>
+                                <a href="#" id="agregar-proveedor" class="btn btn-link">Agregar</a>&nbsp;
                                 <a href="#" data-url="{{ url('/proveedor/obtener') }}" id="editar-proveedor" class="btn btn-link">Editar</a>
                             </div>
                             <div class="col-md-12">
