@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Idrd\Usuarios\Repo\Tipo;
 use Validator;
 use App\Http\Requests\RegistroFT;
 use App\Modelos\Subdireccion;
 use App\Modelos\FichaTecnica;
-use App\Modelos\Persona;
 
 class FichaTecnicaController extends Controller
 {

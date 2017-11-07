@@ -10,7 +10,7 @@
 		<meta name="csrf-token" content="{{ csrf_token() }}" />
 		@section('style')
 			<link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-			<link rel="stylesheet" href="{{ asset('public/Css/bootstrap.css') }}" media="screen">
+			<link rel="stylesheet" href="{{ asset('public/css/bootstrap.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/jquery-ui/themes/flick/jquery-ui.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/magnific-popup/dist/magnific-popup.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/bootstrap-select/dist/css/bootstrap-select.css') }}" media="screen">
@@ -20,7 +20,7 @@
 			<link rel="stylesheet" href="{{ asset('public/components/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/highcharts/css/highcharts.css') }}" media="screen">
 			<link rel="stylesheet" href="{{ asset('public/components/loaders.css/loaders.min.css') }}" media="screen">
-			<link rel="stylesheet" href="{{ asset('public/Css/main.css') }}" media="screen">
+			<link rel="stylesheet" href="{{ asset('public/css/main.css') }}" media="screen">
 		@show
 		@section('script')
 			<script src="{{ asset('public/components/moment/moment.js') }}"></script>

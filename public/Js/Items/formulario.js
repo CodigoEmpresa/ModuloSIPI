@@ -13,7 +13,7 @@ $(function()
     function itemHtml(item)
     {
         return '<li data-id="'+item.Id+'" class="item list-group-item">'+
-                    '<h5><span data-rel="Codigo">'+item.Id.pad(4)+'</span> | <span data-rel="Nombre">'+item.Nombre+'</span></h5>'+
+                    '<h5><span data-rel="Codigo">'+(item.Id.pad(4))+'</span> | <span data-rel="Nombre">'+item.Nombre+'</span></h5>'+
                     '<div class="list-group-item-text">'+
                         '<div class="row">'+
                             '<div class="col-md-12">'+
@@ -221,7 +221,7 @@ $(function()
                 var html = '';
                 var item_seleccionado = obtenerItemSeleccionado();
 
-                if (item_seleccionado != 0)
+                if (item_seleccionado !== 0)
                 {
                     html += $('.item[data-id="'+item_seleccionado+'"]').length ? $('.item[data-id="'+item_seleccionado+'"]').clone().wrap('<div>').parent().html() : '';
                 }
