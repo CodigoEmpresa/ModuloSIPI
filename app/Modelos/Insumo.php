@@ -7,7 +7,7 @@ use Idrd\Usuarios\Seguridad\TraitSeguridad;
 
 class Insumo extends Model
 {
-    protected $table = 'Insumos';
+    protected $table = 'insumos';
     protected $primaryKey = 'Id';
     protected $fillable = ['Id_Item', 'Nombre', 'Descripcion', 'Unidad_De_Medida', 'Precio_Oficial', 'Precio_Adjudicado', 'Precio_Oficial_Calculo', 'Precio_Oficial_Fecha', 'Foto_1', 'Foto_2', 'Foto_3'];
 

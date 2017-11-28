@@ -7,7 +7,7 @@ use Idrd\Usuarios\Seguridad\TraitSeguridad;
 
 class Proveedor extends Model
 {
-    protected $table = 'Proveedores';
+    protected $table = 'proveedores';
     protected $primaryKey = 'Id';
     protected $fillable = ['Nombre', 'Ciudad', 'Direccion' ,'Telefono', 'Email', 'Nombre_Contacto'];
 	

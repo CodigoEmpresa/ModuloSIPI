@@ -7,7 +7,7 @@ use Idrd\Usuarios\Seguridad\TraitSeguridad;
 
 class Item extends Model
 {
-    protected $table = 'Items';
+    protected $table = 'items';
     protected $primaryKey = 'Id';
     protected $fillable = ['Nombre' ,'Descripcion'];
 

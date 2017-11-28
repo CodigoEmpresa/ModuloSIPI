@@ -7,7 +7,7 @@ use Idrd\Usuarios\Seguridad\TraitSeguridad;
 
 class FichaTecnica extends Model
 {
-    protected $table = 'Fichas_Tecnicas';
+    protected $table = 'fichas_tecnicas';
     protected $primaryKey = 'Id';
     protected $fillable = ['Subdireccion_Id', 'Persona_Id', 'Anio', 'Codigo_Proceso', 'Objeto', 'Presupuesto_Estimado', 'Fecha_Entrega_Estimada', 'Observacion', 'Alcance1', 'Alcance2', 'Alcance3'];
 

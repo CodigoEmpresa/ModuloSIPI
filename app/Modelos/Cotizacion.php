@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cotizacion extends Model
 {
-    protected $table = 'Cotizaciones';
+    protected $table = 'cotizaciones';
     protected $primaryKey = 'Id';
     protected $fillable = ['Id_Item', 'Id_Proveedor' ,'Precio', 'Fecha_Actualizacion', 'Observaciones'];
 
