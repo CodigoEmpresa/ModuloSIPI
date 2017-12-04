@@ -35,7 +35,7 @@
 			<script src="{{ asset('public/components/datatables.net-bs/js/dataTables.bootstrap.js') }}"></script>
 			<script src="{{ asset('public/components/datatables.net-responsive/js/dataTables.responsive.js') }}"></script>
 			<script src="{{ asset('public/components/highcharts/js/highcharts.js') }}"></script>
-			<script src="{{ asset('public/Js/main.js') }}"></script>
+			<script src="{{ asset('public/Js/main.js?v=2') }}"></script>
 		@show
 		<title>SIPI</title>
 	</head>

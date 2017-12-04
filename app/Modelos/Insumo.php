@@ -28,7 +28,7 @@ class Insumo extends Model
 
     public function fichasTecnicas()
     {
-        return $this->belongsToMany('App\Modelos\FichaTecnica', 'Fichas_Tecnicas_Isumos', 'Id_Insumo', 'Id_Ficha')
+        return $this->belongsToMany('App\Modelos\FichaTecnica', 'fichas_tecnicas_isumos', 'Id_Insumo', 'Id_Ficha')
                     ->withPivot('Cantidad');
     }
 

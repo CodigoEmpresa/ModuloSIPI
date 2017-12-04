@@ -241,10 +241,16 @@ $(function()
 	});
 });
 
-Number.prototype.pad = function(n) {
-    return new Array(n).join('0').slice((n || 2) * -1) + this;
-}
+Number.prototype.pad = function(w, z) {
+	var n = this;
+    z = z || '0';
+    n = n + '';
+    return n.length >= w ? n : new Array(w - n.length + 1).join(z) + n;
+};
 
-String.prototype.pad = function(n) {
-    return new Array(n).join('0').slice((n || 2) * -1) + this;
-}
+String.prototype.pad =  function(w, z) {
+    var n = this;
+    z = z || '0';
+    n = n + '';
+    return n.length >= w ? n : new Array(w - n.length + 1).join(z) + n;
+};
