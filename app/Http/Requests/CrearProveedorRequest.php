@@ -25,11 +25,8 @@ class CrearProveedorRequest extends Request
     {
         return [
             'Nombre' => 'required',
-            'Ciudad' => 'required',
-            'Direccion' => 'required',
             'Telefono' => 'required',
-            'Email' => 'required',
-            'Nombre_Contacto' => 'required'
+            'Email' => 'required'
         ];
     }
 }

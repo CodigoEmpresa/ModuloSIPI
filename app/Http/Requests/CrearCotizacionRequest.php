@@ -24,17 +24,14 @@ class CrearCotizacionRequest extends Request
     public function rules()
     {
         return [
-            'Id_Proveedor' => 'required',
-            'Precio' => 'required',
-            'Fecha_Actualizacion' => 'required'
+            'Id_Proveedor' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'Id_Proveedor.required' => 'El campo proveedor es requerido',
-            'Fecha_Actualizacion.required' => 'El campo fecha de actualización es requerido',
+            'Id_Proveedor.required' => 'Selecciona un proveedor para agregar al insumo'
         ];
     }
 }

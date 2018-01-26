@@ -9,16 +9,21 @@ class Proveedor extends Model
 {
     protected $table = 'proveedores';
     protected $primaryKey = 'Id';
-    protected $fillable = ['Nombre', 'Ciudad', 'Direccion' ,'Telefono', 'Email', 'Nombre_Contacto'];
+    protected $fillable = ['Id_Item', 'Nombre', 'Ciudad', 'Direccion' ,'Telefono', 'Email', 'Nombre_Contacto'];
 	
 	public function __construct()
     {
         parent::__construct();
     }
 
-    public function cotizaciones()
+    public function insumos()
     {
-        return $this->hasMany('App\Modelos\Cotizacion', 'Id_Proveedor');
+        return $this->belongsToMany('App\Modelos\Insumo', 'cotizaciones', 'Id_Proveedor', 'Id_Insumo');
+    }
+
+    public function item()
+    {
+        return $this->belongsTo('App\Modelos\Item', 'Id_Item');
     }
 
     use TraitSeguridad;

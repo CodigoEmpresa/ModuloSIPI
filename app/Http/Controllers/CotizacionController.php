@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Modelos\Cotizacion;
+use App\Modelos\Proveedor;
 use App\Modelos\Insumo;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use App\Http\Requests\CrearCotizacionRequest;
@@ -23,30 +23,17 @@ class CotizacionController extends Controller
 
     public function crear(CrearCotizacionRequest $request)
     {
-        $id = $request->input('Id');
         $insumo = Insumo::find($request->input('Id_Insumo'));
+        $insumo->proveedores()->attach($request->input('Id_Proveedor'));
+        $proveedor = Proveedor::find($request->input('Id_Proveedor'));
 
-        if (!$id)
-            $cotizacion = new Cotizacion;
-        else
-            $cotizacion = Cotizacion::find($id);
-
-        $cotizacion->Id_Insumo = $request->input('Id_Insumo');
-        $cotizacion->Id_Proveedor = $request->input('Id_Proveedor');
-        $cotizacion->Precio = $request->input('Precio');
-        $cotizacion->Fecha_Actualizacion = $request->input('Fecha_Actualizacion');
-        $cotizacion->Observaciones = $request->input('Observaciones');
-        $cotizacion->save();
-
-        $cotizacion->load('proveedor');
-
-        return response()->json($cotizacion);
+        return response()->json($proveedor);
     }
 
-    public function obtener(Request $request, $cotizacion = '')
-    {
-        $cotizacion = Cotizacion::with('proveedor')->find($cotizacion);
+    public function remover(Request $request) {
+        $insumo = Insumo::find($request->input('Id_Insumo'));
+        $insumo->proveedores()->detach($request->input('Id_Proveedor'));
 
-        return response()->json($cotizacion);
+        return response()->json(true);
     }
 }

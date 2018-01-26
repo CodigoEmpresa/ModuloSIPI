@@ -108,7 +108,7 @@
 				<div class="row">
 					<div class="col-lg-8 col-md-7 col-sm-6">
 						<h1>
-							<img src="http://idrd.gov.co/SIM/images/sipix2.png" alt="" height="48px" style="margin-top: -13px;">
+							<img src="http://idrd.gov.co/SIM/images/sipix2.png" alt="" height="48px" style="margin-top: -25px;">
 							Sistema integrado de precios IDRD
 						</h1>
 						<p class="lead">

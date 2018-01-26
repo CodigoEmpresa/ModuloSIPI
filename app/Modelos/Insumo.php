@@ -21,9 +21,9 @@ class Insumo extends Model
         return $this->belongsTo('App\Modelos\Item', 'Id_Item');
     }
 
-    public function cotizaciones()
+    public function proveedores()
     {
-        return $this->hasMany('App\Modelos\Cotizacion', 'Id_Insumo');
+        return $this->belongsToMany('App\Modelos\Proveedor', 'cotizaciones', 'Id_Insumo', 'Id_Proveedor');
     }
 
     public function fichasTecnicas()

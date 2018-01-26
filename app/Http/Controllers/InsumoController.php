@@ -42,7 +42,7 @@ class InsumoController extends Controller {
 
 	public function obtenerInsumo(Request $request, $insumo = '')
 	{
-		$insumo = Insumo::with('cotizaciones', 'cotizaciones.proveedor')->find($insumo);
+		$insumo = Insumo::with('proveedores')->find($insumo);
 
 		return response()->json($insumo);
 	}

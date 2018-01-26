@@ -4,7 +4,7 @@ $(function()
     var insumo_seleccionado = 0;
     var url_item = $('#lista-item').data('url');
     var url_insumo = $('#lista-insumo').data('url');
-    var utl_cotizaciones = $('#lista-cotizaciones').data('url');
+    var url_proveedores = $('#lista-cotizaciones').data('url');
     var url_assets = $('#lista-insumo').data('url-assets');
     var no_se_encontraron_resultados = '';
     var no_se_encontraron_insumos = '';
@@ -84,25 +84,17 @@ $(function()
                 '</li>';
     }
 
-    function cotizacionHtml(cotizacion)
+    function cotizacionHtml(proveedor)
     {
-        return '<li data-id="'+cotizacion.Id+'" class="cotizacion seleccionado list-group-item">'+
-                    '<h5><span data-rel="Nombre">'+cotizacion.proveedor.Nombre+'</span></h5>'+
+        return '<li data-id="'+proveedor.Id+'" class="cotizacion seleccionado list-group-item">'+
+                    '<h5><span data-rel="Nombre">'+proveedor.Nombre+'</span></h5>'+
                     '<div class="list-group-item-text">'+
                         '<div class="row">'+
                             '<div class="col-md-12">'+
                                 '<small>'+
-                                    '<strong>Fecha actualización:</strong> <span data-rel="Fecha_Actualizacion">'+cotizacion.Fecha_Actualizacion+'</span>'+
-                                '</small>'+
-                            '</div>'+
-                            '<div class="col-md-12">'+
-                                '<small>'+
-                                    '<strong>Precio:</strong> <span data-rel="Precio">'+cotizacion.Precio+'</span>'+
-                                '</small>'+
-                            '</div>'+
-                            '<div class="col-md-12">'+
-                                '<small>'+
-                                    '<strong>Observaciones:</strong> <span data-rel="Observaciones">'+(cotizacion.Observaciones ? cotizacion.Observaciones : 'Sin observaciones')+'</span>'+
+                                    '<strong>Email:</strong> <span data-rel="Email">'+proveedor.Email+'</span>'+
+                                    '<br>'+
+                                    '<strong>Teléfono:</strong> <span data-rel="Telefono">'+proveedor.Telefono+'</span>'+
                                 '</small>'+
                             '</div>'+
                             '<div class="col-md-12">'+
@@ -113,7 +105,7 @@ $(function()
                     '<div class="list-group-item-footer">'+
                         '<div class="row">'+
                             '<div class="col-md-12">'+
-                                '<a data-role="editar" class="label label-default">Editar</a>'+
+                                '<a data-role="remover" class="label label-danger">Remover</a>'+
                             '</div>'+
                         '</div>'+
                     '</div>'+
@@ -261,6 +253,7 @@ $(function()
         e.preventDefault();
     });
 
+    // formulario-items
     $('#agregar-item-form').on('submit', function(e)
     {
         $.post(
@@ -415,6 +408,7 @@ $(function()
         e.preventDefault();
     });
 
+    // formulario-insumos
     $('#agregar-insumo-form').on('submit', function(e)
     {
         var data = new FormData(this);
@@ -521,26 +515,19 @@ $(function()
                 if (data)
                 {
                     var html_cotizaciones = '';
-                    if (data)
+                    // popular lista de cotizaciones
+                    if (data.proveedores.length)
                     {
-                        // popular lista de cotizaciones
-                        if (data.cotizaciones.length)
+                        $.each(data.proveedores, function(i, proveedor)
                         {
-                            $.each(data.cotizaciones, function(i, cotizacion)
-                            {
-                                html_cotizaciones += cotizacionHtml(cotizacion, true);
-                                $('#lista-cotizaciones .cotizaciones[data-id="'+cotizacion.Id+'"]').remove();
-                            });
-                        } else {
-                            html_cotizaciones = no_se_encontraron_cotizaciones;
-                        }
-
-                        $('#lista-cotizaciones').html(html_cotizaciones);
-                        $('#precio-oficial').find('input[name="Precio_Oficial"]').val(data.Precio_Oficial);
-                        $('#precio-oficial').find('textarea[name="Precio_Oficial_Calculo"]').val(data.Precio_Oficial_Calculo);
-                        $('#precio-oficial').find('input[name="Id"]').val(data.Id);
-                        $('#precio-oficial').show();
+                            html_cotizaciones += cotizacionHtml(proveedor);
+                            $('#lista-cotizaciones .cotizaciones[data-id="'+proveedor.Id+'"]').remove();
+                        });
+                    } else {
+                        html_cotizaciones = no_se_encontraron_cotizaciones;
                     }
+
+                    $('#lista-cotizaciones').html(html_cotizaciones);
                 }
             }).fail(function(xhr, status, error)
             {
@@ -558,20 +545,19 @@ $(function()
     // modal-cotizacion
     $('#agregar-cotizacion').on('click', function(e)
     {
+        $('#agregar-proveedor-form').hide();
+
         var item = {
             Id: 0,
             Id_Insumo: obtenerInsumoSeleccionado(),
-            Id_Proveedor: '',
-            Precio: '',
-            Observaciones: '',
-            Fecha_Actualizacion: ''
+            Id_Proveedor: ''
         }
 
         if(obtenerInsumoSeleccionado() == 0)
         {
             bootbox.alert({
                 title: 'Error',
-                message: 'Debe seleccionar un insumo para agregar una cotización',
+                message: 'Debe seleccionar un insumo para agregar un proveedor',
                 buttons: {
                     ok: {
                         label: 'Volver',
@@ -580,7 +566,42 @@ $(function()
                 }
             });
         } else {
-            populateModal('#modal-agregar-cotizacion', item);
+            $.post(
+                $('select[name="Id_Proveedor"]').data('url'),
+                {
+                    Id_Insumo: obtenerInsumoSeleccionado()
+                },
+                'json'
+            ).done(function(proveedores) {
+                $('select[name="Id_Proveedor"]').html('');
+                $('select[name="Id_Proveedor"]').prop('title', 'Seleccionar');
+
+                if (proveedores.length) {
+                    var html_proveedores = '';
+                    $.each(proveedores, function(i, proveedor) {
+                        html_proveedores += '<option value="'+proveedor.Id+'">'+proveedor.Nombre+'</option>';
+                    });
+
+                    $('select[name="Id_Proveedor"]').html(html_proveedores);
+                } else {
+                    $('select[name="Id_Proveedor"]').prop('title', 'No se encontraron proveedores para esta categoría');
+                }
+
+                $('select[name="Id_Proveedor"]').selectpicker('refresh');
+
+                populateModal('#modal-agregar-cotizacion', item);
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                bootbox.alert({
+                    title: 'Error',
+                    message: 'No se pudo cargar los proveedores verifique su conexión a internet o comuníquese con el desarrollador <br> Codigo: '+textStatus,
+                    buttons: {
+                        ok: {
+                            label: 'Volver',
+                            className: 'btn-default'
+                        }
+                    }
+                });
+            });
         }
 
         e.preventDefault();
@@ -588,6 +609,18 @@ $(function()
 
     $('#agregar-proveedor').on('click', function(e)
     {
+        var data = {
+            'Id': 0,
+            'Id_Item': obtenerItemSeleccionado(),
+            'Nombre': '',
+            'Ciudad': '',
+            'Nombre_Contacto':'',
+            'Direccion': '',
+            'Telefono': '',
+            'Email': ''
+        }
+
+        populateForm('#agregar-proveedor-form', data);
         $('#agregar-proveedor-form').show();
     });
 
@@ -655,24 +688,23 @@ $(function()
             $(this).prop('action'),
             $(this).serialize(),
             'json'
-        ).done(function(cotizacion)
+        ).done(function(proveedor)
         {
-            if (cotizacion)
+            if (proveedor)
             {
                 var $div_errors = $('#modal-agregar-cotizacion').find('.errores');
                 $div_errors.hide();
 
-                var en_lista = !!$('#lista-cotizaciones .cotizacion[data-id="'+cotizacion.Id+'"]').length;
+                var en_lista = !!$('#lista-cotizaciones .cotizacion[data-id="'+proveedor.Id+'"]').length;
 
                 if (en_lista)
                 {
-                    var panel = $('#lista-cotizaciones').find('.cotizacion[data-id="'+cotizacion.Id+'"]');
-                    panel.find('span[data-rel="Nombre"]').text(cotizacion.proveedor.Nombre);
-                    panel.find('span[data-rel="Fecha_Actualizacion"]').text(cotizacion.Fecha_Actualizacion);
-                    panel.find('span[data-rel="Observaciones"]').text(cotizacion.Observaciones ? cotizacion.Observaciones : 'Sin observaciones');
-                    panel.find('span[data-rel="Precio"]').text(cotizacion.Precio);
+                    var panel = $('#lista-cotizaciones').find('.cotizacion[data-id="'+proveedor.Id+'"]');
+                    panel.find('span[data-rel="Nombre"]').text(proveedor.Nombre);
+                    panel.find('span[data-rel="Email"]').text(proveedor.Email);
+                    panel.find('span[data-rel="Telefono"]').text(proveedor.Telefono);
                 } else {
-                    var panel = cotizacionHtml(cotizacion);
+                    var panel = cotizacionHtml(proveedor);
                     $('#lista-cotizaciones').append(panel);
                 }
 
@@ -693,21 +725,26 @@ $(function()
         e.preventDefault();
     });
 
-    $('#precio-oficial-form').on('submit', function(e)
+    $('#lista-cotizaciones').delegate('a[data-role="remover"]', 'click', function(e)
     {
+        var _this = $(this);
         $.post(
-            $(this).prop('action'),
-            $(this).serialize(),
+            url_proveedores+'/remover',
+            {
+                Id_Insumo: obtenerInsumoSeleccionado(),
+                Id_Proveedor: $(this).closest('.cotizacion').data('id')
+            },
             'json'
-        ).done(function(insumo)
+        ).done(function(data)
         {
-            var panel = $('.insumo[data-id="'+insumo.Id+'"]');
-            panel.find('span[data-rel="Precio_Oficial"]').text(insumo.Precio_Oficial);
-            panel.find('span[data-rel="Precio_Oficial_Calculo"]').text(insumo.Precio_Oficial_Calculo);
-
+            if (data) {
+                _this.closest('.cotizacion').remove();
+            }
+        }).fail(function(xhr, status, error)
+        {       
             bootbox.alert({
-                title: 'Mensaje',
-                message: 'El precio oficial ha sido actualizado satisfactoriamente',
+                title: 'Error',
+                message: 'No se pudo realizar la operación verifique su conexión a internet o comuníquese con el desarrollador <br> Codigo: '+status,
                 buttons: {
                     ok: {
                         label: 'Volver',
@@ -715,28 +752,6 @@ $(function()
                     }
                 }
             });
-        });
-
-        e.preventDefault();
-    });
-
-    $('#lista-cotizaciones').delegate('a[data-role="editar"]', 'click', function(e)
-    {
-        var id = $(this).closest('.cotizacion').data('id');
-
-        $.get(
-            utl_cotizaciones+'/obtener/'+id,
-            {},
-            'json'
-        ).done(function(data)
-        {
-            if (data)
-            {
-                populateModal('#modal-agregar-cotizacion', data);
-            }
-        }).fail(function(xhr, status, error)
-        {
-            alert(status);
         });
 
         e.preventDefault();
