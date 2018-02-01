@@ -175,7 +175,6 @@ div.oculto {
 }
 
 div.list-group-item-text {
-    min-height: 100px;
     overflow-x: hidden;
 }
 

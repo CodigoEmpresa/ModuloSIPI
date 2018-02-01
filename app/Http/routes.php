@@ -69,4 +69,6 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('proveedor/porInsumo', 'ProveedorController@porInsumo');
 	Route::post('cotizacion/crear', 'CotizacionController@crear');
 	Route::post('cotizacion/remover', 'CotizacionController@remover');
+
+	Route::post('precio/crear', 'PrecioController@crear');
 });

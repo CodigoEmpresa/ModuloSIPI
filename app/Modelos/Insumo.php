@@ -9,7 +9,7 @@ class Insumo extends Model
 {
     protected $table = 'insumos';
     protected $primaryKey = 'Id';
-    protected $fillable = ['Id_Item', 'Nombre', 'Descripcion', 'Unidad_De_Medida', 'Precio_Oficial', 'Precio_Adjudicado', 'Precio_Oficial_Calculo', 'Precio_Oficial_Fecha', 'Foto_1', 'Foto_2', 'Foto_3'];
+    protected $fillable = ['Id_Item', 'Nombre', 'Descripcion', 'Unidad_De_Medida', 'Precio_Adjudicado', 'Foto_1', 'Foto_2', 'Foto_3'];
 
     public function __construct()
     {
@@ -30,6 +30,11 @@ class Insumo extends Model
     {
         return $this->belongsToMany('App\Modelos\FichaTecnica', 'fichas_tecnicas_isumos', 'Id_Insumo', 'Id_Ficha')
                     ->withPivot('Cantidad');
+    }
+
+    public function preciosOficiales()
+    {
+        return $this->hasMany('App\Modelos\PrecioOficial', 'Id_Insumo');
     }
 
     use TraitSeguridad;

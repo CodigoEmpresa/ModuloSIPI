@@ -2,40 +2,13 @@ $(function()
 {
     var item_seleccionado = 0;
     var insumo_seleccionado = 0;
-    var url_item = $('#lista-item').data('url');
     var url_insumo = $('#lista-insumo').data('url');
+    var url_item = $('#id_item').data('url');
     var url_proveedores = $('#lista-cotizaciones').data('url');
     var url_assets = $('#lista-insumo').data('url-assets');
     var no_se_encontraron_resultados = '';
     var no_se_encontraron_insumos = '';
     var no_se_encontraron_cotizaciones = '';
-
-    function itemHtml(item)
-    {
-        return '<li data-id="'+item.Id+'" class="item list-group-item">'+
-                    '<h5><span data-rel="Codigo">'+(item.Id.pad(4))+'</span> | <span data-rel="Nombre">'+item.Nombre+'</span></h5>'+
-                    '<div class="list-group-item-text">'+
-                        '<div class="row">'+
-                            '<div class="col-md-12">'+
-                                '<small>'+
-                                    '<strong>Descripción:</strong> <span data-rel="Descripcion">'+(item.Descripcion ? item.Descripcion : 'Sin descripción')+'</span>'+
-                                '</small>'+
-                            '</div>'+
-                            '<div class="col-md-12">'+
-                                '<br>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="list-group-item-footer">'+
-                        '<div class="row">'+
-                            '<div class="col-md-12">'+
-                                '<a data-role="seleccionar" class="label label-primary">Seleccionar</a> '+
-                                '<a data-role="editar" class="label label-default">Editar</a> '+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                '</li>';
-    }
 
     function insumoHtml(insumo)
     {
@@ -56,16 +29,6 @@ $(function()
                             '<div class="col-md-12">'+
                                 '<small>'+
                                     '<strong>Descripción:</strong> <span data-rel="Descripcion">'+(insumo.Descripcion ? insumo.Descripcion : 'Sin descripción')+'</span>'+
-                                '</small>'+
-                            '</div>'+
-                            '<div class="col-md-12">'+
-                                '<small>'+
-                                    '<strong>Precio oficial:</strong> <span data-rel="Precio_Oficial">'+(insumo.Precio_Oficial ? insumo.Precio_Oficial : 'Sin determinar')+'</span>'+
-                                '</small>'+
-                            '</div>'+
-                            '<div class="col-md-12">'+
-                                '<small>'+
-                                    '<strong>Calculo precio oficial:</strong> <span data-rel="Precio_Oficial_Calculo">'+(insumo.Precio_Oficial_Calculo ? insumo.Precio_Oficial_Calculo : 'Sin determinar')+'</span>'+
                                 '</small>'+
                             '</div>'+
                             '<div class="col-md-12">'+
@@ -114,13 +77,6 @@ $(function()
 
     function establecerItemSeleccionado(id)
     {
-        $('#lista-item .item').removeClass('seleccionado').find('a[data-role="seleccionar"]').text('Seleccionar');
-        if(id !== 0)
-        {
-            $('#lista-item .item[data-id="'+id+'"]').addClass('seleccionado');
-            $('#lista-item .item[data-id="'+id+'"]').find('a[data-role="seleccionar"]').text('Cancelar');
-        }
-
         item_seleccionado = id;
         return item_seleccionado;
     }
@@ -196,110 +152,22 @@ $(function()
         $(modal).modal('show');
     }
 
-    //buscador-items
-    $('#buscar-item').on('click', function(e)
-    {
-        var matcher = $('input[name="buscador-items"]').val();
-
-        if(matcher.length > 0)
-        {
-            $.get(
-                $(this).data('url')+'/'+matcher,
-                {},
-                'json'
-            )
-            .done(function(data)
-            {
-                var html = '';
-                var item_seleccionado = obtenerItemSeleccionado();
-
-                if (item_seleccionado !== 0)
-                {
-                    html += $('.item[data-id="'+item_seleccionado+'"]').length ? $('.item[data-id="'+item_seleccionado+'"]').clone().wrap('<div>').parent().html() : '';
-                }
-
-                if (data.length)
-                {
-                    $.each(data, function(i, e)
-                    {
-                        if (!$('.item.seleccionado[data-id="'+e.Id+'"]').length)
-                            html += itemHtml(e, false);
-                    });
-                } else {
-                    html += no_se_encontraron_resultados;
-                }
-
-                $('#lista-item').html(html);
-            }).fail(function(xhr, status, error)
-            {
-                var html = no_se_encontraron_resultados;
-
-                $('#lista-item').html(html);
-            });
-        }
-    });
-
     // modal-items
     $('#agregar-item').on('click', function(e)
     {
         var item = {
             Id: 0,
             Codigo: 'Automático',
-            Nombre: '',
-            Descripcion: ''
+            Nombre: ''
         }
 
         populateModal('#modal-agregar-item', item);
         e.preventDefault();
     });
 
-    // formulario-items
-    $('#agregar-item-form').on('submit', function(e)
+    $('#editar-item').on('click', function(e)
     {
-        $.post(
-            $(this).prop('action'),
-            $(this).serialize(),
-            'json'
-        )
-        .done(function(item)
-        {
-            var $div_errors = $('#modal-agregar-item').find('.errores');
-            $div_errors.hide();
-
-            var en_lista = !!$('#lista-item .item[data-id="'+item.Id+'"]').length;
-
-            if (en_lista)
-            {
-                var panel = $('.item[data-id="'+item.Id+'"]');
-                panel.find('span[data-rel="Codigo"]').text(item.Id.pad(4));
-                panel.find('span[data-rel="Nombre"]').text(item.Nombre);
-                panel.find('span[data-rel="Descripcion"]').text(item.Descripcion ? item.Descripcion : 'Sin descripción');
-            } else {
-                var panel = itemHtml(item);
-                $('#lista-item').append(panel);
-            }
-
-            $('#modal-agregar-item').modal('hide');
-        })
-        .fail(function(xhr, status, error)
-        {
-            if(xhr.status == 422)
-            {
-                var errores = xhr.responseJSON;
-
-                populateErrors('#modal-agregar-item .errores', errores);
-            } else {
-                alert(error);
-            }
-        });
-
-        e.preventDefault();
-    });
-
-    // lista-items
-    $('#lista-item').delegate('a[data-role="editar"]', 'click', function(e)
-    {
-        var id = $(this).closest('.item').data('id');
+        var id = $('#id_item').selectpicker('val');
 
         $.get(
             url_item+'/obtener/'+id,
@@ -320,9 +188,54 @@ $(function()
         e.preventDefault();
     });
 
-    $('#lista-item').delegate('a[data-role="seleccionar"]', 'click', function(e)
+
+    // formulario-items
+    $('#agregar-item-form').on('submit', function(e)
     {
-        var id = $(this).closest('.item').data('id');
+        $.post(
+            $(this).prop('action'),
+            $(this).serialize(),
+            'json'
+        )
+        .done(function(item)
+        {
+            var $div_errors = $('#modal-agregar-item').find('.errores');
+            $div_errors.hide();
+
+            var en_lista = !!$('#id_item option[value="'+item.Id+'"]').length;
+
+            if (en_lista)
+            {
+                var option = $('#id_item option[value="'+item.Id+'"]');
+                option.text(item.Id.pad(4)+' - '+item.Nombre);
+            } else {
+                var option = '<option value="'+item.Id+'">'+item.Id.pad(4)+' - '+item.Nombre+'</option>';
+                $('#id_item').append(option);
+            }
+
+            $('#id_item').selectpicker('refresh');
+            $('#id_item').selectpicker('render');
+
+            $('#modal-agregar-item').modal('hide');
+        })
+        .fail(function(xhr, status, error)
+        {
+            if(xhr.status == 422)
+            {
+                var errores = xhr.responseJSON;
+
+                populateErrors('#modal-agregar-item .errores', errores);
+            } else {
+                alert(error);
+            }
+        });
+
+        e.preventDefault();
+    });
+
+    $('select[name="id_item"]').on('change', function(e)
+    {
+        var id = $('#id_item').selectpicker('val');
         if (id == obtenerItemSeleccionado())
         {
             establecerItemSeleccionado(0);
@@ -752,6 +665,61 @@ $(function()
                     }
                 }
             });
+        });
+
+        e.preventDefault();
+    });
+
+    //precio oficial
+    $('#agregar-precio').on('click', function(e)
+    {
+        var precio = {
+            Id: 0,
+            Id_Insumo: obtenerInsumoSeleccionado(),
+            Precio_Oficial: '',
+            Precio_Oficial_Fecha: '',
+            IVA: 0
+        }
+
+        if(obtenerInsumoSeleccionado() == 0)
+        {
+            bootbox.alert({
+                title: 'Error',
+                message: 'Debe seleccionar un insumo para agregar un precio',
+                buttons: {
+                    ok: {
+                        label: 'Volver',
+                        className: 'btn-default'
+                    }
+                }
+            });
+        } else {
+            populateModal('#modal-agregar-precio', precio);
+        }
+
+        e.preventDefault();
+    });
+
+    $('#agregar-precio-form').on('submit', function(e)
+    {
+        $.post(
+            $(this).prop('action'),
+            $(this).serialize(),
+            'json'
+        ).done(function(precio)
+        {
+            console.log(precio);
+            $('#modal-agregar-precio').modal('hide');
+        }).fail(function(xhr, status, error)
+        {
+            if(xhr.status == 422)
+            {
+                var errores = xhr.responseJSON;
+
+                populateErrors('#agregar-precio-form .errores', errores);
+            } else {
+                alert(error);
+            }
         });
 
         e.preventDefault();

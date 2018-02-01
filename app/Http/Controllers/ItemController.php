@@ -27,7 +27,7 @@ class ItemController extends Controller {
 	{
 		$datos = [
 			'seccion' => 'Gestor de Insumos',
-			'proveedores' => Proveedor::all()
+			'categorias' => Item::all()
 		];
 
 		return view('Items.formulario', $datos);
@@ -59,7 +59,6 @@ class ItemController extends Controller {
 			$item = Item::find($id);
 
 		$item->Nombre = $request->input('Nombre');
-		$item->Descripcion = $request->input('Descripcion');
 		$item->save();
 
 		return response()->json($item);

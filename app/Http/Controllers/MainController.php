@@ -45,7 +45,8 @@ class MainController extends Controller {
 				'gestion_de_categorias' => array_key_exists(1, $permissions_array) ? intval($permissions_array[4]) : 0,
 				'gestion_de_insumos' => array_key_exists(1, $permissions_array) ? intval($permissions_array[5]) : 0,
 				'gestion_de_cotizaciones' => array_key_exists(1, $permissions_array) ? intval($permissions_array[6]) : 0,
-				'gestion_de_proveedores' => array_key_exists(1, $permissions_array) ? intval($permissions_array[7]) : 0
+				'gestion_de_proveedores' => array_key_exists(1, $permissions_array) ? intval($permissions_array[7]) : 0,
+				'gestion_de_precios_oficiales' => array_key_exists(1, $permissions_array) ? intval($permissions_array[7]) : 0
 			];
 
 			$_SESSION['Usuario'] = $user_array;

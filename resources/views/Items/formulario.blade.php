@@ -11,7 +11,7 @@
         </div>
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="row">
                         <div class="col-md-12">
                             <h3>1. <small>Selecciona una categoría</small></h3>
@@ -20,20 +20,25 @@
                             <br>
                         </div>
                         <div class="col-md-12 form-group">
-                            <label for="" class="control-label">Categoría @if($_SESSION['Usuario']['Permisos']['gestion_de_categorias']) <a href="#" id="agregar-item" class="btn-sm btn-link">Agregar</a> @endif</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="buscador-items" aria-label="..." placeholder="Buscar">
-                                <div class="input-group-btn">
-                                    <button id="buscar-item" type="button" class="btn btn-default" data-url="{{ url('item/buscar') }}" name="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <ul class="list-group" id="lista-item" data-url="{{ url('/item') }}"></ul>
+                            <label for="" class="control-label">
+                                Categoría 
+                            </label>
+                            @if($_SESSION['Usuario']['Permisos']['gestion_de_categorias']) 
+                                <a href="#" id="editar-item" class="btn-sm btn-link pull-right">Editar</a> 
+                                <a href="#" id="agregar-item" class="btn-sm btn-lin pull-right">Agregar</a>
+                            @endif
+                            <select name="id_item" id="id_item" title="Seleccionar" class="form-control" data-live-search="true" data-url="{{ url('/item') }}">
+                                @foreach($categorias as $categoria) 
+                                    <option value="{{ $categoria['Id'] }}">{{ $categoria->getCode() }} - {{ $categoria['Nombre'] }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-12">
+                    <br>
+                </div>
+                <div class="col-md-8">
                     <div class="row">
                         <div class="col-md-12">
                             <h3>2. <small>Elige o crea un insumo</small></h3>
@@ -53,13 +58,27 @@
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3>3. <small>Administra los proveedores y asigna un precio oficial</small></h3>
+                            <h3>3. <small>Administra el precio oficial y asigna proveedores</small></h3>
                         </div>
                         <div class="col-md-12">
                             <br>
                         </div>
                         <div class="col-md-12 form-group">
-                            <label for="" class="control-label">Proveedores @if($_SESSION['Usuario']['Permisos']['gestion_de_cotizaciones']) <a href="#" id="agregar-cotizacion" class="btn-sm btn-link">Agregar</a> @endif</label>
+                            <label for="" class="control-label">
+                                Precio oficial 
+                                @if($_SESSION['Usuario']['Permisos']['gestion_de_cotizaciones']) 
+                                    <a href="#" id="agregar-precio" class="btn-sm btn-link">Agregar</a> 
+                                @endif
+                            </label>
+                            <p class="form-control-static">Lista de precios</p>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label for="" class="control-label">
+                                Proveedores 
+                                @if($_SESSION['Usuario']['Permisos']['gestion_de_cotizaciones']) 
+                                    <a href="#" id="agregar-cotizacion" class="btn-sm btn-link">Agregar</a> 
+                                @endif
+                            </label>
                             <p class="form-control-static">Lista de proveedores</p>
                         </div>
                         <div class="col-md-12">
@@ -95,10 +114,6 @@
                             <div class="col-md-12 form-group">
                                 <label for="" class="control-label">* Nombre</label>
                                 <input type="text" name="Nombre" class="form-control">
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <label for="" class="control-label">Descripción</label>
-                                <textarea name="Descripcion" class="form-control"></textarea>
                             </div>
                         </div>
                     </div>
@@ -146,21 +161,10 @@
                                 <label for="" class="control-label">Descripción</label>
                                 <textarea name="Descripcion" class="form-control"></textarea>
                             </div>
-                            <div class="col-md-12 form-group">
-                                <label for="" class="control-label">Precio oficial</label>
-                                <p class="form-control-static" name="Precio_Oficial">Sin determinar</p>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <label for="" class="control-label">Precio oficial detalles</label>
-                                <p class="form-control-static" name="Precio_Oficial_Calculo">Sin determinar</p>
-                            </div>
                             <div class="col-md-12">
                                 <img name="Foto_1" data-url="{{ asset('public/storage') }}" src="{{ asset('public/storage/default.jpg') }}" style="height:30px" alt="" class="pointer pull-left img-responsive img-rounded">
                                 <img name="Foto_2" data-url="{{ asset('public/storage') }}" src="{{ asset('public/storage/default.jpg') }}" style="height:30px" alt="" class="pointer insumo-img pull-left img-responsive img-rounded">
                                 <img name="Foto_3" data-url="{{ asset('public/storage') }}" src="{{ asset('public/storage/default.jpg') }}" style="height:30px" alt="" class="pointer insumo-img pull-left img-responsive img-rounded">
-                            </div>
-                            <div class="col-md-12">
-                                <br>
                             </div>
                             <div class="col-md-12 form-group">
                                 <label for="Foto_1" class="control-label">Foto 1</label>
@@ -182,6 +186,53 @@
                         <input type="hidden" name="_method" value="POST">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                         @if($_SESSION['Usuario']['Permisos']['gestion_de_insumos']) <button type="submit" class="btn btn-primary">Guardar</button> @endif
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-agregar-precio" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">Precio</h3>
+                </div>
+                <form id="agregar-precio-form" action="{{ url('/precio/crear') }}">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="errores col-md-12" style="display: none;">
+                                <div class="alert alert-danger alert-dismissible">
+                                    <strong>Solucione los siguientes inconvenientes y vuelva a intentarlo</strong>
+                                    <ul>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="" class="control-label">Precio</label>
+                                <input type="text" name="Precio_Oficial" value="" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="" class="control-label">Fecha</label>
+                                <input type="text" name="Precio_Oficial_Fecha" data-role="datepicker" value="" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group checkbox">
+                                <label for="" class="">&nbsp;</label><br>
+                                <label>
+                                    <input type="checkbox" id="IVA" name="IVA" value="1"> IVA
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="Id" value="0">
+                        <input type="hidden" name="Id_Insumo" value="0">
+                        <input type="hidden" name="_method" value="POST">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        @if($_SESSION['Usuario']['Permisos']['gestion_de_cotizaciones']) 
+                            <button type="submit" class="btn btn-primary">Guardar</button> 
+                        @endif
                     </div>
                 </form>
             </div>
